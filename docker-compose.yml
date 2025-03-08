@@ -1,0 +1,39 @@
+#
+# Copyright (C) 2024 Temmi Pietsch - All Rights Reserved
+#
+# You may not use, distribute or modify this code without the explicitly
+# permission of the author.
+#
+
+services:
+  server:
+    container_name: gj-sharepic-gen-web
+    restart: always
+    hostname: gj-sharepic-generator.temmi.land
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "95:95"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.gj-sharepic-gen-web.entrypoints=web"
+      - "traefik.http.routers.gj-sharepic-gen-web.rule=Host(`gj-sharepic-generator.temmi.land`) || Host(`www.gj-sharepic-generator.temmi.land`)"
+      - "traefik.http.middlewares.gj-sharepic-gen-web-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.gj-sharepic-gen-web.middlewares=gj-sharepic-gen-web-https-redirect"
+      - "traefik.http.routers.gj-sharepic-gen-web-secure.entrypoints=websecure"
+      - "traefik.http.routers.gj-sharepic-gen-web-secure.rule=Host(`gj-sharepic-generator.temmi.land`) || Host(`www.gj-sharepic-generator.temmi.land`)"
+      - "traefik.http.routers.gj-sharepic-gen-web-secure.tls=true"
+      - "traefik.http.routers.gj-sharepic-gen-web-secure.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.gj-sharepic-gen-web-secure.service=gj-sharepic-gen-web"
+      - "traefik.http.services.gj-sharepic-gen-web.loadbalancer.server.port=95"
+      - "traefik.docker.network=proxy"
+    networks:
+      - proxy
+      - default
+
+networks:
+  proxy:
+    external: true
+  default:
+    driver: bridge
