@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'Wix Madefor Display';
-  src: url(./fonts/Wix_Madefor_Display/WixMadeforDisplay-VariableFont_wght.ttf) format('truetype');
+  src: url(/fonts/Wix_Madefor_Display/WixMadeforDisplay-VariableFont_wght.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Work Sans';
-  src: url('./fonts/Work_Sans/WorkSans-Italic-VariableFont_wght.ttf') format('truetype');
+  src: url(/fonts/Work_Sans/WorkSans-Italic-VariableFont_wght.ttf) format('truetype');
 }
 
 html {
