@@ -1,0 +1,183 @@
+@font-face {
+  font-family: 'Wix Madefor Display';
+  src: url(./fonts/Wix_Madefor_Display/WixMadeforDisplay-VariableFont_wght.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Work Sans';
+  src: url('./fonts/Work_Sans/WorkSans-Italic-VariableFont_wght.ttf') format('truetype');
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+.wix-madefor-display-400 {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.wix-madefor-display-600 {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.wix-madefor-display-800 {
+  font-family: "Wix Madefor Display", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #33c270;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.inner {
+	display: flex;
+	gap: 10rem;
+}
+
+.container {
+	background: white;
+	padding: 2rem;
+}
+
+button {
+	margin-top: 2rem;
+	border: 0.2rem solid black;
+	width: 20rem;
+	height: 5rem;
+	color: black;
+	background-color: white;
+	font-family: "Wix Madefor Display", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 800;
+	font-style: normal;
+	font-size: 2rem;
+	cursor: pointer;
+	position: relative;
+	transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
+
+	&:hover {
+		color: white;
+		background-color: black;
+	}
+
+}
+
+.sharepic-canvas {
+	width: 360px;
+	height: 450px;
+	overflow: hidden;
+}
+
+h1 {
+	margin: 0;
+	padding: 0.35rem 0.55rem;
+	width: max-content;
+	position: relative;
+	font-size: 3.75rem;
+	line-height: 1.1;
+	white-space: pre-line;
+}
+
+.heading-bottom {
+	margin: 0;
+	padding: 0;
+	left: 2.9rem;
+	bottom: 7.5rem;
+	position: absolute;
+	width: 100%;
+}
+
+.heading-top-reset {
+	top: unset;
+}
+
+.heading-top {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	left: 2.9rem;
+	top: 7.5rem;
+	width: 100%;
+}
+
+.gj-logo {
+	font-family: "Work Sans", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 700;
+	font-style: italic;
+	position: absolute;
+	text-transform: uppercase;
+	color: #c7ff7a;
+	top: 40.5rem;
+	width: max-content;
+	left: 1.25rem;
+	margin: 0;
+	padding: 0;
+	line-height: 1.35rem;
+	transform: rotate(-13deg);
+	font-size: 1.5rem;
+	letter-spacing: 0rem;
+	text-align: left;
+}
+
+.sharepic-container {
+	position: relative;
+}
+
+.arrow {
+	position: absolute;
+	bottom: 0.25rem;
+	right: 0.25rem;
+	width: 50px;
+}
+
+.gj-logo span {
+  display: inline-block;
+  margin-left: 1.15rem;
+}
+
+.ortsgruppe {
+	font-family: "Work Sans", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 700;
+	font-style: italic;
+	position: absolute;
+	text-transform: uppercase;
+	color: #c7ff7a;
+	top: 42.5rem;
+	width: 10rem;
+	left: 2.65rem;
+	margin: 0;
+	padding: 0;
+	line-height: 1rem;
+	transform: rotate(-13deg);
+	font-size: 0.75rem;
+	letter-spacing: -0.01rem;
+	text-align: left;
+}
