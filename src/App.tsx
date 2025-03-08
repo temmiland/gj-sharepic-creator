@@ -96,7 +96,6 @@ function App() {
 
 	const handleColorChange = (color: Color) => setSelectedColor(color);
 
-
 	const handleHighlightColorChange = (color: Color) => setHighlightColor(color);
 
 	const handleDownload = () => {
@@ -241,7 +240,7 @@ function App() {
 			<label key={color.value}>
 				<input
 					type="radio"
-					name="color"
+					name="highlightcolor"
 					value={color.value}
 					checked={highlightColor.value === color.value}
 					onChange={() => handleHighlightColorChange(color)}
