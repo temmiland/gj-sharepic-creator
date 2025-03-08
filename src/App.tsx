@@ -279,7 +279,7 @@ function App() {
           <input type='number' value={pictogramPosition.x} onChange={(e) => setPictogramPosition({ ...pictogramPosition, x: parseInt(e.target.value) })} />
           <input type='number' value={pictogramPosition.y} onChange={(e) => setPictogramPosition({ ...pictogramPosition, y: parseInt(e.target.value) })} />
         </div>
-		<p>v0.0.1 - build 08.03.2025 - <a href="https://github.com/temmiland/gj-sharepic-generator">github</a></p>
+		<p>v0.0.2 - build 08.03.2025 - <a href="https://github.com/temmiland/gj-sharepic-generator">github</a></p>
       </div>
     </div>
   );

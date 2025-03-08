@@ -91,7 +91,6 @@ button {
 .sharepic-canvas {
 	width: 360px;
 	height: 450px;
-	overflow: hidden;
 }
 
 h1 {
@@ -148,6 +147,7 @@ h1 {
 
 .sharepic-container {
 	position: relative;
+	overflow: hidden;
 }
 
 .arrow {
