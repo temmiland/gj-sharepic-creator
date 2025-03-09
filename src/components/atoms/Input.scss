@@ -1,0 +1,173 @@
+input, textarea, select, option {
+	font-weight: 700;
+}
+input[type="checkbox"] {
+  width: 3.4rem;
+  height: 3.4rem;
+  border: 2px solid #000000;
+  position: relative;
+  cursor: pointer;
+  appearance: none;
+  background-color: #ffffff;
+  transition: background-color 0.3s ease;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #4CAF50;
+}
+
+/* Animation für ::before (oberen Balken) */
+input[type="checkbox"]:checked::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 6px;
+  width: 10px;
+  height: 2px;
+  background-color: #ffffff;
+  transform: rotate(40deg) translate(5px, 8px);
+  animation: showBefore 1s ease forwards;
+}
+
+/* Animation für ::after (unteren Balken) */
+input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 6px;
+  width: 16px;
+  height: 2px;
+  background-color: #ffffff;
+  transform: rotate(130deg) translate(-2px, -4px);
+  animation: showAfter 1s ease forwards;
+}
+
+/* Keyframe-Animation für ::before (oberen Balken) */
+@keyframes showBefore {
+  0% {
+    transform: scale(0) rotate(40deg) translate(5px, 8px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(40deg) translate(5px, 8px);
+    opacity: 1;
+  }
+}
+
+/* Keyframe-Animation für ::after (unteren Balken) */
+@keyframes showAfter {
+  0% {
+    transform: scale(0) rotate(130deg) translate(-2px, -4px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(130deg) translate(-2px, -4px);
+    opacity: 1;
+  }
+}
+
+/* Stil für den Text-Input */
+input[type="text"] {
+  width: 80%;
+  height: 40px;
+  padding: 0 12px;
+  border: 2px solid #000000;
+  font-size: 16px;
+  color: #000000;
+  background-color: #ffffff;
+  outline: none;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+/* Stil, wenn der Input fokussiert wird */
+input[type="text"]:focus {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+textarea {
+  width: 80%;
+  min-height: 40px;
+  padding: 12px;
+  border: 2px solid #000000;
+  font-size: 16px;
+  color: #000000;
+  background-color: #ffffff;
+  outline: none;
+  resize: none; /* Verhindert das manuelle Vergrößern/Verkleinern */
+  transition: background-color 0.3s ease;
+}
+
+/* Stil, wenn das Textarea fokussiert wird */
+textarea:focus {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+input[type="number"] {
+  width: 10%;
+  height: 40px;
+  padding: 0 12px;
+  margin: 0.2rem;
+  border: 2px solid #000000;
+  font-size: 16px;
+  color: #000000;
+  background-color: #ffffff;
+  text-align: center;
+  outline: none;
+  transition: background-color 0.3s ease;
+  appearance: textfield;
+}
+
+/* Stil, wenn das Number Input fokussiert wird */
+input[type="number"]:focus {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Stil für das Select-Feld */
+select {
+  width: 85.55%;
+  height: 40px;
+  padding: 0 12px;
+  border: 2px solid #333;
+  font-size: 16px;
+  color: #000000;
+  background-color: #ffffff;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+/* Stil, wenn das Select-Feld fokussiert wird */
+select:focus {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Stil für die Options */
+option {
+  padding: 8px;
+  background-color: #f0f0f0;
+  color: #000000;
+  font-size: 16px;
+}
+
+/* Animation für den Placeholder im Select */
+select::after {
+  content: attr(data-placeholder);
+  opacity: 0;
+  animation: fadeInSelect 0.5s ease forwards;
+}
+
+/* Keyframe-Animation für den Placeholder (Text von links nach rechts) */
+@keyframes fadeInSelect {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

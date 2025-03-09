@@ -7,8 +7,20 @@
   src: url(/fonts/Work_Sans/WorkSans-Italic-VariableFont_wght.ttf) format('truetype');
 }
 
-html {
-	font-size: 62.5%;
+:root {
+  font-family: "Wix Madefor Display", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: 62.5%;
+
+  color-scheme: light dark;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #33c270;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -17,6 +29,13 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
 }
 
 .wix-madefor-display-400 {
@@ -40,21 +59,6 @@ body {
   font-style: normal;
 }
 
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(0, 0, 0, 0.87);
-  background-color: #33c270;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 .inner {
 	display: flex;
 	gap: 10rem;
@@ -63,29 +67,7 @@ body {
 .container {
 	background: white;
 	padding: 2rem;
-}
-
-button {
-	margin-top: 2rem;
-	border: 0.2rem solid black;
-	width: 20rem;
-	height: 5rem;
-	color: black;
-	background-color: white;
-	font-family: "Wix Madefor Display", sans-serif;
-	font-optical-sizing: auto;
-	font-weight: 800;
-	font-style: normal;
-	font-size: 2rem;
-	cursor: pointer;
-	position: relative;
-	transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
-
-	&:hover {
-		color: white;
-		background-color: black;
-	}
-
+	height: max-content;
 }
 
 .sharepic-canvas {
@@ -148,6 +130,7 @@ h1 {
 .sharepic-container {
 	position: relative;
 	overflow: hidden;
+	margin-top: 2rem;
 }
 
 .arrow {

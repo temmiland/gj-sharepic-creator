@@ -1,0 +1,22 @@
+button {
+	margin-top: 2rem;
+	border: 0.2rem solid black;
+	width: 20rem;
+	height: 5rem;
+	color: black;
+	background-color: white;
+	font-family: "Wix Madefor Display", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 800;
+	font-style: normal;
+	font-size: 2rem;
+	cursor: pointer;
+	position: relative;
+	transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
+
+	&:hover {
+		color: white;
+		background-color: black;
+	}
+
+}
