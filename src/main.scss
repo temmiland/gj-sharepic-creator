@@ -3,6 +3,16 @@
   src: url(/fonts/Wix_Madefor_Display/WixMadeforDisplay-VariableFont_wght.ttf) format('truetype');
 }
 @font-face {
+  font-family: 'Wix Madefor Text';
+  src: url(/fonts/Wix_Madefor_Text/WixMadeforText-VariableFont_wght.ttf) format('truetype');
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Wix Madefor Text';
+  src: url(/fonts/Wix_Madefor_Text/WixMadeforText-Italic-VariableFont_wght.ttf) format('truetype');
+  font-style: italic;
+}
+@font-face {
   font-family: 'Work Sans';
   src: url(/fonts/Work_Sans/WorkSans-Italic-VariableFont_wght.ttf) format('truetype');
 }
@@ -73,38 +83,6 @@ body {
 .sharepic-canvas {
 	width: 360px;
 	height: 450px;
-}
-
-h1 {
-	margin: 0;
-	padding: 0.35rem 0.55rem;
-	width: max-content;
-	position: relative;
-	font-size: 3.75rem;
-	line-height: 1.1;
-	white-space: pre-line;
-}
-
-.heading-bottom {
-	margin: 0;
-	padding: 0;
-	left: 2.9rem;
-	bottom: 7.5rem;
-	position: absolute;
-	width: 100%;
-}
-
-.heading-top-reset {
-	top: unset;
-}
-
-.heading-top {
-	margin: 0;
-	padding: 0;
-	position: absolute;
-	left: 2.9rem;
-	top: 7.5rem;
-	width: 100%;
 }
 
 .gj-logo {

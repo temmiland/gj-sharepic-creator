@@ -10,7 +10,7 @@ export function SharePicPictogram({ pictogram, position, colorSet }: SharePicPic
 				style={{
 					filter: colorSet.name === "Black" ? 'invert()' : '',
 					maxWidth: 'max-content',
-					position: 'relative',
+					position: 'absolute',
 					top: `${position.y}px`,
 					left: `${position.x}px`,
 				}}

@@ -1,0 +1,27 @@
+.content {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+	.content-inner {
+		margin: 0;
+		padding: 0;
+		width: 82.5%;
+		position: absolute;
+		left: 2.9rem;
+
+		.text {
+			margin-top: 3rem;
+		}
+	}
+
+	.content-inner-bottom {
+		bottom: 7.5rem;
+	}
+
+	.content-inner-top {
+		top: 7.5rem;
+	}
+}

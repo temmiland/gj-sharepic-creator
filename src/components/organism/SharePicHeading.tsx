@@ -1,43 +1,43 @@
+import { colorSets } from "../../constants/colors";
+import H1 from "../atoms/H1";
+import "./SharePicHeading.scss";
+
 type SharePicHeadingProps = {
 	multiLineText: string[];
-	topOrBottom: boolean;
 	colorSet: ColorSet;
 	highlightColor: HighlightColor;
+	fontSize: number;
 };
 
-export function SharePicHeading({ multiLineText, topOrBottom, colorSet, highlightColor }: SharePicHeadingProps) {
+export function SharePicHeading({ multiLineText, colorSet, highlightColor, fontSize }: SharePicHeadingProps) {
 
 	return (
-		<div className={topOrBottom ? 'heading-top' : 'heading-bottom'}>
+		<div className="heading">
 			{
 				multiLineText.map((line) => (
 					line !== "" ? (
-						<h1
+						<H1
 							key={line}
-							className={
-								topOrBottom
-									? 'wix-madefor-display-800'
-									: 'heading-top-reset wix-madefor-display-800'
-								}
-							style={
+							fontSize={fontSize}
+							fontColor={
 								line.startsWith('*')
-									? {
-										backgroundColor: highlightColor.backgroundColor,
-										color: highlightColor.name === "Black"
-											? '#ffffff'
-											: '#000000'
-									}
-									: {
-										backgroundColor: colorSet.name === "White"
-											? '#000000'
-											: '#ffffff',
-										color: colorSet.name === "White"
-											? '#ffffff'
-											: '#000000',
-							}}
+									? highlightColor.name === "Black"
+											? colorSets.find(cS => cS.name === "White")?.backgroundColor!!
+											: colorSets.find(cS => cS.name === "Black")?.backgroundColor!!
+									: colorSet.name === "White"
+											? colorSets.find(cS => cS.name === "White")?.backgroundColor!!
+											: colorSets.find(cS => cS.name === "Black")?.backgroundColor!!
+							}
+							backgroundColor={
+								line.startsWith('*')
+									? highlightColor.backgroundColor
+									: colorSet.name === "White"
+											? colorSets.find(cS => cS.name === "Black")?.backgroundColor!!
+											: colorSets.find(cS => cS.name === "White")?.backgroundColor!!
+							}
 						>
 							{line.replace('*', '')}
-						</h1>
+						</H1>
 					) : null
 				))
 			}

@@ -1,17 +1,14 @@
 import { colorSets, highlightColors } from "../../constants/colors";
-import { pictograms } from "../../constants/pictograms";
 import { useSharePic } from "../../context/SharePicContext";
 import { EditorColorSet } from "../organism/EditorColorSet";
 import { EditorHighlightColor } from "../organism/EditorHighlightColor";
 import { EditorLogoVisible } from "../organism/EditorLogoVisible";
 import { EditorArrowVisible } from "../organism/EditorArrowVisible";
 import { EditorLogoLocalGroup } from "../organism/EditorLogoLocalGroup";
-import { EditorHeadingTopOrBottom } from "../organism/EditorHeadingTopOrBottom";
 import { EditorHeading } from "../organism/EditorHeading";
-import { EditorPictogram } from "../organism/EditorPictogram";
-import { EditorPictogramPosition } from "../organism/EditorPictogramPosition";
+import { EditorText } from "../organism/EditorText";
 
-export default function EditorTitleOnly() {
+export default function EditorTitleAndText() {
 	const { state, dispatch } = useSharePic();
 
 	return (
@@ -49,11 +46,21 @@ export default function EditorTitleOnly() {
 				})}
 			/>
 
-			<EditorHeadingTopOrBottom
-				topOrBottom={state.headingTopOrBottom}
-				handleTopOrBottom={() => dispatch({
-					type: "SET_HEADING_TOP_OR_BOTTOM",
-					payload: !state.headingTopOrBottom
+			<EditorHeading
+				multiLineText={state.heading}
+				maxCharsPerLine={20}
+				maxLines={3}
+				handleHeading={(e: { target: { value: any; }; }) => dispatch({
+					type: "SET_HEADING",
+					payload: e.target.value.split(/\r?\n/).slice(0, 5)
+				})}
+			/>
+
+			<EditorText
+				multiLineText={state.text}
+				handleText={(e: { target: { value: any; }; }) => dispatch({
+					type: "SET_TEXT",
+					payload: e.target.value.split(/\r?\n/)
 				})}
 			/>
 
@@ -66,38 +73,7 @@ export default function EditorTitleOnly() {
 				})}
 			/>
 
-			<EditorHeading
-				multiLineText={state.heading}
-				maxCharsPerLine={20}
-				maxLines={5}
-				handleHeading={(e: { target: { value: any; }; }) => dispatch({
-					type: "SET_HEADING",
-					payload: e.target.value.split(/\r?\n/).slice(0, 5)
-				})}
-			/>
-
-			<EditorPictogram
-				pictograms={pictograms}
-				pictogram={state.pictogram}
-				handlePictogram={(e: { target: { value: any; }; }) => dispatch({
-					type: "SET_PICTOGRAM",
-					payload: pictograms.find((p) => p.name === e.target.value) || null,
-				})}
-			/>
-
-			<EditorPictogramPosition
-				pictogramPosition={state.pictogramPosition}
-				handlePictogramPositionX={(e: { target: { value: string; }; }) => dispatch({
-					type: "SET_PICTOGRAM_POSITION",
-					payload: { ...state.pictogramPosition, x: parseInt(e.target.value) }
-				})}
-				handlePictogramPositionY={(e: { target: { value: string; }; }) => dispatch({
-					type: "SET_PICTOGRAM_POSITION",
-					payload: { ...state.pictogramPosition, y: parseInt(e.target.value) }
-				})}
-			/>
-
-			<p>v0.2.0 - build 10.03.2025 - <a href="https://github.com/temmiland/gj-sharepic-generator">github</a></p>
+			<p>v0.3.0 - build 10.03.2025 - <a href="https://github.com/temmiland/gj-sharepic-generator">github</a></p>
 		</>
 	);
 }

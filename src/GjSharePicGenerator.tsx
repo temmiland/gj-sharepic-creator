@@ -3,10 +3,21 @@ import domtoimage from 'dom-to-image-more';
 import Button from './components/atoms/Button';
 import SharePicTitleOnly from './components/templates/SharePicTitleOnly';
 import EditorTitleOnly from './components/templates/EditorTitleOnly';
+import SharePicTitleAndText from './components/templates/SharePicTitleAndText';
+import EditorTitleAndText from './components/templates/EditorTitleAndText';
 import './GjSharePicGenerator.scss';
 
 const templates = {
-	titleOnly: { name: 'Nur Überschrift', sharePic: SharePicTitleOnly, options: EditorTitleOnly },
+	titleOnly: {
+		name: 'Nur Überschrift',
+		sharePic: SharePicTitleOnly,
+		options: EditorTitleOnly,
+	},
+	titleAndText: {
+		name: 'Überschrift & Text',
+		sharePic: SharePicTitleAndText,
+		options: EditorTitleAndText,
+	},
 }
 
 function GjSharePicGenerator() {

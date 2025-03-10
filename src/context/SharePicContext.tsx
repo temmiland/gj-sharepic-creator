@@ -6,6 +6,7 @@ interface SharePicState {
 	logoVisible: boolean;
 	arrowVisible: boolean;
 	heading: string[];
+	text: string[];
 	headingTopOrBottom: boolean;
 	highlightColor: HighlightColor;
 	colorSet: ColorSet;
@@ -14,10 +15,12 @@ interface SharePicState {
 }
 
 type SharePicAction =
+	| { type: "INITIALIZE"; payload: SharePicState }
 	| { type: "SET_LOCAL_GROUP"; payload: string }
 	| { type: "SET_LOGO_VISIBLE"; payload: boolean }
 	| { type: "SET_ARROW_VISIBLE"; payload: boolean }
 	| { type: "SET_HEADING"; payload: string[] }
+	| { type: "SET_TEXT"; payload: string[] }
 	| { type: "SET_HEADING_TOP_OR_BOTTOM"; payload: boolean }
 	| { type: "SET_HIGHLIGHT_COLOR"; payload: HighlightColor }
 	| { type: "SET_COLOR_SET"; payload: ColorSet }
@@ -26,6 +29,8 @@ type SharePicAction =
 
 const sharePicReducer = (state: SharePicState, action: SharePicAction): SharePicState => {
 	switch (action.type) {
+		case "INITIALIZE":
+		return { ...action.payload };
 		case "SET_LOCAL_GROUP":
 		return { ...state, localGroup: action.payload };
 		case "SET_LOGO_VISIBLE":
@@ -36,6 +41,8 @@ const sharePicReducer = (state: SharePicState, action: SharePicAction): SharePic
 		return { ...state, headingTopOrBottom: action.payload };
 		case "SET_HEADING":
 		return { ...state, heading: action.payload };
+		case "SET_TEXT":
+		return { ...state, text: action.payload };
 		case "SET_HIGHLIGHT_COLOR":
 		return { ...state, highlightColor: action.payload };
 		case "SET_COLOR_SET":
@@ -50,11 +57,12 @@ const sharePicReducer = (state: SharePicState, action: SharePicAction): SharePic
 };
 
 const initialState: SharePicState = {
-	localGroup: "Dresden",
+	localGroup: "",
 	logoVisible: true,
 	arrowVisible: false,
-	headingTopOrBottom: true,
-	heading: ["Corporate", "Design", "Generator", "*Test", "*123"],
+	headingTopOrBottom: false,
+	heading: [],
+	text: [],
 	highlightColor: highlightColors[0],
 	colorSet: colorSets[1],
 	pictogram: null,

@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import { useSharePic } from "../../context/SharePicContext";
 import { SharePicLogo } from "../organism/SharePicLogo";
 import { SharePicArrow } from "../organism/SharePicArrow";
-import { SharePicContent } from "../organism/SharePicContent";
 import { SharePicHeading } from "../organism/SharePicHeading";
+import { SharePicText } from "../organism/SharePicText";
 import { SharePicPictogram } from "../organism/SharePicPictogram";
 import { colorSets, highlightColors } from "../../constants/colors";
+import { SharePicContent } from "../organism/SharePicContent";
 
-export default function SharePicTitleOnly() {
+export default function SharePicTitleAndText() {
 
 	const { state, dispatch } = useSharePic();
 
@@ -19,8 +20,8 @@ export default function SharePicTitleOnly() {
 				logoVisible: true,
 				arrowVisible: false,
 				headingTopOrBottom: true,
-				heading: ["Corporate", "Design", "Generator", "*Test", "*123"],
-				text: [],
+				heading: ["Corporate Design", "*Generator"],
+				text: ["*_~#Hallo!#~_* Hier ist ein *fetter* Text, ein _kursiver_ Text, ein ~durchgestrichener~ Text und ein #hervorgehobener# Text.", "Das ist ein zweiter Absatz, den du mit einem Enter erzeugen kannst."],
 				highlightColor: highlightColors[0],
 				colorSet: colorSets[4],
 				pictogram: null,
@@ -47,7 +48,12 @@ export default function SharePicTitleOnly() {
 					multiLineText={state.heading}
 					colorSet={state.colorSet}
 					highlightColor={state.highlightColor}
-					fontSize={3.75}
+					fontSize={3}
+				/>
+				<SharePicText
+					multiLineText={state.text}
+					colorSet={state.colorSet}
+					highlightColor={state.highlightColor}
 				/>
 			</SharePicContent>
 			<SharePicPictogram
