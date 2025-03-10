@@ -7,6 +7,7 @@ input[type="checkbox"] {
   border: 2px solid #000000;
   position: relative;
   cursor: pointer;
+  border-radius: 0px;
   appearance: none;
   background-color: #ffffff;
   transition: background-color 0.3s ease;
@@ -76,6 +77,8 @@ input[type="text"] {
   color: #000000;
   background-color: #ffffff;
   outline: none;
+  border-radius: 0px;
+  appearance: none;
   position: relative;
   transition: background-color 0.3s ease;
 }
@@ -95,7 +98,10 @@ textarea {
   color: #000000;
   background-color: #ffffff;
   outline: none;
-  resize: none; /* Verhindert das manuelle Vergrößern/Verkleinern */
+  border-radius: 0px;
+  appearance: none;
+  font-family: "Wix Madefor Display", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  resize: none;
   transition: background-color 0.3s ease;
 }
 
@@ -116,6 +122,8 @@ input[type="number"] {
   background-color: #ffffff;
   text-align: center;
   outline: none;
+  border-radius: 0px;
+  appearance: none;
   transition: background-color 0.3s ease;
   appearance: textfield;
 }
@@ -136,6 +144,8 @@ select {
   color: #000000;
   background-color: #ffffff;
   outline: none;
+  border-radius: 0px;
+  appearance: none;
   transition: background-color 0.3s ease;
 }
 
