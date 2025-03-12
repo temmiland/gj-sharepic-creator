@@ -1,54 +1,32 @@
-# React + TypeScript + Vite
+# gj-sharepic-creator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+With the web application developed by Temmi Pietsch for the GRÜNE JUGEND Dresden, it is possible to easily create various templates from the corporate design templates, online.
 
-Currently, two official plugins are available:
+## Check it out
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+You can reach the application [here. – (gjshare.pics)](https://gjshare.pics)
 
-## Expanding the ESLint configuration
+## Known issues
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- currently there is no right mobile design (WIP)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Bugs can be found [here. – (GitHub issues)](https://github.com/temmiland/gj-sharepic-creator/labels/bug).
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Changelog
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Changelogs can be found [here. – (GitHub releases)](https://github.com/temmiland/j-sharepic-creator/releases)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## Contribute
+
+### Pull Requests
+
+If you make any changes or improvements to this project, please make a pull request to merge your changes with the upstream.
+
+## Thanks to ❤
+
+- React
+- Vite
+
+## License
+
+gj-sharepic-creator is licensed under the GNU AFFERO GENERAL PUBLIC LICENSE. Please see [LICENSE](https://github.com/temmiland/gj-sharepic-creator/blob/main/LICENSE) for more info.
