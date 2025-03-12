@@ -5,7 +5,6 @@ import { EditorHighlightColor } from "../organism/EditorHighlightColor";
 import { EditorLogoVisible } from "../organism/EditorLogoVisible";
 import { EditorArrowVisible } from "../organism/EditorArrowVisible";
 import { EditorLogoLocalGroup } from "../organism/EditorLogoLocalGroup";
-import { EditorHeading } from "../organism/EditorHeading";
 import { EditorText } from "../organism/EditorText";
 import { EditorPictogram } from "../organism/EditorPictogram";
 import { EditorPictogramPosition } from "../organism/EditorPictogramPosition";
