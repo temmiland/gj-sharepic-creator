@@ -2,12 +2,11 @@ import { useEffect } from "react";
 import { useSharePic } from "../../context/SharePicContext";
 import { SharePicLogo } from "../organism/SharePicLogo";
 import { SharePicArrow } from "../organism/SharePicArrow";
-import { SharePicContent } from "../organism/SharePicContent";
-import { SharePicHeading } from "../organism/SharePicHeading";
 import { SharePicPictogram } from "../organism/SharePicPictogram";
 import { colorSets, highlightColors } from "../../constants/colors";
+import { pictograms } from "../../constants/pictograms";
 
-export default function SharePicTitleOnly() {
+export default function SharePicTextOnly() {
 
 	const { state, dispatch } = useSharePic();
 
@@ -16,15 +15,15 @@ export default function SharePicTitleOnly() {
 			type: "INITIALIZE",
 			payload: {
 				localGroup: "Dresden",
-				logoVisible: true,
+				logoVisible: false,
 				arrowVisible: true,
 				headingTopOrBottom: true,
-				heading: ["Corporate", "Design", "Generator", "*Test", "*123"],
+				heading: [],
 				text: [],
 				highlightColor: highlightColors[0],
 				colorSet: colorSets[4],
-				pictogram: null,
-				pictogramPosition: { x: 175, y: 225 },
+				pictogram: pictograms.find(pictogram => pictogram.name == 'Streikfaust') as Pictogram,
+				pictogramPosition: { x: 95, y: 125 },
 			}
 		});
 	}, []);
@@ -40,17 +39,6 @@ export default function SharePicTitleOnly() {
 				visible={state.arrowVisible}
 				color={state.colorSet.accentColor}
 			/>
-			<SharePicContent
-				positionValue={7.5}
-				topOrBottom={state.headingTopOrBottom}
-			>
-				<SharePicHeading
-					multiLineText={state.heading}
-					colorSet={state.colorSet}
-					highlightColor={state.highlightColor}
-					fontSize={3.75}
-				/>
-			</SharePicContent>
 			<SharePicPictogram
 				pictogram={state.pictogram}
 				position={state.pictogramPosition}

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useSharePic } from "../../context/SharePicContext";
 import { SharePicLogo } from "../organism/SharePicLogo";
 import { SharePicArrow } from "../organism/SharePicArrow";
-import { SharePicHeading } from "../organism/SharePicHeading";
 import { SharePicText } from "../organism/SharePicText";
 import { SharePicPictogram } from "../organism/SharePicPictogram";
 import { colorSets, highlightColors } from "../../constants/colors";
@@ -17,8 +16,8 @@ export default function SharePicTextOnly() {
 			type: "INITIALIZE",
 			payload: {
 				localGroup: "Dresden",
-				logoVisible: true,
-				arrowVisible: false,
+				logoVisible: false,
+				arrowVisible: true,
 				headingTopOrBottom: true,
 				heading: [],
 				text: ["*_~#Hallo!#~_* Hier ist ein *fetter* Text, ein _kursiver_ Text, ein ~durchgestrichener~ Text und ein #hervorgehobener# Text.", "Das ist ein zweiter Absatz, den du mit einem Enter erzeugen kannst."],

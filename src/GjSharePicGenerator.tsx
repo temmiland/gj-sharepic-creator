@@ -8,6 +8,8 @@ import EditorTitleAndText from './components/templates/EditorTitleAndText';
 import './GjSharePicGenerator.scss';
 import SharePicTextOnly from './components/templates/SharePicTextOnly';
 import EditorTextOnly from './components/templates/EditorTextOnly';
+import SharePicPictogramOnly from './components/templates/SharePicPictogramOnly';
+import EditorPictogramOnly from './components/templates/EditorPictogramOnly';
 
 const templates = {
 	titleOnly: {
@@ -24,6 +26,11 @@ const templates = {
 		name: 'Text / Piktogram',
 		sharePic: SharePicTextOnly,
 		options: EditorTextOnly,
+	},
+	pictogramOnly: {
+		name: 'Piktogram',
+		sharePic: SharePicPictogramOnly,
+		options: EditorPictogramOnly,
 	}
 }
 
@@ -75,7 +82,7 @@ function GjSharePicGenerator() {
 					}
 				</div>
 				<Button onClick={handleDownload}>Download</Button>
-				<p>v0.4.1 - build 12.03.2025 - <a href="https://github.com/temmiland/gj-sharepic-generator">github</a></p>
+				<p>v0.5.0 - build 12.03.2025 - <a href="https://github.com/temmiland/gj-sharepic-generator">github</a></p>
 			</div>
 
 			<div className='container'>

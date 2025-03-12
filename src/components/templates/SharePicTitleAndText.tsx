@@ -18,7 +18,7 @@ export default function SharePicTitleAndText() {
 			payload: {
 				localGroup: "Dresden",
 				logoVisible: true,
-				arrowVisible: false,
+				arrowVisible: true,
 				headingTopOrBottom: true,
 				heading: ["Corporate Design", "*Generator"],
 				text: ["*_~#Hallo!#~_* Hier ist ein *fetter* Text, ein _kursiver_ Text, ein ~durchgestrichener~ Text und ein #hervorgehobener# Text.", "Das ist ein zweiter Absatz, den du mit einem Enter erzeugen kannst."],
