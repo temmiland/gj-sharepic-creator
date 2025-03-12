@@ -7,8 +7,11 @@ import { EditorArrowVisible } from "../organism/EditorArrowVisible";
 import { EditorLogoLocalGroup } from "../organism/EditorLogoLocalGroup";
 import { EditorHeading } from "../organism/EditorHeading";
 import { EditorText } from "../organism/EditorText";
+import { EditorPictogram } from "../organism/EditorPictogram";
+import { EditorPictogramPosition } from "../organism/EditorPictogramPosition";
+import { pictograms } from "../../constants/pictograms";
 
-export default function EditorTitleAndText() {
+export default function EditorTextOnly() {
 	const { state, dispatch } = useSharePic();
 
 	return (
@@ -46,16 +49,6 @@ export default function EditorTitleAndText() {
 				})}
 			/>
 
-			<EditorHeading
-				multiLineText={state.heading}
-				maxCharsPerLine={20}
-				maxLines={3}
-				handleHeading={(e: { target: { value: any; }; }) => dispatch({
-					type: "SET_HEADING",
-					payload: e.target.value.split(/\r?\n/).slice(0, 5)
-				})}
-			/>
-
 			<EditorText
 				multiLineText={state.text}
 				handleText={(e: { target: { value: any; }; }) => dispatch({
@@ -70,6 +63,27 @@ export default function EditorTitleAndText() {
 				handleHighlightColor={(e: { target: { value: string; }; }) => dispatch({
 					type: "SET_HIGHLIGHT_COLOR",
 					payload: highlightColors.find((c) => c.name === e.target.value)!!,
+				})}
+			/>
+
+			<EditorPictogram
+				pictograms={pictograms}
+				pictogram={state.pictogram}
+				handlePictogram={(e: { target: { value: any; }; }) => dispatch({
+					type: "SET_PICTOGRAM",
+					payload: pictograms.find((p) => p.name === e.target.value) || null,
+				})}
+			/>
+
+			<EditorPictogramPosition
+				pictogramPosition={state.pictogramPosition}
+				handlePictogramPositionX={(e: { target: { value: string; }; }) => dispatch({
+					type: "SET_PICTOGRAM_POSITION",
+					payload: { ...state.pictogramPosition, x: parseInt(e.target.value) }
+				})}
+				handlePictogramPositionY={(e: { target: { value: string; }; }) => dispatch({
+					type: "SET_PICTOGRAM_POSITION",
+					payload: { ...state.pictogramPosition, y: parseInt(e.target.value) }
 				})}
 			/>
 		</>

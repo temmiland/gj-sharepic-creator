@@ -42,13 +42,14 @@ export default function SharePicTitleAndText() {
 				color={state.colorSet.accentColor}
 			/>
 			<SharePicContent
+				positionValue={7.5}
 				topOrBottom={state.headingTopOrBottom}
 			>
 				<SharePicHeading
 					multiLineText={state.heading}
 					colorSet={state.colorSet}
 					highlightColor={state.highlightColor}
-					fontSize={3}
+					fontSize={2.6}
 				/>
 				<SharePicText
 					multiLineText={state.text}

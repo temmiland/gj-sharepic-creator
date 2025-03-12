@@ -96,8 +96,6 @@ export default function EditorTitleOnly() {
 					payload: { ...state.pictogramPosition, y: parseInt(e.target.value) }
 				})}
 			/>
-
-			<p>v0.2.0 - build 10.03.2025 - <a href="https://github.com/temmiland/gj-sharepic-generator">github</a></p>
 		</>
 	);
 }

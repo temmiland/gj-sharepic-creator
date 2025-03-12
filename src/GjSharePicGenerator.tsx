@@ -6,18 +6,25 @@ import EditorTitleOnly from './components/templates/EditorTitleOnly';
 import SharePicTitleAndText from './components/templates/SharePicTitleAndText';
 import EditorTitleAndText from './components/templates/EditorTitleAndText';
 import './GjSharePicGenerator.scss';
+import SharePicTextOnly from './components/templates/SharePicTextOnly';
+import EditorTextOnly from './components/templates/EditorTextOnly';
 
 const templates = {
 	titleOnly: {
-		name: 'Nur Überschrift',
+		name: 'Überschrift / Piktogramm',
 		sharePic: SharePicTitleOnly,
 		options: EditorTitleOnly,
 	},
 	titleAndText: {
-		name: 'Überschrift & Text',
+		name: 'Überschrift / Text',
 		sharePic: SharePicTitleAndText,
 		options: EditorTitleAndText,
 	},
+	textOnly: {
+		name: 'Text / Piktogram',
+		sharePic: SharePicTextOnly,
+		options: EditorTextOnly,
+	}
 }
 
 function GjSharePicGenerator() {
@@ -68,6 +75,7 @@ function GjSharePicGenerator() {
 					}
 				</div>
 				<Button onClick={handleDownload}>Download</Button>
+				<p>v0.4.0 - build 12.03.2025 - <a href="https://github.com/temmiland/gj-sharepic-generator">github</a></p>
 			</div>
 
 			<div className='container'>
