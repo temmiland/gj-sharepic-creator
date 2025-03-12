@@ -75,7 +75,7 @@ function GjSharePicGenerator() {
 					}
 				</div>
 				<Button onClick={handleDownload}>Download</Button>
-				<p>v0.4.0 - build 12.03.2025 - <a href="https://github.com/temmiland/gj-sharepic-generator">github</a></p>
+				<p>v0.4.1 - build 12.03.2025 - <a href="https://github.com/temmiland/gj-sharepic-generator">github</a></p>
 			</div>
 
 			<div className='container'>
