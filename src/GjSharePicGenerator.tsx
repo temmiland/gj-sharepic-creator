@@ -13,17 +13,17 @@ import EditorPictogramOnly from './components/templates/EditorPictogramOnly';
 
 const templates = {
 	titleOnly: {
-		name: 'Überschrift / Piktogramm',
+		name: 'Überschrift (opt. Piktogramm)',
 		sharePic: SharePicTitleOnly,
 		options: EditorTitleOnly,
 	},
 	titleAndText: {
-		name: 'Überschrift / Text',
+		name: 'Überschrift & Text',
 		sharePic: SharePicTitleAndText,
 		options: EditorTitleAndText,
 	},
 	textOnly: {
-		name: 'Text / Piktogram',
+		name: 'Text (opt. Piktogramm)',
 		sharePic: SharePicTextOnly,
 		options: EditorTextOnly,
 	},

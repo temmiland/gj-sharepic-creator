@@ -1,3 +1,5 @@
+import Input from "../atoms/Input";
+
 type EditorPictogramPositionProps = {
 	pictogramPosition: PictogramPostion;
 	handlePictogramPositionX: React.ChangeEventHandler<HTMLInputElement>;
@@ -8,12 +10,12 @@ export function EditorPictogramPosition({ pictogramPosition, handlePictogramPosi
 	return (
 		<>
 			<div>
-				<input
+				<Input
 					type='number'
 					value={pictogramPosition.x}
 					onChange={handlePictogramPositionX}
 				/>
-				<input
+				<Input
 					type='number'
 					value={pictogramPosition.y}
 					onChange={handlePictogramPositionY}

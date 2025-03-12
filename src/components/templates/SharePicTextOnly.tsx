@@ -20,9 +20,9 @@ export default function SharePicTextOnly() {
 				arrowVisible: true,
 				headingTopOrBottom: true,
 				heading: [],
-				text: ["*_~#Hallo!#~_* Hier ist ein *fetter* Text, ein _kursiver_ Text, ein ~durchgestrichener~ Text und ein #hervorgehobener# Text.", "Das ist ein zweiter Absatz, den du mit einem Enter erzeugen kannst."],
+				text: ["Ziel waren stets Gay Bars in Greenwich Village, einem Stadtteil New Yorks. Dieses Mal lehnte sich die Community aber gegen die Polizeigewalt auf. Die Polizisten verbarrikadierten sich in der Bar, während Hunderte von Menschen protestierten. Die Aufstände vor dem Stonewall Inn waren eines der ersten Ereignisse, bei dem Lesben, Schwule, trans* Personen und andere Gruppen gemeinsam kämpften!"],
 				highlightColor: highlightColors[0],
-				colorSet: colorSets[4],
+				colorSet: colorSets[2],
 				pictogram: null,
 				pictogramPosition: { x: 175, y: 225 },
 			}

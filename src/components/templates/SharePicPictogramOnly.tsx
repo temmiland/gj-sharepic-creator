@@ -21,7 +21,7 @@ export default function SharePicTextOnly() {
 				heading: [],
 				text: [],
 				highlightColor: highlightColors[0],
-				colorSet: colorSets[4],
+				colorSet: colorSets[3],
 				pictogram: pictograms.find(pictogram => pictogram.name == 'Streikfaust') as Pictogram,
 				pictogramPosition: { x: 95, y: 125 },
 			}

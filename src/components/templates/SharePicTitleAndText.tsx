@@ -17,13 +17,13 @@ export default function SharePicTitleAndText() {
 			type: "INITIALIZE",
 			payload: {
 				localGroup: "Dresden",
-				logoVisible: true,
+				logoVisible: false,
 				arrowVisible: true,
 				headingTopOrBottom: true,
-				heading: ["Corporate Design", "*Generator"],
-				text: ["*_~#Hallo!#~_* Hier ist ein *fetter* Text, ein _kursiver_ Text, ein ~durchgestrichener~ Text und ein #hervorgehobener# Text.", "Das ist ein zweiter Absatz, den du mit einem Enter erzeugen kannst."],
+				heading: ["*Kein Ausbau", "fossiler Infrastruktur!"],
+				text: ["In den letzten Jahrzehnten ist die Energieversorgung in Deutschland auf Energieimporte aus Russland in Form von Erdgas aufgebaut worden. Das hat sich durch den brutalen Überfall Russlands auf die Ukraine geändert. Die große Abhängigkeit von fossilen Energien ist der Grund für die Energiekrise. Ein weiterer Ausbau von LNG-Terminals kann daher keine Lösung sein!"],
 				highlightColor: highlightColors[0],
-				colorSet: colorSets[4],
+				colorSet: colorSets[1],
 				pictogram: null,
 				pictogramPosition: { x: 175, y: 225 },
 			}

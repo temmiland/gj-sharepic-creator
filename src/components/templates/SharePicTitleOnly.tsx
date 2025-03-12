@@ -6,6 +6,7 @@ import { SharePicContent } from "../organism/SharePicContent";
 import { SharePicHeading } from "../organism/SharePicHeading";
 import { SharePicPictogram } from "../organism/SharePicPictogram";
 import { colorSets, highlightColors } from "../../constants/colors";
+import { pictograms } from "../../constants/pictograms";
 
 export default function SharePicTitleOnly() {
 
@@ -18,13 +19,13 @@ export default function SharePicTitleOnly() {
 				localGroup: "Dresden",
 				logoVisible: true,
 				arrowVisible: true,
-				headingTopOrBottom: true,
-				heading: ["Corporate", "Design", "Generator", "*Test", "*123"],
+				headingTopOrBottom: false,
+				heading: ["*Menschen", "retten statt", "Abschottung!"],
 				text: [],
 				highlightColor: highlightColors[0],
 				colorSet: colorSets[4],
-				pictogram: null,
-				pictogramPosition: { x: 175, y: 225 },
+				pictogram: pictograms.find(pictogram => pictogram.name == 'Banner') as Pictogram,
+				pictogramPosition: { x: 75, y: 50 },
 			}
 		});
 	}, []);
