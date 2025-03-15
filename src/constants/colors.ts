@@ -34,6 +34,36 @@ export const colorSets: ColorSet[] = [
 		backgroundColor: "#ffffff",
 		accentColor: "#000000"
 	},
+	{
+		name: "Gradient 1",
+		backgroundColor: "linear-gradient(45deg, #c7ff7a, #9f88ff, #f28ade, #ff8568)",
+		accentColor: "#000000"
+	},
+	{
+		name: "Gradient 2",
+		backgroundColor: "linear-gradient(45deg, #c7ff7a, #9f88ff, #f28ade)",
+		accentColor: "#000000"
+	},
+	{
+		name: "Gradient 3",
+		backgroundColor: "linear-gradient(45deg,  #9f88ff, #f28ade, #ff8568)",
+		accentColor: "#000000"
+	},
+	{
+		name: "Gradient 4",
+		backgroundColor: "linear-gradient(45deg,  #c7ff7a, #9f88ff)",
+		accentColor: "#000000"
+	},
+	{
+		name: "Gradient 5",
+		backgroundColor: "linear-gradient(45deg,  #9f88ff, #f28ade)",
+		accentColor: "#000000"
+	},
+	{
+		name: "Gradient 6",
+		backgroundColor: "linear-gradient(45deg,  #f28ade, #ff8568)",
+		accentColor: "#000000"
+	}
 ];
 
 export const highlightColors: HighlightColor[] = [

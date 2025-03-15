@@ -8,21 +8,24 @@ type ColorPickerProps = {
 };
 
 function ColorPicker({ colors, color, handleColor }: ColorPickerProps) {
-	return colors.map((c) => (
-				<div
-					key={'highlightColor' + c.name}
-					className="color-picker-wrapper"
-					style={{ backgroundColor: c.backgroundColor }}
-				>
-					<label>
-						<Input
-							type="radio"
-							value={c.name}
-							checked={color.name === c.name}
-							onChange={handleColor}
-						/>
-					</label>
-				</div>
+	return colors.map((c, i) => (
+		<>
+			<div
+				key={'highlightColor' + c.name}
+				className="color-picker-wrapper"
+				style={{ background: c.backgroundColor }}
+			>
+				<label>
+					<Input
+						type="radio"
+						value={c.name}
+						checked={color.name === c.name}
+						onChange={handleColor}
+					/>
+				</label>
+			</div>
+			{ i === 6 ? <br /> : ''}
+		</>
 	));
 }
 

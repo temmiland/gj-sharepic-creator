@@ -29,7 +29,7 @@ export default function SharePicTextOnly() {
 	}, []);
 
 	return(
-		<div className='sharepic-canvas' style={{ backgroundColor: state.colorSet.backgroundColor }}>
+		<div className='sharepic-canvas' style={{ background: state.colorSet.backgroundColor }}>
 			<SharePicLogo
 				localGroup={state.localGroup}
 				visible={state.logoVisible}
