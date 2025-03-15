@@ -11,7 +11,7 @@ function H1({ fontSize, fontColor, backgroundColor, children }: H1Props) {
 	return (
 		<h1
 			style={{
-				fontSize: fontSize + 'rem',
+				fontSize: fontSize * 10 + 'px',
 				color: fontColor,
 				backgroundColor: backgroundColor
 			}}

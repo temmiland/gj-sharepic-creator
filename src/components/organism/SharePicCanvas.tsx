@@ -83,22 +83,26 @@ export function SharePicCanvas({ backgroundImage, backgroundPosition, background
 	};
 
 	return (
-		<div className='sharepic-canvas' style={{
+		<div id='sharepic-download' className='sharepic-canvas' style={{
+				padding: 0,
+				margin: 0,
 				position: 'relative',
 				backgroundColor: colorSet.backgroundColor,
+				zIndex: 0,
 		}}>
 			{backgroundImage && (
-			<div
+			<img
+				src={backgroundImage}
 				style={{
 					position: 'absolute',
 					top: '-20px',
 					left: '-20px',
 					width: '400px',
 					height: '490px',
-					backgroundImage: `url(${backgroundImage})`,
-					backgroundSize: 'cover',
-					backgroundPosition: backgroundPosition.value,
+					objectFit: 'cover',
+					objectPosition: backgroundPosition.value,
 					filter: `blur(${backgroundBlur}rem)`,
+					zIndex: 1,
 				}}
 			/>
 		)}

@@ -13,6 +13,7 @@ export function SharePicPictogram({ pictogram, position, colorSet }: SharePicPic
 					position: 'absolute',
 					top: `${position.y}px`,
 					left: `${position.x}px`,
+					zIndex: 10
 				}}
 			>
 				<img

@@ -16,12 +16,14 @@
   font-family: 'Work Sans';
   src: url(/fonts/Work_Sans/WorkSans-Italic-VariableFont_wght.ttf) format('truetype');
 }
+html, body {
+  font-size: 62.5%;
+}
 
 :root {
   font-family: "Wix Madefor Display", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  font-size: 62.5%;
 
   color-scheme: light dark;
   color: rgba(0, 0, 0, 0.87);
@@ -103,6 +105,7 @@ body {
 	font-size: 1.5rem;
 	letter-spacing: 0rem;
 	text-align: left;
+	z-index: 20;
 }
 
 .sharepic-container {
@@ -116,6 +119,7 @@ body {
 	bottom: 0.25rem;
 	right: 0.25rem;
 	width: 50px;
+	z-index: 20;
 }
 
 .gj-logo span {
@@ -141,4 +145,5 @@ body {
 	font-size: 0.75rem;
 	letter-spacing: -0.01rem;
 	text-align: left;
+	z-index: 20;
 }
