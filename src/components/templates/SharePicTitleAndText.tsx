@@ -28,6 +28,7 @@ export default function SharePicTitleAndText() {
 				colorSet: colorSets[1],
 				backgroundImage: null,
 				backgroundPosition: backgroundPositions[0],
+				backgroundBlur: 0.2,
 				pictogram: null,
 				pictogramPosition: { x: 175, y: 225 },
 			}
@@ -38,6 +39,7 @@ export default function SharePicTitleAndText() {
 		<SharePicCanvas
 			backgroundImage={state.backgroundImage}
 			backgroundPosition={state.backgroundPosition}
+			backgroundBlur={state.backgroundBlur}
 			colorSet={state.colorSet}
 			handleColorSet={(colorSet: ColorSet) => dispatch({
 				type: "SET_COLOR_SET",

@@ -13,6 +13,7 @@ import { EditorPictogram } from "../organism/EditorPictogram";
 import { EditorPictogramPosition } from "../organism/EditorPictogramPosition";
 import { EditorBackgroundPosition } from "../organism/EditorBackgroundPosition";
 import { backgroundPositions } from "../../constants/background-positions";
+import { EditorBackgroundBlur } from "../organism/EditorBackgroundBlur";
 
 export default function EditorTitleOnly() {
 	const { state, dispatch } = useSharePic();
@@ -43,7 +44,15 @@ export default function EditorTitleOnly() {
 				position={state.backgroundPosition}
 				handlePosition={(e: { target: { value: any; }; }) => dispatch({
 					type: "SET_BACKGROUND_POSITION",
-					payload: backgroundPositions.find((bP) => bP.value === e.target.value),
+					payload: backgroundPositions.find((bP) => bP.value === e.target.value)!!,
+				})}
+			/>
+
+			<EditorBackgroundBlur
+				blur={state.backgroundBlur}
+				handleBlur={(e: { target: { value: any; }; }) => dispatch({
+					type: "SET_BACKGROUND_BLUR",
+					payload: e.target.value
 				})}
 			/>
 

@@ -13,6 +13,7 @@ interface SharePicState {
 	colorSet: ColorSet;
 	backgroundImage: string | null;
 	backgroundPosition: BackgroundPosition;
+	backgroundBlur: number;
 	pictogram: Pictogram | null;
 	pictogramPosition: { x: number; y: number };
 }
@@ -29,6 +30,7 @@ type SharePicAction =
 	| { type: "SET_COLOR_SET"; payload: ColorSet }
 	| { type: "SET_BACKGROUND_IMAGE"; payload: string | null }
 	| { type: "SET_BACKGROUND_POSITION"; payload: BackgroundPosition }
+	| { type: "SET_BACKGROUND_BLUR"; payload: number }
 	| { type: "SET_PICTOGRAM"; payload: Pictogram | null }
 	| { type: "SET_PICTOGRAM_POSITION"; payload: { x: number; y: number } };
 
@@ -56,6 +58,8 @@ const sharePicReducer = (state: SharePicState, action: SharePicAction): SharePic
 		return { ...state, backgroundImage: action.payload };
 		case "SET_BACKGROUND_POSITION":
 		return { ...state, backgroundPosition: action.payload };
+		case "SET_BACKGROUND_BLUR":
+		return { ...state, backgroundBlur: action.payload };
 		case "SET_PICTOGRAM":
 		return { ...state, pictogram: action.payload };
 		case "SET_PICTOGRAM_POSITION":
@@ -76,6 +80,7 @@ const initialState: SharePicState = {
 	colorSet: colorSets[1],
 	backgroundImage: null,
 	backgroundPosition: backgroundPositions[0],
+	backgroundBlur: 0.2,
 	pictogram: null,
 	pictogramPosition: { x: 175, y: 225 },
 };

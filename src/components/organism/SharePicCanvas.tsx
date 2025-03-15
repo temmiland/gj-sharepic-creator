@@ -4,12 +4,13 @@ import { colorSets } from "../../constants/colors";
 type SharePicCanvasProps = {
 	backgroundImage: string | null;
 	backgroundPosition: BackgroundPosition;
+	backgroundBlur: number;
 	colorSet: ColorSet;
 	handleColorSet: (colorSet: ColorSet) => void;
 	children: React.ReactNode;
 };
 
-export function SharePicCanvas({ backgroundImage, backgroundPosition, colorSet, handleColorSet, children }: SharePicCanvasProps) {
+export function SharePicCanvas({ backgroundImage, backgroundPosition, backgroundBlur, colorSet, handleColorSet, children }: SharePicCanvasProps) {
 
 	useEffect(() => {
 		const calculateAndSetColorSet = async () => {
@@ -83,10 +84,24 @@ export function SharePicCanvas({ backgroundImage, backgroundPosition, colorSet, 
 
 	return (
 		<div className='sharepic-canvas' style={{
-				background: backgroundImage ? `url(${backgroundImage})` : colorSet.backgroundColor,
-				backgroundSize: backgroundImage ? `cover` : "none",
-				backgroundPosition: backgroundPosition.value
+				position: 'relative',
+				backgroundColor: colorSet.backgroundColor,
 		}}>
+			{backgroundImage && (
+			<div
+				style={{
+					position: 'absolute',
+					top: '-20px',
+					left: '-20px',
+					width: '400px',
+					height: '490px',
+					backgroundImage: `url(${backgroundImage})`,
+					backgroundSize: 'cover',
+					backgroundPosition: backgroundPosition.value,
+					filter: `blur(${backgroundBlur}rem)`,
+				}}
+			/>
+		)}
 			{children}
 		</div>
 	);

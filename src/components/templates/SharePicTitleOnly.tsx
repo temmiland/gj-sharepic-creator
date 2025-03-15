@@ -28,6 +28,7 @@ export default function SharePicTitleOnly() {
 				colorSet: colorSets[4],
 				backgroundImage: null,
 				backgroundPosition: backgroundPositions[0],
+				backgroundBlur: 0.2,
 				pictogram: pictograms.find(pictogram => pictogram.name == 'Banner') as Pictogram,
 				pictogramPosition: { x: 75, y: 50 },
 			}
@@ -39,6 +40,7 @@ export default function SharePicTitleOnly() {
 		<SharePicCanvas
 			backgroundImage={state.backgroundImage}
 			backgroundPosition={state.backgroundPosition}
+			backgroundBlur={state.backgroundBlur}
 			colorSet={state.colorSet}
 			handleColorSet={(colorSet: ColorSet) => dispatch({
 				type: "SET_COLOR_SET",

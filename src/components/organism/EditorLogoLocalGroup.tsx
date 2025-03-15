@@ -6,7 +6,7 @@ type EditorLogoLocalGroupProps = {
 export function EditorLogoLocalGroup({ localGroup, handleLocalGroup }: EditorLogoLocalGroupProps) {
 	return (
 		<>
-			<h2>Ortsgruppe</h2>
+			<h2>Logo – Ortsgruppe</h2>
 			<input
 				type="text"
 				value={localGroup}

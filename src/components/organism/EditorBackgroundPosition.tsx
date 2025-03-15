@@ -11,7 +11,7 @@ export function EditorBackgroundPosition({ position, handlePosition }: EditorBac
 
 	return (
 		<>
-			<h2>Hintergrundbild Position</h2>
+			<h2>Hintergrundbild – Position</h2>
 			<select
 				onChange={handlePosition}
 				defaultValue={position.value}
