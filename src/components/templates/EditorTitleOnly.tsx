@@ -2,6 +2,7 @@ import { colorSets, highlightColors } from "../../constants/colors";
 import { pictograms } from "../../constants/pictograms";
 import { useSharePic } from "../../context/SharePicContext";
 import { EditorColorSet } from "../organism/EditorColorSet";
+import { EditorBackgroundImage } from "../organism/EditorBackgroundImage";
 import { EditorHighlightColor } from "../organism/EditorHighlightColor";
 import { EditorLogoVisible } from "../organism/EditorLogoVisible";
 import { EditorArrowVisible } from "../organism/EditorArrowVisible";
@@ -22,6 +23,13 @@ export default function EditorTitleOnly() {
 				handleColorSet={(e: { target: { value: string; }; }) => dispatch({
 					type: "SET_COLOR_SET",
 					payload: colorSets.find((c) => c.name === e.target.value)!!,
+				})}
+			/>
+
+			<EditorBackgroundImage
+				handleBackgroundImage={(base64File: string) => dispatch({
+					type: "SET_BACKGROUND_IMAGE",
+					payload: base64File
 				})}
 			/>
 

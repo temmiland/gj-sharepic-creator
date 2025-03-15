@@ -180,3 +180,32 @@ select::after {
     opacity: 1;
   }
 }
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 2px solid #000000;
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 0px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.custom-file-upload:hover {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.custom-file-upload:focus {
+  outline: none;
+  background-color: #000000;
+  color: #ffffff;
+}

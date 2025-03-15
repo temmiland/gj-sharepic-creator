@@ -24,6 +24,7 @@ export default function SharePicTitleAndText() {
 				text: ["In den letzten Jahrzehnten ist die Energieversorgung in Deutschland auf Energieimporte aus Russland in Form von Erdgas aufgebaut worden. Das hat sich durch den brutalen Überfall Russlands auf die Ukraine geändert. Die große Abhängigkeit von fossilen Energien ist der Grund für die Energiekrise. Ein weiterer Ausbau von LNG-Terminals kann daher keine Lösung sein!"],
 				highlightColor: highlightColors[0],
 				colorSet: colorSets[1],
+				backgroundImage: null,
 				pictogram: null,
 				pictogramPosition: { x: 175, y: 225 },
 			}

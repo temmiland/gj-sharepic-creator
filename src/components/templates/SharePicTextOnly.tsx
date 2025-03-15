@@ -23,6 +23,7 @@ export default function SharePicTextOnly() {
 				text: ["Ziel waren stets Gay Bars in Greenwich Village, einem Stadtteil New Yorks. Dieses Mal lehnte sich die Community aber gegen die Polizeigewalt auf. Die Polizisten verbarrikadierten sich in der Bar, während Hunderte von Menschen protestierten. Die Aufstände vor dem Stonewall Inn waren eines der ersten Ereignisse, bei dem Lesben, Schwule, trans* Personen und andere Gruppen gemeinsam kämpften!"],
 				highlightColor: highlightColors[0],
 				colorSet: colorSets[2],
+				backgroundImage: null,
 				pictogram: null,
 				pictogramPosition: { x: 175, y: 225 },
 			}
