@@ -20,3 +20,8 @@ type PictogramPostion = {
 	x: number,
 	y: number
 }
+
+type BackgroundPosition = {
+	displayName: string;
+	value: string;
+};

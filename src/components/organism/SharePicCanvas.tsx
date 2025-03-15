@@ -3,12 +3,13 @@ import { colorSets } from "../../constants/colors";
 
 type SharePicCanvasProps = {
 	backgroundImage: string | null;
+	backgroundPosition: BackgroundPosition;
 	colorSet: ColorSet;
 	handleColorSet: (colorSet: ColorSet) => void;
 	children: React.ReactNode;
 };
 
-export function SharePicCanvas({ backgroundImage, colorSet, handleColorSet, children }: SharePicCanvasProps) {
+export function SharePicCanvas({ backgroundImage, backgroundPosition, colorSet, handleColorSet, children }: SharePicCanvasProps) {
 
 	useEffect(() => {
 		const calculateAndSetColorSet = async () => {
@@ -84,6 +85,7 @@ export function SharePicCanvas({ backgroundImage, colorSet, handleColorSet, chil
 		<div className='sharepic-canvas' style={{
 				background: backgroundImage ? `url(${backgroundImage})` : colorSet.backgroundColor,
 				backgroundSize: backgroundImage ? `cover` : "none",
+				backgroundPosition: backgroundPosition.value
 		}}>
 			{children}
 		</div>

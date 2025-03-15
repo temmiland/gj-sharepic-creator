@@ -8,6 +8,7 @@ import { SharePicPictogram } from "../organism/SharePicPictogram";
 import { colorSets, highlightColors } from "../../constants/colors";
 import { SharePicContent } from "../organism/SharePicContent";
 import { SharePicCanvas } from "../organism/SharePicCanvas";
+import { backgroundPositions } from "../../constants/background-positions";
 
 export default function SharePicTitleAndText() {
 
@@ -26,6 +27,7 @@ export default function SharePicTitleAndText() {
 				highlightColor: highlightColors[0],
 				colorSet: colorSets[1],
 				backgroundImage: null,
+				backgroundPosition: backgroundPositions[0],
 				pictogram: null,
 				pictogramPosition: { x: 175, y: 225 },
 			}
@@ -35,6 +37,7 @@ export default function SharePicTitleAndText() {
 	return(
 		<SharePicCanvas
 			backgroundImage={state.backgroundImage}
+			backgroundPosition={state.backgroundPosition}
 			colorSet={state.colorSet}
 			handleColorSet={(colorSet: ColorSet) => dispatch({
 				type: "SET_COLOR_SET",

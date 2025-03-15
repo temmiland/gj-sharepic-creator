@@ -10,6 +10,8 @@ import { EditorPictogram } from "../organism/EditorPictogram";
 import { EditorPictogramPosition } from "../organism/EditorPictogramPosition";
 import { pictograms } from "../../constants/pictograms";
 import { EditorBackgroundImage } from "../organism/EditorBackgroundImage";
+import { EditorBackgroundPosition } from "../organism/EditorBackgroundPosition";
+import { backgroundPositions } from "../../constants/background-positions";
 
 export default function EditorTextOnly() {
 	const { state, dispatch } = useSharePic();
@@ -35,6 +37,16 @@ export default function EditorTextOnly() {
 					payload: null
 				})}
 			/>
+
+			<EditorBackgroundPosition
+				position={state.backgroundPosition}
+				handlePosition={(e: { target: { value: any; }; }) => dispatch({
+					type: "SET_BACKGROUND_POSITION",
+					payload: backgroundPositions.find((bP) => bP.value === e.target.value),
+				})}
+			>
+
+			</EditorBackgroundPosition>
 
 			<EditorLogoLocalGroup
 				localGroup={state.localGroup}

@@ -1,5 +1,6 @@
 import { createContext, useReducer, useContext, ReactNode } from "react";
 import { colorSets, highlightColors } from "../constants/colors";
+import { backgroundPositions } from "../constants/background-positions";
 
 interface SharePicState {
 	localGroup: string;
@@ -11,6 +12,7 @@ interface SharePicState {
 	highlightColor: HighlightColor;
 	colorSet: ColorSet;
 	backgroundImage: string | null;
+	backgroundPosition: BackgroundPosition;
 	pictogram: Pictogram | null;
 	pictogramPosition: { x: number; y: number };
 }
@@ -26,6 +28,7 @@ type SharePicAction =
 	| { type: "SET_HIGHLIGHT_COLOR"; payload: HighlightColor }
 	| { type: "SET_COLOR_SET"; payload: ColorSet }
 	| { type: "SET_BACKGROUND_IMAGE"; payload: string | null }
+	| { type: "SET_BACKGROUND_POSITION"; payload: BackgroundPosition }
 	| { type: "SET_PICTOGRAM"; payload: Pictogram | null }
 	| { type: "SET_PICTOGRAM_POSITION"; payload: { x: number; y: number } };
 
@@ -51,6 +54,8 @@ const sharePicReducer = (state: SharePicState, action: SharePicAction): SharePic
 		return { ...state, colorSet: action.payload };
 		case "SET_BACKGROUND_IMAGE":
 		return { ...state, backgroundImage: action.payload };
+		case "SET_BACKGROUND_POSITION":
+		return { ...state, backgroundPosition: action.payload };
 		case "SET_PICTOGRAM":
 		return { ...state, pictogram: action.payload };
 		case "SET_PICTOGRAM_POSITION":
@@ -70,6 +75,7 @@ const initialState: SharePicState = {
 	highlightColor: highlightColors[0],
 	colorSet: colorSets[1],
 	backgroundImage: null,
+	backgroundPosition: backgroundPositions[0],
 	pictogram: null,
 	pictogramPosition: { x: 175, y: 225 },
 };

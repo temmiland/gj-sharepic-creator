@@ -11,6 +11,8 @@ import { EditorHeadingTopOrBottom } from "../organism/EditorHeadingTopOrBottom";
 import { EditorHeading } from "../organism/EditorHeading";
 import { EditorPictogram } from "../organism/EditorPictogram";
 import { EditorPictogramPosition } from "../organism/EditorPictogramPosition";
+import { EditorBackgroundPosition } from "../organism/EditorBackgroundPosition";
+import { backgroundPositions } from "../../constants/background-positions";
 
 export default function EditorTitleOnly() {
 	const { state, dispatch } = useSharePic();
@@ -34,6 +36,14 @@ export default function EditorTitleOnly() {
 				handleFileDelete={() => dispatch({
 					type: "SET_BACKGROUND_IMAGE",
 					payload: null
+				})}
+			/>
+
+			<EditorBackgroundPosition
+				position={state.backgroundPosition}
+				handlePosition={(e: { target: { value: any; }; }) => dispatch({
+					type: "SET_BACKGROUND_POSITION",
+					payload: backgroundPositions.find((bP) => bP.value === e.target.value),
 				})}
 			/>
 

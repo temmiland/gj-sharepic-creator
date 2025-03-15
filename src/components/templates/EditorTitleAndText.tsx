@@ -8,6 +8,8 @@ import { EditorLogoLocalGroup } from "../organism/EditorLogoLocalGroup";
 import { EditorHeading } from "../organism/EditorHeading";
 import { EditorText } from "../organism/EditorText";
 import { EditorBackgroundImage } from "../organism/EditorBackgroundImage";
+import { EditorBackgroundPosition } from "../organism/EditorBackgroundPosition";
+import { backgroundPositions } from "../../constants/background-positions";
 
 export default function EditorTitleAndText() {
 	const { state, dispatch } = useSharePic();
@@ -33,6 +35,16 @@ export default function EditorTitleAndText() {
 					payload: null
 				})}
 			/>
+
+			<EditorBackgroundPosition
+				position={state.backgroundPosition}
+				handlePosition={(e: { target: { value: any; }; }) => dispatch({
+					type: "SET_BACKGROUND_POSITION",
+					payload: backgroundPositions.find((bP) => bP.value === e.target.value),
+				})}
+			>
+
+			</EditorBackgroundPosition>
 
 			<EditorLogoLocalGroup
 				localGroup={state.localGroup}
