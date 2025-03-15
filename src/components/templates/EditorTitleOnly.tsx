@@ -31,6 +31,10 @@ export default function EditorTitleOnly() {
 					type: "SET_BACKGROUND_IMAGE",
 					payload: base64File
 				})}
+				handleFileDelete={() => dispatch({
+					type: "SET_BACKGROUND_IMAGE",
+					payload: null
+				})}
 			/>
 
 			<EditorLogoLocalGroup

@@ -2,9 +2,10 @@ import Input from "../atoms/Input";
 
 type EditorBackgroundImageProps = {
 	handleBackgroundImage: (base64File: string) => void;
+	handleFileDelete: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
-export function EditorBackgroundImage({ handleBackgroundImage }: EditorBackgroundImageProps) {
+export function EditorBackgroundImage({ handleBackgroundImage, handleFileDelete }: EditorBackgroundImageProps) {
 
 	const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
@@ -26,6 +27,7 @@ export function EditorBackgroundImage({ handleBackgroundImage }: EditorBackgroun
 				type="file"
 				accept="image/*"
 				onChange={handleImageUpload}
+				onFileDelete={handleFileDelete}
 			/>
 		</>
 	);

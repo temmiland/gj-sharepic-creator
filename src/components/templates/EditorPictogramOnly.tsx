@@ -7,6 +7,7 @@ import { EditorLogoLocalGroup } from "../organism/EditorLogoLocalGroup";
 import { EditorPictogram } from "../organism/EditorPictogram";
 import { EditorPictogramPosition } from "../organism/EditorPictogramPosition";
 import { pictograms } from "../../constants/pictograms";
+import { EditorBackgroundImage } from "../organism/EditorBackgroundImage";
 
 export default function EditorTextOnly() {
 	const { state, dispatch } = useSharePic();
@@ -19,6 +20,17 @@ export default function EditorTextOnly() {
 				handleColorSet={(e: { target: { value: string; }; }) => dispatch({
 					type: "SET_COLOR_SET",
 					payload: colorSets.find((c) => c.name === e.target.value)!!,
+				})}
+			/>
+
+			<EditorBackgroundImage
+				handleBackgroundImage={(base64File: string) => dispatch({
+					type: "SET_BACKGROUND_IMAGE",
+					payload: base64File
+				})}
+				handleFileDelete={() => dispatch({
+					type: "SET_BACKGROUND_IMAGE",
+					payload: null
 				})}
 			/>
 

@@ -7,6 +7,7 @@ import { EditorArrowVisible } from "../organism/EditorArrowVisible";
 import { EditorLogoLocalGroup } from "../organism/EditorLogoLocalGroup";
 import { EditorHeading } from "../organism/EditorHeading";
 import { EditorText } from "../organism/EditorText";
+import { EditorBackgroundImage } from "../organism/EditorBackgroundImage";
 
 export default function EditorTitleAndText() {
 	const { state, dispatch } = useSharePic();
@@ -19,6 +20,17 @@ export default function EditorTitleAndText() {
 				handleColorSet={(e: { target: { value: string; }; }) => dispatch({
 					type: "SET_COLOR_SET",
 					payload: colorSets.find((c) => c.name === e.target.value)!!,
+				})}
+			/>
+
+			<EditorBackgroundImage
+				handleBackgroundImage={(base64File: string) => dispatch({
+					type: "SET_BACKGROUND_IMAGE",
+					payload: base64File
+				})}
+				handleFileDelete={() => dispatch({
+					type: "SET_BACKGROUND_IMAGE",
+					payload: null
 				})}
 			/>
 

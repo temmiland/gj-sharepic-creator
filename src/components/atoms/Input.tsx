@@ -7,15 +7,15 @@ type InputProps = {
 	checked?: boolean;
 	value?: string | number;
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	onFileDelete?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
-function Input({ type, name, accept, checked, value, onChange }: InputProps) {
+function Input({ type, name, accept, checked, value, onChange, onFileDelete }: InputProps) {
 	return type === "file"
 		? (
-			<>
+			<div className="file-upload">
 				<label
 					htmlFor="file-upload"
-					className="custom-file-upload"
 				>
 					Datei auswählen
 				</label>
@@ -28,7 +28,12 @@ function Input({ type, name, accept, checked, value, onChange }: InputProps) {
 					value={value}
 					onChange={onChange}
 				/>
-			</>
+				<button
+					onClick={onFileDelete}
+				>
+					Entfernen
+				</button>
+			</div>
 		)
 		: (
 			<input

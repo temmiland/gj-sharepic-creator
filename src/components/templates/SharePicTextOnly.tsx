@@ -6,6 +6,7 @@ import { SharePicText } from "../organism/SharePicText";
 import { SharePicPictogram } from "../organism/SharePicPictogram";
 import { colorSets, highlightColors } from "../../constants/colors";
 import { SharePicContent } from "../organism/SharePicContent";
+import { SharePicCanvas } from "../organism/SharePicCanvas";
 
 export default function SharePicTextOnly() {
 
@@ -31,7 +32,14 @@ export default function SharePicTextOnly() {
 	}, []);
 
 	return(
-		<div className='sharepic-canvas' style={{ background: state.colorSet.backgroundColor }}>
+		<SharePicCanvas
+			backgroundImage={state.backgroundImage}
+			colorSet={state.colorSet}
+			handleColorSet={(colorSet: ColorSet) => dispatch({
+				type: "SET_COLOR_SET",
+				payload: colorSet
+			})}
+		>
 			<SharePicLogo
 				localGroup={state.localGroup}
 				visible={state.logoVisible}
@@ -56,6 +64,6 @@ export default function SharePicTextOnly() {
 				position={state.pictogramPosition}
 				colorSet={state.colorSet}
 			/>
-		</div>
+		</SharePicCanvas>
 	);
 }

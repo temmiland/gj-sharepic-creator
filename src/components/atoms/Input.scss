@@ -182,30 +182,58 @@ select::after {
 }
 
 input[type="file"] {
-  display: none;
+  	display: none;
 }
 
-.custom-file-upload {
-  display: inline-block;
-  padding: 10px 20px;
-  border: 2px solid #000000;
-  background-color: #ffffff;
-  color: #000000;
-  font-weight: 700;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-  border-radius: 0px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
+.file-upload {
 
-.custom-file-upload:hover {
-  background-color: #000000;
-  color: #ffffff;
-}
+	label {
+		display: inline-block;
+		padding: 10px 20px;
+		border: 2px solid #000000;
+		background-color: #ffffff;
+		color: #000000;
+		font-weight: 700;
+		font-size: 1.6rem;
+		cursor: pointer;
+		text-align: center;
+		border-radius: 0px;
+		transition: background-color 0.3s ease, color 0.3s ease;
 
-.custom-file-upload:focus {
-  outline: none;
-  background-color: #000000;
-  color: #ffffff;
+		&:hover {
+			background-color: #000000;
+			color: #ffffff;
+		}
+
+		&:focus {
+			outline: none;
+			background-color: #000000;
+			color: #ffffff;
+		}
+	}
+
+	button {
+			border: 0.2rem solid black;
+			width: 10rem;
+			margin: 0 0 0 1rem;
+			height: 4.8rem;
+			color: black;
+			background-color: white;
+			font-family: "Wix Madefor Display", sans-serif;
+			font-optical-sizing: auto;
+			color: #000000;
+			font-weight: 700;
+			font-size: 1.6rem;
+			font-style: normal;
+			cursor: pointer;
+			position: relative;
+			transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
+
+			&:hover {
+				color: white;
+				background-color: black;
+			}
+
+	}
+
 }
