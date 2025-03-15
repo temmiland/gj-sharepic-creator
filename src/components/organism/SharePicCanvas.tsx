@@ -87,7 +87,7 @@ export function SharePicCanvas({ backgroundImage, backgroundPosition, background
 				padding: 0,
 				margin: 0,
 				position: 'relative',
-				backgroundColor: colorSet.backgroundColor,
+				background: colorSet.backgroundColor,
 				zIndex: 0,
 		}}>
 			{backgroundImage && (
