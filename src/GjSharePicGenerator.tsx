@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import domtoimage from 'dom-to-image-more';
+import { domToPng } from 'modern-screenshot'
 import Button from './components/atoms/Button';
 import SharePicTitleOnly from './components/templates/SharePicTitleOnly';
 import EditorTitleOnly from './components/templates/EditorTitleOnly';
@@ -41,10 +41,10 @@ function GjSharePicGenerator() {
 	const handleDownload = () => {
 		const node = document.getElementById('sharepic-download');
 		if (node) {
-			domtoimage.toPng(node, {
+			domToPng(node, {
 				height: 1350,
 				width: 1080,
-				style: { transform: 'scale(3, 3)', 'transform-origin': 'top left' },
+				style: { transform: 'scale(3, 3)', transformOrigin: 'top left' },
 			}).then((dataUrl: string) => {
 				const link = document.createElement('a');
 				link.download = `gj-sharepic-${new Date().toISOString()}.png`;
@@ -81,7 +81,7 @@ function GjSharePicGenerator() {
 					}
 				</div>
 				<Button onClick={handleDownload}>Download</Button>
-				<p>v0.7.2 - build 15.03.2025 - <a href="https://github.com/temmiland/gj-sharepic-generator">github</a></p>
+				<p>v0.7.3 - build 17.03.2025 - <a href="https://github.com/temmiland/gj-sharepic-generator">github</a></p>
 			</div>
 
 			<div className='container'>

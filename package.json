@@ -10,8 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@types/dom-to-image": "^2.6.7",
-    "dom-to-image-more": "^3.5.0",
+    "modern-screenshot": "^4.6.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sass-embedded": "^1.85.1"
