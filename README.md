@@ -14,7 +14,7 @@ Bugs can be found [here. – (GitHub issues)](https://github.com/temmiland/gj-sh
 
 ## Changelog
 
-Changelogs can be found [here. – (GitHub releases)](https://github.com/temmiland/j-sharepic-creator/releases)
+Changelogs can be found [here. – (GitHub releases)](https://github.com/temmiland/gj-sharepic-creator/releases)
 
 ## Contribute
 
