@@ -10,6 +10,8 @@ import SharePicTextOnly from './components/templates/SharePicTextOnly';
 import EditorTextOnly from './components/templates/EditorTextOnly';
 import SharePicPictogramOnly from './components/templates/SharePicPictogramOnly';
 import EditorPictogramOnly from './components/templates/EditorPictogramOnly';
+import SharePicEvent from './components/templates/SharePicEvent';
+import EditorEvent from './components/templates/EditorEvent';
 
 const templates = {
 	titleOnly: {
@@ -21,6 +23,11 @@ const templates = {
 		name: 'Überschrift & Text',
 		sharePic: SharePicTitleAndText,
 		options: EditorTitleAndText,
+	},
+	event: {
+		name: 'Veranstaltung',
+		sharePic: SharePicEvent,
+		options: EditorEvent,
 	},
 	textOnly: {
 		name: 'Text (opt. Piktogramm)',
