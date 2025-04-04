@@ -11,7 +11,7 @@ type SharePicTextProps = {
 export function SharePicText({ multiLineText, colorSet, highlightColor }: SharePicTextProps) {
 
 	function parseMarkdown(text: string): React.ReactNode {
-    const regex = /(\*[^*]+\*|_[^_]+_|~[^~]+~|#[^#]+#)/g;
+    const regex = /(\*[^*]+\*|_[^_]+_|~[^~]+~|#[^#]+#|%[^%]+%)/g;
 
     let lastIndex = 0;
     const elements: React.ReactNode[] = [];
@@ -35,13 +35,39 @@ export function SharePicText({ multiLineText, colorSet, highlightColor }: ShareP
       } else if (fullMatch.startsWith('~') && fullMatch.endsWith('~')) {
         const strikeContent = fullMatch.slice(1, -1);
         elements.push(<del key={offset}>{parseMarkdown(strikeContent)}</del>);
-      } else if (fullMatch.startsWith('#') && fullMatch.endsWith('#')) {
+	  } else if (fullMatch.startsWith('%') && fullMatch.endsWith('%')) {
+		const spanContent = fullMatch.slice(1, -1);
+        elements.push(
+          <span
+            key={offset}
+            style={{
+              backgroundColor: colorSet.accentColor === '#c7ff7a'
+			  	? colorSet.backgroundColor === '#000000'
+					? colorSets.find(cS => cS.name === "White")?.backgroundColor!!
+					: colorSets.find(cS => cS.name === "Black")?.backgroundColor!!
+				: colorSet.accentColor,
+			  color: colorSet.backgroundColor === '#000000'
+			  	? colorSets.find(cS => cS.name === "Black")?.backgroundColor!!
+					: colorSets.find(cS => cS.name === "White")?.backgroundColor!!,
+			  boxDecorationBreak: 'clone',
+			  WebkitBoxDecorationBreak: 'clone',
+            }}
+          >
+            {parseMarkdown(spanContent)}
+          </span>
+        );
+	  } else if (fullMatch.startsWith('#') && fullMatch.endsWith('#')) {
         const spanContent = fullMatch.slice(1, -1);
         elements.push(
           <span
             key={offset}
             style={{
-              backgroundColor: highlightColor.backgroundColor
+              backgroundColor: highlightColor.backgroundColor,
+			  boxDecorationBreak: 'clone',
+			  WebkitBoxDecorationBreak: 'clone',
+			  color: highlightColor.backgroundColor === '#000000'
+			  	? colorSets.find(cS => cS.name === "White")?.backgroundColor!!
+				: colorSets.find(cS => cS.name === "Black")?.backgroundColor!!,
             }}
           >
             {parseMarkdown(spanContent)}
