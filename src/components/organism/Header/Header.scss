@@ -1,0 +1,149 @@
+/* CD Colors */
+$cdWhite: #ffffff;
+$cdBlack: #000000;
+$cdLightGreen: #c7ff7a;
+$cdGreen: #33c270;
+$cdLavendel: #9f88ff;
+$cdPink: #f28ade;
+$cdApricot: #ff8568;
+
+header {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	padding: 1rem 0 1rem 0;
+	background: $cdGreen;
+	z-index: 10000;
+
+	.inner {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
+		justify-content: space-between;
+		grid-template-rows: auto;
+		gap: 0;
+		position: relative;
+		max-width: 1440px;
+		margin: 0 auto;
+		padding: 0 10rem 0 10rem;
+
+		.logo {
+			width: 15rem;
+			cursor: pointer;
+
+			img {
+
+			}
+		}
+
+		.menu {
+			justify-self: end;
+			border: 0;
+			border-radius: 0;
+			appearance: none;
+			background: $cdGreen;
+			cursor: pointer;
+			height: 4.5rem;
+			max-height: 4.5rem;
+			width: 4.5rem;
+			max-width: 4.5rem;
+			position: relative;
+
+			&.active {
+				background: $cdPink;
+			}
+
+			.icon {
+				width: 3.5rem;
+				height: 0.25rem;
+				display: block;
+				background: $cdLightGreen;
+				position: relative;
+
+				// shows a extra bar before and after the center bar
+				&::before,
+				&::after {
+					content: "";
+					width: 100%;
+					height: 100%;
+					background: inherit;
+					position: absolute;
+					left: 0;
+					transition: transform 0.3s ease-in-out;
+				}
+
+				&::before {
+					top: -1rem;
+				}
+
+				&::after {
+					top: 1rem;
+				}
+			}
+			&:not(.active):hover .icon {
+				&::before {
+					transform: translateX(-0.25rem);
+				}
+
+				&::after {
+					transform: translateX(0.25rem);
+				}
+			}
+
+			&.active .icon {
+				&::before {
+					transform: translateX(-0.25rem);
+				}
+				&::after {
+					transform: translateX(0.25rem);
+				}
+			}
+
+			&.active:hover .icon {
+				&::before {
+					transform: translateX(0rem);
+				}
+
+				&::after {
+					transform: translateX(0rem);
+				}
+			}
+		}
+
+		.overlay {
+			grid-column: 1 / -1;
+			justify-self: center;
+
+			li {
+				list-style: none;
+				text-transform: uppercase;
+				margin: 2rem;
+				padding: 0.5rem 1rem;
+				text-align: center;
+				display: inline-block;
+				font-size: 4rem;
+				line-height: 1.5;
+				font-weight: 900;
+				color: $cdBlack;
+				background: $cdWhite;
+				cursor: pointer;
+
+
+				&:hover {
+					opacity: 0.5;
+				}
+
+				a {
+					color: $cdBlack;
+					text-decoration: none;
+					display: inline-block;
+				}
+			}
+		}
+	}
+
+	&.active {
+		background: $cdPink;
+	}
+}

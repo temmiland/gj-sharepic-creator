@@ -7,7 +7,7 @@ type ButtonProps = {
 
 function Button({ onClick, children = "Buttontext" }: ButtonProps) {
 	return (
-		<button onClick={onClick}>
+		<button className="hdg-button" onClick={onClick}>
 			{children}
 		</button>
 	);

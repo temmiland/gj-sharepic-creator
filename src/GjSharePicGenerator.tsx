@@ -65,38 +65,39 @@ function GjSharePicGenerator() {
 	const EditorComponent = templates[selectedTemplate].options;
 
 	return (
-		<div className="inner">
-			<div className='container'>
-				<h2>Vorlage auswählen:</h2>
-				<select
-					onChange={(e) => setSelectedTemplate(e.target.value as keyof typeof templates)}
-					value={selectedTemplate}
-				>
+		<>
+			<div className="inner">
+				<div className='container'>
+					<h2>Vorlage auswählen:</h2>
+					<select
+						onChange={(e) => setSelectedTemplate(e.target.value as keyof typeof templates)}
+						value={selectedTemplate}
+					>
+						{
+							Object.entries(templates).map(([key, template]) => (
+								<option key={key} value={key}>
+									{template.name}
+								</option>
+							))
+						}
+					</select>
+					<div
+						className='sharepic-container'
+					>
+						{
+							SharePicComponent && (<SharePicComponent />)
+						}
+					</div>
+					<Button onClick={handleDownload}>Download</Button>
+				</div>
+
+				<div className='container'>
 					{
-						Object.entries(templates).map(([key, template]) => (
-							<option key={key} value={key}>
-								{template.name}
-							</option>
-						))
-					}
-				</select>
-				<div
-					className='sharepic-container'
-				>
-					{
-						SharePicComponent && (<SharePicComponent />)
+						EditorComponent && (<EditorComponent />)
 					}
 				</div>
-				<Button onClick={handleDownload}>Download</Button>
-				<p>v0.8.0 - build 04.04.2025 - <a href="https://github.com/temmiland/gj-sharepic-creator">github</a></p>
 			</div>
-
-			<div className='container'>
-				{
-					EditorComponent && (<EditorComponent />)
-				}
-			</div>
-		</div>
+		</>
   );
 }
 
