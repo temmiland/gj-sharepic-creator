@@ -1,65 +1,105 @@
-/* CD Colors */
-$cdWhite: #ffffff;
-$cdBlack: #000000;
-$cdLightGreen: #c7ff7a;
-$cdGreen: #33c270;
-$cdLavendel: #9f88ff;
-$cdPink: #f28ade;
-$cdApricot: #ff8568;
+/******************************************************************************
+ * gj-sharepic-creator
+ * Copyright (c) 2025 temmiland
+ *
+ * Licensed under the Affero General Public License (AGPL) Version 3.0;
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *     https://gjshare.pics/license
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * Affero General Public License for more details.
+ *
+ * You should have received a copy of the Affero General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************/
 
-header {
+@use '../../../variables' as *;
+@use '../../../fonts' as *;
+
+header.hdg-header {
+	width: 100%;
+	padding: 1rem 0;
 	position: fixed;
 	left: 0;
 	top: 0;
-	width: 100%;
-	padding: 1rem 0 1rem 0;
-	background: $cdGreen;
 	z-index: 10000;
+	background: $cdGreen;
 
-	.inner {
+	&.hdg-header__menu--open {
+		background: $cdPink;
+	}
+
+	&.hdg-header--shrink .hdg-header__logo {
+		width: 7.5rem !important;
+	}
+
+	.hdg-header__inner {
+		max-width: 1440px;
+		margin: 0 auto;
+		padding: 0 10rem 0 10rem;
+		position: relative;
 		display: grid;
 		grid-template-columns: 1fr auto;
 		align-items: center;
 		justify-content: space-between;
-		grid-template-rows: auto;
-		gap: 0;
-		position: relative;
-		max-width: 1440px;
-		margin: 0 auto;
-		padding: 0 10rem 0 10rem;
 
-		.logo {
+		@media (max-width: 768px) {
+			padding: 0 5rem;
+		}
+
+		@media (max-width: 425px) {
+			padding: 0 2rem;
+		}
+
+		@media (max-width: 375px) {
+			padding: 0 1.75rem;
+		}
+
+		@media (max-width: 320px) {
+			padding: 0 0.75rem;
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.hdg-header__logo {
 			width: 15rem;
 			cursor: pointer;
+			transition: all 0.3s ease-in-out;
 
-			img {
+			@media (max-width: 425px) {
+				width: 10rem;
+			}
 
+			@media (orientation: landscape) and (max-height: 500px) {
+				width: 7.5rem;
 			}
 		}
 
-		.menu {
+		.hdg-header__menu-button {
+			height: 4.5rem;
+			width: 4.5rem;
+			position: relative;
 			justify-self: end;
+			appearance: none;
+			cursor: pointer;
+			background: $cdGreen;
 			border: 0;
 			border-radius: 0;
-			appearance: none;
-			background: $cdGreen;
-			cursor: pointer;
-			height: 4.5rem;
-			max-height: 4.5rem;
-			width: 4.5rem;
-			max-width: 4.5rem;
-			position: relative;
 
-			&.active {
+			&.hdg-header__menu--open {
 				background: $cdPink;
 			}
 
-			.icon {
+			.hdg-header__menu-icon {
 				width: 3.5rem;
 				height: 0.25rem;
+				position: relative;
 				display: block;
 				background: $cdLightGreen;
-				position: relative;
 
 				// shows a extra bar before and after the center bar
 				&::before,
@@ -67,9 +107,9 @@ header {
 					content: "";
 					width: 100%;
 					height: 100%;
-					background: inherit;
 					position: absolute;
 					left: 0;
+					background: inherit;
 					transition: transform 0.3s ease-in-out;
 				}
 
@@ -81,7 +121,17 @@ header {
 					top: 1rem;
 				}
 			}
-			&:not(.active):hover .icon {
+
+			&.hdg-header__menu--open .hdg-header__menu-icon {
+				&::before {
+					transform: translateX(-0.25rem);
+				}
+				&::after {
+					transform: translateX(0.25rem);
+				}
+			}
+
+			&:not(.hdg-header__menu--open):hover .hdg-header__menu-icon {
 				&::before {
 					transform: translateX(-0.25rem);
 				}
@@ -91,59 +141,77 @@ header {
 				}
 			}
 
-			&.active .icon {
-				&::before {
-					transform: translateX(-0.25rem);
-				}
-				&::after {
-					transform: translateX(0.25rem);
-				}
-			}
-
-			&.active:hover .icon {
-				&::before {
-					transform: translateX(0rem);
-				}
-
+			&.hdg-header__menu--open:hover .hdg-header__menu-icon {
+				&::before,
 				&::after {
 					transform: translateX(0rem);
 				}
 			}
 		}
 
-		.overlay {
+		.hdg-header__menu {
+			margin: 0;
+			padding: 0;
+			display: flex;
+			flex-direction: column;
 			grid-column: 1 / -1;
-			justify-self: center;
+			justify-self: left;
 
-			li {
-				list-style: none;
-				text-transform: uppercase;
+			@media (orientation: landscape) and (max-height: 500px) {
+				display: inline-block;
+				flex-direction: unset;
+			}
+
+			li.hdg-header__menu-entry {
+				width: max-content;
 				margin: 2rem;
 				padding: 0.5rem 1rem;
-				text-align: center;
 				display: inline-block;
-				font-size: 4rem;
+				cursor: pointer;
+				background: $cdWhite;
+				list-style: none;
+				text-transform: uppercase;
+				text-align: left;
 				line-height: 1.5;
+				font-size: 4rem;
 				font-weight: 900;
 				color: $cdBlack;
-				background: $cdWhite;
-				cursor: pointer;
 
+				@media (max-width: 768px) {
+					margin: 1.5rem;
+					font-size: 3rem;
+				}
 
-				&:hover {
+				@media (max-width: 375px) {
+					margin: 1.15rem;
+					font-size: 2.5rem;
+				}
+
+				@media (max-width: 320px) {
+					margin: 1.15rem;
+					font-size: 2.25rem;
+				}
+
+				@media (orientation: landscape) and (max-height: 500px) {
+					margin: 1.5rem;
+					font-size: 3rem;
+				}
+
+				&:not(.hdg-header__menu-entry--disabled):hover {
+					opacity: 0.5;
+				}
+
+				&.hdg-header__menu-entry--disabled {
+					cursor: not-allowed;
 					opacity: 0.5;
 				}
 
 				a {
-					color: $cdBlack;
-					text-decoration: none;
 					display: inline-block;
+					text-decoration: none;
+					color: $cdBlack;
 				}
 			}
 		}
-	}
-
-	&.active {
-		background: $cdPink;
 	}
 }

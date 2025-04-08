@@ -1,3 +1,22 @@
+/******************************************************************************
+ * gj-sharepic-creator
+ * Copyright (c) 2025 temmiland
+ *
+ * Licensed under the Affero General Public License (AGPL) Version 3.0;
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *     https://gjshare.pics/license
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * Affero General Public License for more details.
+ *
+ * You should have received a copy of the Affero General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ *****************************************************************************/
+
 import { createContext, useReducer, useContext, ReactNode } from "react";
 import { colorSets, highlightColors } from "../constants/colors";
 import { backgroundPositions } from "../constants/background-positions";
@@ -37,35 +56,35 @@ type SharePicAction =
 const sharePicReducer = (state: SharePicState, action: SharePicAction): SharePicState => {
 	switch (action.type) {
 		case "INITIALIZE":
-		return { ...action.payload };
+			return { ...action.payload };
 		case "SET_LOCAL_GROUP":
-		return { ...state, localGroup: action.payload };
+			return { ...state, localGroup: action.payload };
 		case "SET_LOGO_VISIBLE":
-		return { ...state, logoVisible: action.payload };
+			return { ...state, logoVisible: action.payload };
 		case "SET_ARROW_VISIBLE":
-		return { ...state, arrowVisible: action.payload };
+			return { ...state, arrowVisible: action.payload };
 		case "SET_HEADING_TOP_OR_BOTTOM":
-		return { ...state, headingTopOrBottom: action.payload };
+			return { ...state, headingTopOrBottom: action.payload };
 		case "SET_HEADING":
-		return { ...state, heading: action.payload };
+			return { ...state, heading: action.payload };
 		case "SET_TEXT":
-		return { ...state, text: action.payload };
+			return { ...state, text: action.payload };
 		case "SET_HIGHLIGHT_COLOR":
-		return { ...state, highlightColor: action.payload };
+			return { ...state, highlightColor: action.payload };
 		case "SET_COLOR_SET":
-		return { ...state, colorSet: action.payload };
+			return { ...state, colorSet: action.payload };
 		case "SET_BACKGROUND_IMAGE":
-		return { ...state, backgroundImage: action.payload };
+			return { ...state, backgroundImage: action.payload };
 		case "SET_BACKGROUND_POSITION":
-		return { ...state, backgroundPosition: action.payload };
+			return { ...state, backgroundPosition: action.payload };
 		case "SET_BACKGROUND_BLUR":
-		return { ...state, backgroundBlur: action.payload };
+			return { ...state, backgroundBlur: action.payload };
 		case "SET_PICTOGRAM":
-		return { ...state, pictogram: action.payload };
+			return { ...state, pictogram: action.payload };
 		case "SET_PICTOGRAM_POSITION":
-		return { ...state, pictogramPosition: action.payload };
+			return { ...state, pictogramPosition: action.payload };
 		default:
-		return state;
+			return state;
 	}
 };
 

@@ -15,32 +15,30 @@
  *
  * You should have received a copy of the Affero General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
  *****************************************************************************/
 
-/// <reference types="vite/client" />
+import Header from '../../organism/Header';
+import Footer from '../../organism/Footer';
+import './Route.scss';
 
-type ColorSet = {
-	name: string;
-	backgroundColor: string;
-	accentColor: string;
+type RouteProps =  {
+	children: React.ReactNode
+	| React.ReactElement<any, string | React.JSXElementConstructor<any>>
+	| React.ReactPortal
+	| boolean
+	| null
+	| undefined
 };
 
-type HighlightColor = {
-	name: string;
-	backgroundColor: string;
-};
-
-type Pictogram = {
-	name: string;
-	path: string;
-};
-
-type PictogramPostion = {
-	x: number,
-	y: number
+export default function Route({children}: RouteProps) {
+	return (
+		<>
+			<Header />
+			<div className="hdg-route">
+				{children}
+			</div>
+			<Footer />
+		</>
+	);
 }
-
-type BackgroundPosition = {
-	displayName: string;
-	value: string;
-};

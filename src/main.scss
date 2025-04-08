@@ -1,329 +1,52 @@
-/* CD Colors */
-$cdWhite: #ffffff;
-$cdBlack: #000000;
-$cdLightGreen: #c7ff7a;
-$cdGreen: #33c270;
-$cdLavendel: #9f88ff;
-$cdPink: #f28ade;
-$cdApricot: #ff8568;
+/******************************************************************************
+ * gj-sharepic-creator
+ * Copyright (c) 2025 temmiland
+ *
+ * Licensed under the Affero General Public License (AGPL) Version 3.0;
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *     https://gjshare.pics/license
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * Affero General Public License for more details.
+ *
+ * You should have received a copy of the Affero General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ *****************************************************************************/
 
-@font-face {
-  font-family: 'Wix Madefor Display';
-  src: url(/fonts/Wix_Madefor_Display/WixMadeforDisplay-VariableFont_wght.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'Wix Madefor Text';
-  src: url(/fonts/Wix_Madefor_Text/WixMadeforText-VariableFont_wght.ttf) format('truetype');
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Wix Madefor Text';
-  src: url(/fonts/Wix_Madefor_Text/WixMadeforText-Italic-VariableFont_wght.ttf) format('truetype');
-  font-style: italic;
-}
-@font-face {
-  font-family: 'Work Sans';
-  src: url(/fonts/Work_Sans/WorkSans-Italic-VariableFont_wght.ttf) format('truetype');
-}
+@use 'variables' as *;
+@use 'fonts' as *;
 
-:root {
-	font-family: "Wix Madefor Display", system-ui, Avenir, Helvetica, Arial, sans-serif;
-	line-height: 1.5;
-	font-weight: 400;
+html {
 	font-size: 62.5%;
-
-	color-scheme: light dark;
-	color: rgba(0, 0, 0, 0.87);
-	background-color: #33c270;
-
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 }
 
 body {
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	display: flex;
-	place-items: center;
 	min-width: 320px;
 	min-height: 100vh;
+	display: grid;
+	place-items: center;
+	font-family: "Wix Madefor Display", system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-weight: 400;
+	line-height: 1.5;
+	color: rgba(0, 0, 0, 0.87);
+	background-color: $cdGreen;
+
+	color-scheme: light dark;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 #root {
 	width: 100%;
 	margin: 0 auto;
 	overflow: hidden;
-}
-
-.wix-madefor-display-400 {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.wix-madefor-display-600 {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
-}
-
-.wix-madefor-display-800 {
-  font-family: "Wix Madefor Display", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 800;
-  font-style: normal;
-}
-
-.inner {
-	display: flex;
-	gap: 10rem;
-}
-
-.container {
-	background: white;
-	padding: 2rem;
-	height: max-content;
-}
-
-.sharepic-canvas {
-	width: 360px;
-	height: 450px;
-}
-
-.gj-logo {
-	font-family: "Work Sans", sans-serif;
-	font-optical-sizing: auto;
-	font-weight: 700;
-	font-style: italic;
-	position: absolute;
-	text-transform: uppercase;
-	color: #c7ff7a;
-	top: 40.5rem;
-	width: max-content;
-	left: 1.25rem;
-	margin: 0;
-	padding: 0;
-	line-height: 1.35rem;
-	transform: rotate(-13deg);
-	font-size: 1.5rem;
-	letter-spacing: 0rem;
-	text-align: left;
-	z-index: 20;
-}
-
-.sharepic-container {
-	position: relative;
-	overflow: hidden;
-	margin-top: 2rem;
-}
-
-.arrow {
-	position: absolute;
-	bottom: 0.25rem;
-	right: 0.25rem;
-	width: 50px;
-	z-index: 20;
-}
-
-.gj-logo span {
-  display: inline-block;
-  margin-left: 1.15rem;
-}
-
-.ortsgruppe {
-	font-family: "Work Sans", sans-serif;
-	font-optical-sizing: auto;
-	font-weight: 700;
-	font-style: italic;
-	position: absolute;
-	text-transform: uppercase;
-	color: #c7ff7a;
-	top: 42.5rem;
-	width: 10rem;
-	left: 2.65rem;
-	margin: 0;
-	padding: 0;
-	line-height: 1rem;
-	transform: rotate(-13deg);
-	font-size: 0.75rem;
-	letter-spacing: -0.01rem;
-	text-align: left;
-	z-index: 20;
-}
-
-.hdg-content {
-	.hdg-hero {
-		background: $cdGreen;
-		padding-bottom: 10rem;
-		text-align: left;
-
-		.__inner {
-			padding: 10rem 10rem 0 10rem;
-
-			h1 {
-				@extend .wix-madefor-display-800;
-				color: $cdWhite;
-				font-size: 8rem;
-				white-space: pre-line;
-
-				margin: 0;
-
-				span {
-					color: $cdLightGreen;
-				}
-			}
-			p {
-				@extend .wix-madefor-display-400;
-				margin-top: 5rem;
-				margin-bottom: 5rem;
-				font-size: 2.5rem;
-				line-height: 1.5;
-				color: $cdWhite;
-
-				span {
-					color: $cdLightGreen;
-				}
-			}
-
-			.__buttons {
-				display: flex;
-				gap: 3.5rem;
-
-				.__button {
-					max-width: max-content;
-					button {
-						@extend .wix-madefor-display-600;
-						border: 0;
-						border-radius: 0;
-						appearance: none;
-						cursor: pointer;
-						background: transparent;
-						color: $cdWhite;
-						margin-top: 1rem;
-						padding: 0;
-						font-size: 2.5rem;
-						position: relative;
-
-						&::after {
-							content: "";
-							display: block;
-							width: 100%;
-							height: 0.5rem;
-							background: $cdLightGreen;
-							position: absolute;
-							left: 0;
-							bottom: -1rem;
-							transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
-						}
-
-						&:hover::after {
-							width: 0%;
-							right: 100%;
-						}
-
-						&.disabled,
-						&:disabled {
-							color: #dcdcdc;
-							cursor: not-allowed;
-
-							&::after {
-								background: #dcdcdc;
-							}
-
-							&:hover::after {
-								width: 100%; // Optional: Kein Hover-Effekt bei disabled
-								right: 0;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	.hdg-image-carousel {
-		background: $cdGreen;
-		padding-bottom: 10rem;
-		position: relative;
-
-		.__inner {
-			padding: 5rem 10rem;
-			display: flex;
-			gap: 2rem;
-			align-items: center;
-		}
-	}
-}
-
-.hdg-route {
-	margin: 20rem auto 10rem auto;
-	max-width: 144rem;
-}
-
-footer {
-	background: $cdLightGreen;
-	height: 180px;
-	color: $cdBlack;
-	position: relative;
-
-	.inner {
-		max-width: 144rem;
-		margin: 0 auto;
-		position: relative;
-		top: 7.5rem;
-		display: flex;
-  		flex-direction: column;
-
-		p {
-			color: $cdBlack;
-			text-align: right;
-			font-size: 1.75rem;
-			line-height: 1.5;
-			font-weight: 500;
-			padding: 0;
-			float: right;
-			right: 3rem;
-			position: absolute;
-
-			a {
-				color: $cdGreen;
-				text-decoration: none;
-				font-weight: 700;
-				display: inline-block;
-
-				&::after {
-					content: "";
-					display: block;
-					width: 100%;
-					height: 0.25rem;
-					background: $cdGreen;
-					position: relative;
-					left: 0;
-					bottom: 0;
-					transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
-				}
-
-				&:hover::after {
-					width:0%;
-					right: 100%;
-				}
-			}
-		}
-	}
-
-	&::after {
-		content: "";
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 10rem;
-		background: $cdGreen;
-		clip-path: polygon(0 0, 0 0, 100% 100%, 100% 0);
-		transform: scale(-1, 1)
-	}
 }

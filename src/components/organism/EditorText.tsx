@@ -10,6 +10,7 @@ export function EditorText({ multiLineText, handleText }: EditorTextProps) {
 			<textarea
 				value={multiLineText.join("\n")}
 				onChange={handleText}
+				style={{height: "15rem"}}
 			/>
 		</>
 	);

@@ -15,32 +15,21 @@
  *
  * You should have received a copy of the Affero General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
  *****************************************************************************/
 
-/// <reference types="vite/client" />
+import './Footer.scss';
 
-type ColorSet = {
-	name: string;
-	backgroundColor: string;
-	accentColor: string;
-};
-
-type HighlightColor = {
-	name: string;
-	backgroundColor: string;
-};
-
-type Pictogram = {
-	name: string;
-	path: string;
-};
-
-type PictogramPostion = {
-	x: number,
-	y: number
+export default function Footer() {
+	return (
+		<footer className="hdg-footer">
+			<div className="hdg-footer__inner">
+				<p>
+					Made with ♥︎ by <a href="https://temmi.land">Temmi Pietsch</a>
+					<br/>
+					v0.9.0  ✦ <a href="https://github.com/temmiland/gj-sharepic-creator">GitHub</a> ✦ <a href="./kontakt">Kontakt</a> ✦ <a href="./datenschutz">Datenschutz</a> ✦ <a href="./impressum">Impressum</a>
+				</p>
+			</div>
+		</footer>
+	);
 }
-
-type BackgroundPosition = {
-	displayName: string;
-	value: string;
-};

@@ -1,0 +1,207 @@
+@use '../../../variables' as *;
+@use '../../../fonts' as *;
+
+.hdg-content {
+	.hdg-hero {
+		background: $cdGreen;
+		padding-bottom: 10rem;
+		text-align: left;
+
+		@media (orientation: landscape) and (max-height: 500px) {
+			padding-bottom: 0rem;
+		}
+
+		@media (max-width: 425px) {
+			padding-bottom: 0rem;
+		}
+
+		.__inner {
+			padding: 10rem 10rem 0 10rem;
+
+			@media (orientation: landscape) and (max-height: 500px) {
+				padding: 5rem 5rem 0 5rem;
+			}
+
+			@media (max-width: 425px) {
+				padding: 5rem 5rem 0 5rem;
+			}
+
+			h1 {
+				@extend .wix-madefor-display-800;
+				color: $cdWhite;
+				font-size: 8rem;
+				white-space: pre-line;
+				margin: 0;
+				padding: 0;
+
+				@media (orientation: landscape) and (max-height: 500px) {
+					font-size: 4.25rem;
+				}
+
+				@media (max-width: 425px) {
+					font-size: 4.25rem;
+				}
+
+				span {
+					color: $cdLightGreen;
+				}
+			}
+			p {
+				@extend .wix-madefor-display-400;
+				margin-top: 5rem;
+				margin-bottom: 5rem;
+				font-size: 2.5rem;
+				line-height: 1.5;
+				color: $cdWhite;
+
+				@media (orientation: landscape) and (max-height: 500px) {
+					font-size: 2rem;
+				}
+
+				@media (max-width: 425px) {
+					font-size: 2rem;
+				}
+
+				span {
+					color: $cdLightGreen;
+				}
+			}
+
+			.__buttons {
+				display: flex;
+				gap: 3.5rem;
+
+				@media (orientation: landscape) and (max-height: 500px) {
+					flex-direction: column;
+					gap: 3rem;
+				}
+
+				@media (max-width: 425px) {
+					flex-direction: column;
+					gap: 3rem;
+				}
+
+				.__button {
+					max-width: max-content;
+
+					@media (orientation: landscape) and (max-height: 500px) {
+						display: flex;
+						flex-direction: column;
+					}
+
+					button {
+						@extend .wix-madefor-display-600;
+						border: 0;
+						border-radius: 0;
+						appearance: none;
+						cursor: pointer;
+						background: transparent;
+						color: $cdWhite;
+						margin-top: 1rem;
+						padding: 0;
+						font-size: 2.5rem;
+						position: relative;
+
+						@media (orientation: landscape) and (max-height: 500px) {
+							font-size: 2rem;
+						}
+
+						@media (max-width: 380px) {
+							font-size: 2.25rem;
+						}
+
+						@media (max-width: 340px) {
+							font-size: 1.8rem;
+						}
+
+						&::after {
+							content: "";
+							display: block;
+							width: 100%;
+							height: 0.5rem;
+							background: $cdLightGreen;
+							position: absolute;
+							left: 0;
+							bottom: -1rem;
+							transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+						}
+
+						&:hover::after {
+							width: 0%;
+							right: 100%;
+						}
+
+						&.disabled,
+						&:disabled {
+							color: #dcdcdc;
+							cursor: not-allowed;
+
+							&::after {
+								background: #dcdcdc;
+							}
+
+							&:hover::after {
+								width: 100%; // Optional: Kein Hover-Effekt bei disabled
+								right: 0;
+							}
+						}
+					}
+
+					span {
+						font-family: 'Wix Madefor Display', sans-serif;
+						font-size: 1.5rem;
+						color: #a9a9a9;
+						margin-left: 1rem;
+						font-weight: 700;
+						background: #fff;
+						border-radius: 2rem;
+						padding: 0.5rem 1rem;
+						display: inline-block;
+
+						@media (orientation: landscape) and (max-height: 500px) {
+							margin: 2rem 0;
+							font-size: 1.25rem;
+							width: max-content;
+						}
+
+						@media (max-width: 425px) {
+							margin: 2rem 0;
+						}
+					}
+				}
+			}
+		}
+	}
+	.hdg-image-carousel {
+		background: $cdGreen;
+		position: relative;
+
+		.__inner {
+			padding: 5rem 10rem;
+			display: flex;
+			gap: 2rem;
+			align-items: center;
+
+			img.story {
+				width: 32rem;
+				height: 55rem;
+				object-fit: cover;
+
+				@media (max-width: 425px) {
+					width: 16rem;
+					height: 26.5rem;
+				}
+			}
+
+			img.sharepic {
+				width: 32rem;
+				height: 40rem;
+
+				@media (max-width: 425px) {
+					width: 16rem;
+					height: 20rem;
+				}
+			}
+		}
+	}
+}

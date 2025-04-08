@@ -1,58 +1,54 @@
-import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, StrictMode } from 'react';
+/******************************************************************************
+ * gj-sharepic-creator
+ * Copyright (c) 2025 temmiland
+ *
+ * Licensed under the Affero General Public License (AGPL) Version 3.0;
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *     https://gjshare.pics/license
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * Affero General Public License for more details.
+ *
+ * You should have received a copy of the Affero General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ *****************************************************************************/
+
+import React from 'react';
 import { createRoot } from 'react-dom/client';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router";
-import { SharePicProvider } from './context/SharePicContext.tsx';
-import GjSharePicGenerator from './GjSharePicGenerator.tsx';
-import './main.scss';
-import { Header } from './components/organism/Header/index.tsx';
+import { createBrowserRouter, RouterProvider } from "react-router";
+import Route from './components/templates/Route/index.tsx';
 import { Content } from './components/organism/Content/index.tsx';
+import { SharePicProvider } from './context/SharePicContext.tsx';
+import GjSharePicGenerator from './components/pages/GjSharePicGenerator/index.tsx';
+import './main.scss';
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-		<Route>
-			<Content />
-		</Route>
-	),
-  },
-  {
-	path: "/sharepic",
-	element: (
-		<Route>
-			<SharePicProvider>
-				<GjSharePicGenerator />
-			</SharePicProvider>
-		</Route>
-	)
-  }
+	{
+		path: "/",
+		element: (
+			<Route>
+				<Content />
+			</Route>
+		),
+	},
+	{
+		path: "/sharepics",
+		element: (
+			<Route>
+				<SharePicProvider>
+					<GjSharePicGenerator />
+				</SharePicProvider>
+			</Route>
+		)
+	}
 ]);
 
-function Route({children}: {children: ReactNode | ReactElement<any, string | JSXElementConstructor<any>> | ReactPortal | boolean | null | undefined}) {
-	return (
-		<>
-			<Header />
-			<div className="hdg-route">
-				{children}
-			</div>
-			<footer>
-				<div className="inner">
-					<p>
-						Made with ♥︎ by <a href="https://temmi.land">Temmi Pietsch</a>
-						<br/>
-						v0.9.0  ✦ <a href="https://github.com/temmiland/gj-sharepic-creator">GitHub</a> ✦ <a href="./kontakt">Kontakt</a> ✦ <a href="./datenschutz">Datenschutz</a> ✦ <a href="./impressum">Impressum</a>
-					</p>
-				</div>
-			</footer>
-		</>
-	);
-}
-
 createRoot(document.getElementById('root')!).render(
-	<StrictMode>
+	<React.StrictMode>
 		<RouterProvider router={router}/>
-	</StrictMode>,
-)
+	</React.StrictMode>,
+);

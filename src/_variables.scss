@@ -17,30 +17,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *****************************************************************************/
 
-/// <reference types="vite/client" />
-
-type ColorSet = {
-	name: string;
-	backgroundColor: string;
-	accentColor: string;
-};
-
-type HighlightColor = {
-	name: string;
-	backgroundColor: string;
-};
-
-type Pictogram = {
-	name: string;
-	path: string;
-};
-
-type PictogramPostion = {
-	x: number,
-	y: number
-}
-
-type BackgroundPosition = {
-	displayName: string;
-	value: string;
-};
+ /* Corporate Design – Hex codes */
+$cdWhite: #ffffff;
+$cdBlack: #000000;
+$cdLightGreen: #c7ff7a;
+$cdGreen: #33c270;
+$cdLavendel: #9f88ff;
+$cdPink: #f28ade;
+$cdApricot: #ff8568;
