@@ -25,10 +25,6 @@ export default function Privacy() {
 		<div className="hdg-privacy">
 			<div className="hdg-privacy__inner">
 				<h1>Datenschutz</h1>
-				<p>
-					{ 'The legal information on my website is available only in German.' }
-					{ ' Please feel free to contact me with any inquiries.' }
-				</p>
 				<h2>
 					{ '1. Datenschutz auf einen Blick' }
 				</h2>
