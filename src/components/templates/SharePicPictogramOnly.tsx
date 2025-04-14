@@ -25,6 +25,7 @@ export default function SharePicTextOnly() {
 				highlightColor: highlightColors[0],
 				colorSet: colorSets[3],
 				backgroundImage: null,
+				backgroundImageUploaded: false,
 				backgroundPosition: backgroundPositions[0],
 				backgroundBlur: 0.2,
 				pictogram: pictograms.find(pictogram => pictogram.name == 'Streikfaust') as Pictogram,
@@ -35,6 +36,7 @@ export default function SharePicTextOnly() {
 
 	return(
 		<SharePicCanvas
+			backgroundImageUploaded={state.backgroundImageUploaded}
 			backgroundImage={state.backgroundImage}
 			backgroundPosition={state.backgroundPosition}
 			backgroundBlur={state.backgroundBlur}

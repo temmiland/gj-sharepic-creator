@@ -1,3 +1,4 @@
+import React from 'react';
 import Input from '../atoms/Input';
 import './ColorPicker.scss';
 
@@ -9,9 +10,8 @@ type ColorPickerProps = {
 
 function ColorPicker({ colors, color, handleColor }: ColorPickerProps) {
 	return colors.map((c, i) => (
-		<>
+		<React.Fragment key={`cp-${colors.length}-${i}`}>
 				<div
-					key={'highlightColor' + c.name}
 					className="color-picker-wrapper"
 					style={{ background: c.backgroundColor }}
 				>
@@ -25,7 +25,7 @@ function ColorPicker({ colors, color, handleColor }: ColorPickerProps) {
 					</label>
 				</div>
 				{ i === 6 ? <br /> : ''}
-			</>
+			</React.Fragment>
 	));
 }
 

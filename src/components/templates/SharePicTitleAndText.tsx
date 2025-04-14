@@ -27,6 +27,7 @@ export default function SharePicTitleAndText() {
 				highlightColor: highlightColors[0],
 				colorSet: colorSets[1],
 				backgroundImage: null,
+				backgroundImageUploaded: false,
 				backgroundPosition: backgroundPositions[0],
 				backgroundBlur: 0.2,
 				pictogram: null,
@@ -37,6 +38,7 @@ export default function SharePicTitleAndText() {
 
 	return(
 		<SharePicCanvas
+			backgroundImageUploaded={state.backgroundImageUploaded}
 			backgroundImage={state.backgroundImage}
 			backgroundPosition={state.backgroundPosition}
 			backgroundBlur={state.backgroundBlur}

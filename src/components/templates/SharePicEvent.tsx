@@ -27,6 +27,7 @@ export default function SharePicEvent() {
 				highlightColor: highlightColors[0],
 				colorSet: colorSets[5],
 				backgroundImage: "./event_bg.jpg",
+				backgroundImageUploaded: false,
 				backgroundPosition: backgroundPositions[0],
 				backgroundBlur: 0,
 				pictogram: null,
@@ -37,6 +38,7 @@ export default function SharePicEvent() {
 
 	return(
 		<SharePicCanvas
+			backgroundImageUploaded={state.backgroundImageUploaded}
 			backgroundImage={state.backgroundImage}
 			backgroundPosition={state.backgroundPosition}
 			backgroundBlur={state.backgroundBlur}

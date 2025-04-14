@@ -27,6 +27,7 @@ export default function SharePicTitleOnly() {
 				highlightColor: highlightColors[0],
 				colorSet: colorSets[4],
 				backgroundImage: null,
+				backgroundImageUploaded: false,
 				backgroundPosition: backgroundPositions[0],
 				backgroundBlur: 0.2,
 				pictogram: pictograms.find(pictogram => pictogram.name == 'Banner') as Pictogram,
@@ -38,6 +39,7 @@ export default function SharePicTitleOnly() {
 
 	return(
 		<SharePicCanvas
+			backgroundImageUploaded={state.backgroundImageUploaded}
 			backgroundImage={state.backgroundImage}
 			backgroundPosition={state.backgroundPosition}
 			backgroundBlur={state.backgroundBlur}

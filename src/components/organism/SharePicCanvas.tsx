@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { colorSets } from "../../constants/colors";
 
 type SharePicCanvasProps = {
+	backgroundImageUploaded: boolean;
 	backgroundImage: string | null;
 	backgroundPosition: BackgroundPosition;
 	backgroundBlur: number;
@@ -10,11 +11,11 @@ type SharePicCanvasProps = {
 	children: React.ReactNode;
 };
 
-export function SharePicCanvas({ backgroundImage, backgroundPosition, backgroundBlur, colorSet, handleColorSet, children }: SharePicCanvasProps) {
+export function SharePicCanvas({ backgroundImageUploaded, backgroundImage, backgroundPosition, backgroundBlur, colorSet, handleColorSet, children }: SharePicCanvasProps) {
 
 	useEffect(() => {
 		const calculateAndSetColorSet = async () => {
-			if (backgroundImage) {
+			if (backgroundImageUploaded && backgroundImage) {
 				try {
 					const colorSet = await calculateColorSetOnImageBrightness(backgroundImage);
 					handleColorSet(colorSet);
@@ -63,8 +64,6 @@ export function SharePicCanvas({ backgroundImage, backgroundPosition, background
 		return new Promise((resolve, reject) => {
 			const image = new Image();
 			image.src = base64Image;
-			console.log(base64Image);
-
 
 			image.onload = () => {
 				const brightness = calculateImageBrightness(image);

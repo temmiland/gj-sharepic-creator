@@ -29,11 +29,13 @@ export default function EditorEvent() {
 			<EditorBackgroundImage
 				handleBackgroundImage={(base64File: string) => dispatch({
 					type: "SET_BACKGROUND_IMAGE",
-					payload: base64File
+					payload: base64File,
+					uploaded: true,
 				})}
 				handleFileDelete={() => dispatch({
 					type: "SET_BACKGROUND_IMAGE",
-					payload: null
+					payload: null,
+					uploaded: false,
 				})}
 			/>
 

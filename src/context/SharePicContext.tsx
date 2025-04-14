@@ -31,6 +31,7 @@ interface SharePicState {
 	highlightColor: HighlightColor;
 	colorSet: ColorSet;
 	backgroundImage: string | null;
+	backgroundImageUploaded: boolean;
 	backgroundPosition: BackgroundPosition;
 	backgroundBlur: number;
 	pictogram: Pictogram | null;
@@ -47,7 +48,7 @@ type SharePicAction =
 	| { type: "SET_HEADING_TOP_OR_BOTTOM"; payload: boolean }
 	| { type: "SET_HIGHLIGHT_COLOR"; payload: HighlightColor }
 	| { type: "SET_COLOR_SET"; payload: ColorSet }
-	| { type: "SET_BACKGROUND_IMAGE"; payload: string | null }
+	| { type: "SET_BACKGROUND_IMAGE"; payload: string | null, uploaded?: boolean }
 	| { type: "SET_BACKGROUND_POSITION"; payload: BackgroundPosition }
 	| { type: "SET_BACKGROUND_BLUR"; payload: number }
 	| { type: "SET_PICTOGRAM"; payload: Pictogram | null }
@@ -74,7 +75,11 @@ const sharePicReducer = (state: SharePicState, action: SharePicAction): SharePic
 		case "SET_COLOR_SET":
 			return { ...state, colorSet: action.payload };
 		case "SET_BACKGROUND_IMAGE":
-			return { ...state, backgroundImage: action.payload };
+			return {
+				...state,
+				backgroundImage: action.payload,
+				backgroundImageUploaded: !!action.uploaded
+			};
 		case "SET_BACKGROUND_POSITION":
 			return { ...state, backgroundPosition: action.payload };
 		case "SET_BACKGROUND_BLUR":
@@ -98,6 +103,7 @@ const initialState: SharePicState = {
 	highlightColor: highlightColors[0],
 	colorSet: colorSets[1],
 	backgroundImage: null,
+	backgroundImageUploaded: false,
 	backgroundPosition: backgroundPositions[0],
 	backgroundBlur: 0.2,
 	pictogram: null,
