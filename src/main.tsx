@@ -24,6 +24,9 @@ import Route from './components/templates/Route/index.tsx';
 import { Content } from './components/organism/Content/index.tsx';
 import { SharePicProvider } from './context/SharePicContext.tsx';
 import GjSharePicGenerator from './components/pages/GjSharePicGenerator/index.tsx';
+import Privacy from './components/pages/Privacy/index.tsx';
+import Contact from './components/pages/Contact/index.tsx';
+import Imprint from './components/pages/Imprint/index.tsx';
 import './main.scss';
 
 const router = createBrowserRouter([
@@ -42,6 +45,30 @@ const router = createBrowserRouter([
 				<SharePicProvider>
 					<GjSharePicGenerator />
 				</SharePicProvider>
+			</Route>
+		)
+	},
+	{
+		path: "/kontakt",
+		element: (
+			<Route>
+				<Contact />
+			</Route>
+		)
+	},
+	{
+		path: "/datenschutz",
+		element: (
+			<Route>
+				<Privacy />
+			</Route>
+		)
+	},
+	{
+		path: "/impressum",
+		element: (
+			<Route>
+				<Imprint />
 			</Route>
 		)
 	}

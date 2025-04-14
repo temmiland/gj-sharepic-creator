@@ -3,9 +3,9 @@
 
 .inner {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
-	padding: 5rem;
-	gap: 10rem;
+	grid-template-columns: 0.5fr 1fr;
+	padding: 0 5rem;
+	gap: 5rem;
 	justify-content: center;
 
 	@media (orientation: landscape) and (max-height: 500px) {
@@ -39,7 +39,8 @@
 
 	&.sticky {
 		position: sticky;
-		top: 0;
+		top: 15rem;
+		right: 5rem;
 		z-index: 10;
 		align-self: start;
 	}
@@ -48,6 +49,7 @@
 .sharepic-canvas {
 	width: 360px;
 	height: 450px;
+	overflow: hidden;
 }
 
 

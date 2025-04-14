@@ -1,0 +1,163 @@
+/******************************************************************************
+ * gj-sharepic-creator
+ * Copyright (c) 2025 temmiland
+ *
+ * Licensed under the Affero General Public License (AGPL) Version 3.0;
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *     https://gjshare.pics/license
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * Affero General Public License for more details.
+ *
+ * You should have received a copy of the Affero General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************/
+@use '../../../variables' as *;
+@use '../../../fonts' as *;
+
+.hdg-privacy {
+	.hdg-privacy__inner {
+		padding: 10rem 10rem 0 10rem;
+
+		@media (orientation: landscape) and (max-height: 500px) {
+			padding: 5rem 5rem 0 5rem;
+		}
+
+		@media (max-width: 425px) {
+			padding: 5rem 5rem 0 5rem;
+		}
+
+		h1 {
+			@extend .wix-madefor-display-800;
+			color: $cdWhite;
+			font-size: 8rem;
+			white-space: pre-line;
+			margin: 0;
+			padding: 0;
+
+			@media (orientation: landscape) and (max-height: 500px) {
+				font-size: 4.25rem;
+			}
+
+			@media (max-width: 425px) {
+				font-size: 4.25rem;
+			}
+
+			span {
+				color: $cdLightGreen;
+			}
+		}
+
+		h2 {
+			@extend .wix-madefor-display-800;
+			color: $cdWhite;
+			font-size: 5rem;
+			white-space: pre-line;
+			padding: 0;
+			margin: 5rem 0 2.5rem 0;
+
+			@media (orientation: landscape) and (max-height: 500px) {
+				font-size: 3.25rem;
+			}
+
+			@media (max-width: 425px) {
+				font-size: 3.25rem;
+			}
+
+			span {
+				color: $cdLightGreen;
+			}
+		}
+
+		h3 {
+			@extend .wix-madefor-display-800;
+			color: $cdWhite;
+			font-size: 3.5rem;
+			white-space: pre-line;
+			padding: 0;
+			margin: 5rem 0 2.5rem 0;
+
+			@media (orientation: landscape) and (max-height: 500px) {
+				font-size: 3.25rem;
+			}
+
+			@media (max-width: 425px) {
+				font-size: 3.25rem;
+			}
+
+			span {
+				color: $cdLightGreen;
+			}
+		}
+
+		h4 {
+			@extend .wix-madefor-display-800;
+			color: $cdWhite;
+			font-size: 2.75rem;
+			white-space: pre-line;
+			padding: 0;
+			margin: 5rem 0 2.5rem 0;
+
+			@media (orientation: landscape) and (max-height: 500px) {
+				font-size: 3.25rem;
+			}
+
+			@media (max-width: 425px) {
+				font-size: 3.25rem;
+			}
+
+			span {
+				color: $cdLightGreen;
+			}
+		}
+
+		p {
+			@extend .wix-madefor-display-400;
+			font-size: 2.5rem;
+			line-height: 1.5;
+			color: $cdWhite;
+
+			@media (orientation: landscape) and (max-height: 500px) {
+				font-size: 2rem;
+			}
+
+			@media (max-width: 425px) {
+				font-size: 2rem;
+			}
+
+			span {
+				color: $cdLightGreen;
+			}
+
+			a {
+				display: inline-block;
+				cursor: pointer;
+				text-decoration: none;
+				font-weight: 700;
+				color: $cdLightGreen;
+
+				&::after {
+					content: "";
+					width: 100%;
+					height: 0.25rem;
+					position: relative;
+					left: 0;
+					bottom: 0;
+					display: block;
+					background: $cdLightGreen;
+					transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+				}
+
+				&:hover::after {
+					width: 0%;
+					right: 100%;
+				}
+			}
+		}
+	}
+}

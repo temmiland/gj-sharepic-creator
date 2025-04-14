@@ -29,14 +29,12 @@ body {
 	padding: 0;
 	width: 100%;
 	min-width: 320px;
-	min-height: 100vh;
 	display: grid;
-	place-items: center;
 	font-family: "Wix Madefor Display", system-ui, Avenir, Helvetica, Arial, sans-serif;
 	font-weight: 400;
 	line-height: 1.5;
 	color: rgba(0, 0, 0, 0.87);
-	background-color: $cdGreen;
+	background-color: $cdLightGreen;
 
 	color-scheme: light dark;
 	font-synthesis: none;
@@ -49,4 +47,5 @@ body {
 	width: 100%;
 	margin: 0 auto;
 	overflow: hidden;
+	background-color: $cdGreen;
 }

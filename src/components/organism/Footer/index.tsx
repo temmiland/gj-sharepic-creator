@@ -18,16 +18,18 @@
  *
  *****************************************************************************/
 
+import { useNavigate } from 'react-router';
 import './Footer.scss';
 
 export default function Footer() {
+	const navigate = useNavigate();
 	return (
 		<footer className="hdg-footer">
 			<div className="hdg-footer__inner">
 				<p>
-					Made with ♥︎ by <a href="https://temmi.land">Temmi Pietsch</a>
+					Made with ♥︎ by <a target="_blank" rel="noopener noreferrer" href="https://temmi.land">Temmi Pietsch</a>
 					<br/>
-					v0.9.0  ✦ <a href="https://github.com/temmiland/gj-sharepic-creator">GitHub</a> ✦ <a href="./kontakt">Kontakt</a> ✦ <a href="./datenschutz">Datenschutz</a> ✦ <a href="./impressum">Impressum</a>
+					v0.9.0  ✦ <a target="_blank" rel="noopener noreferrer" href="https://github.com/temmiland/gj-sharepic-creator">GitHub</a> ✦ <a onClick={() => navigate("/kontakt")}>Kontakt</a> ✦ <a onClick={() => navigate("/datenschutz")}>Datenschutz</a> ✦ <a onClick={() => navigate("/impressum")}>Impressum</a>
 				</p>
 			</div>
 		</footer>

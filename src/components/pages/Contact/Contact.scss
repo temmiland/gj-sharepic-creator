@@ -1,0 +1,115 @@
+/******************************************************************************
+ * gj-sharepic-creator
+ * Copyright (c) 2025 temmiland
+ *
+ * Licensed under the Affero General Public License (AGPL) Version 3.0;
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *     https://gjshare.pics/license
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * Affero General Public License for more details.
+ *
+ * You should have received a copy of the Affero General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *****************************************************************************/
+@use '../../../variables' as *;
+@use '../../../fonts' as *;
+
+.hdg-contact {
+	.hdg-contact__inner {
+		padding: 10rem 10rem 0 10rem;
+
+		@media (orientation: landscape) and (max-height: 500px) {
+			padding: 5rem 5rem 0 5rem;
+		}
+
+		@media (max-width: 425px) {
+			padding: 5rem 5rem 0 5rem;
+		}
+
+		h1 {
+			@extend .wix-madefor-display-800;
+			color: $cdWhite;
+			font-size: 8rem;
+			white-space: pre-line;
+			margin: 0;
+			padding: 0;
+
+			@media (orientation: landscape) and (max-height: 500px) {
+				font-size: 4.25rem;
+			}
+
+			@media (max-width: 425px) {
+				font-size: 4.25rem;
+			}
+
+			span {
+				color: $cdLightGreen;
+			}
+		}
+		p {
+			@extend .wix-madefor-display-400;
+			margin-top: 5rem;
+			margin-bottom: 5rem;
+			font-size: 2.5rem;
+			line-height: 1.5;
+			color: $cdWhite;
+
+			@media (orientation: landscape) and (max-height: 500px) {
+				font-size: 2rem;
+			}
+
+			@media (max-width: 425px) {
+				font-size: 2rem;
+			}
+
+			span {
+				color: $cdLightGreen;
+			}
+		}
+		ol.hdg-contact__list {
+			list-style: none;
+			margin-top: 7.5rem;
+			padding: 0;
+
+			a {
+				text-decoration: none;
+			}
+
+			li {
+				display: flex;
+				background: $cdLightGreen;
+				margin-top: 1rem;
+
+				.hdg-contact__list-icon {
+					margin-left: 3rem;
+					width: 7rem;
+				}
+
+				p {
+					margin: 3.25rem 4rem;
+					@extend .wix-madefor-display-600;
+					font-size: 3rem;
+					color: $cdBlack;
+				}
+
+				.hdg-contact__list-arrow {
+					width: 7rem;
+					margin-right: 3rem;
+					margin-left: auto;
+				}
+
+				&:hover {
+					cursor: pointer;
+					transform: scale(1.05);
+					transition: background 0.3s ease-in-out, left 0.3s ease-in-out, transform 0.3s ease-in-out, left 0.3s ease-in-out;
+				}
+			}
+		}
+	}
+}
