@@ -76,6 +76,12 @@
 					gap: 3rem;
 				}
 
+
+				@media (orientation: portrait) and (max-width: 800px) {
+					display: flex;
+					flex-direction: column;
+				}
+
 				@media (max-width: 425px) {
 					flex-direction: column;
 					gap: 3rem;
@@ -157,6 +163,12 @@
 						border-radius: 2rem;
 						padding: 0.5rem 1rem;
 						display: inline-block;
+
+						@media (max-width: 895px) {
+							margin: 2rem 0;
+							display: block;
+							width: max-content;
+						}
 
 						@media (orientation: landscape) and (max-height: 500px) {
 							margin: 2rem 0;
