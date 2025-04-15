@@ -28,6 +28,7 @@ export default function SharePicTextOnly() {
 				backgroundImageUploaded: false,
 				backgroundPosition: backgroundPositions[0],
 				backgroundBlur: 0.2,
+				backgroundBrightness: 100,
 				pictogram: pictograms.find(pictogram => pictogram.name == 'Streikfaust') as Pictogram,
 				pictogramPosition: { x: 95, y: 125 },
 			}
@@ -40,6 +41,7 @@ export default function SharePicTextOnly() {
 			backgroundImage={state.backgroundImage}
 			backgroundPosition={state.backgroundPosition}
 			backgroundBlur={state.backgroundBlur}
+			backgroundBrightness={state.backgroundBrightness}
 			colorSet={state.colorSet}
 			handleColorSet={(colorSet: ColorSet) => dispatch({
 				type: "SET_COLOR_SET",

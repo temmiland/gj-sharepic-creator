@@ -11,6 +11,7 @@ import { EditorBackgroundImage } from "../organism/EditorBackgroundImage";
 import { EditorBackgroundPosition } from "../organism/EditorBackgroundPosition";
 import { backgroundPositions } from "../../constants/background-positions";
 import { EditorBackgroundBlur } from "../organism/EditorBackgroundBlur";
+import { EditorBackgroundBrightness } from "../organism/EditorBackgroundBrightness";
 
 export default function EditorTitleAndText() {
 	const { state, dispatch } = useSharePic();
@@ -49,6 +50,14 @@ export default function EditorTitleAndText() {
 				blur={state.backgroundBlur}
 				handleBlur={(e: { target: { value: any; }; }) => dispatch({
 					type: "SET_BACKGROUND_BLUR",
+					payload: e.target.value
+				})}
+			/>
+
+			<EditorBackgroundBrightness
+				brightness={state.backgroundBrightness}
+				handleBrightness={(e: { target: { value: any; }; }) => dispatch({
+					type: "SET_BACKGROUND_BRIGHTNESS",
 					payload: e.target.value
 				})}
 			/>

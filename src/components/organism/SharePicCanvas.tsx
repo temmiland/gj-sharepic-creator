@@ -6,12 +6,13 @@ type SharePicCanvasProps = {
 	backgroundImage: string | null;
 	backgroundPosition: BackgroundPosition;
 	backgroundBlur: number;
+	backgroundBrightness: number;
 	colorSet: ColorSet;
 	handleColorSet: (colorSet: ColorSet) => void;
 	children: React.ReactNode;
 };
 
-export function SharePicCanvas({ backgroundImageUploaded, backgroundImage, backgroundPosition, backgroundBlur, colorSet, handleColorSet, children }: SharePicCanvasProps) {
+export function SharePicCanvas({ backgroundImageUploaded, backgroundImage, backgroundPosition, backgroundBlur, backgroundBrightness, colorSet, handleColorSet, children }: SharePicCanvasProps) {
 
 	useEffect(() => {
 		const calculateAndSetColorSet = async () => {
@@ -100,7 +101,7 @@ export function SharePicCanvas({ backgroundImageUploaded, backgroundImage, backg
 					height: '490px',
 					objectFit: 'cover',
 					objectPosition: backgroundPosition.value,
-					filter: `blur(${backgroundBlur}rem)`,
+					filter: `blur(${backgroundBlur}rem) brightness(${backgroundBrightness}%)`,
 					zIndex: 1,
 				}}
 			/>

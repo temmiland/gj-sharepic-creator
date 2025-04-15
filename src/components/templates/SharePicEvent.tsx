@@ -30,6 +30,7 @@ export default function SharePicEvent() {
 				backgroundImageUploaded: false,
 				backgroundPosition: backgroundPositions[0],
 				backgroundBlur: 0,
+				backgroundBrightness: 100,
 				pictogram: null,
 				pictogramPosition: { x: 175, y: 225 },
 			}
@@ -42,6 +43,7 @@ export default function SharePicEvent() {
 			backgroundImage={state.backgroundImage}
 			backgroundPosition={state.backgroundPosition}
 			backgroundBlur={state.backgroundBlur}
+			backgroundBrightness={state.backgroundBrightness}
 			colorSet={state.colorSet}
 			handleColorSet={(colorSet: ColorSet) => dispatch({
 				type: "SET_COLOR_SET",
