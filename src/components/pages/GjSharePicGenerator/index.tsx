@@ -45,7 +45,7 @@ export default function GjSharePicGenerator() {
 
   	const [selectedTemplate, setSelectedTemplate] = useState<keyof typeof templates>('titleOnly');
 
-	const handleDownload = () => {
+	/*const handleDownload = () => {
 		const node = document.getElementById('sharepic-download');
 		if (node) {
 			domToPng(node, {
@@ -57,6 +57,21 @@ export default function GjSharePicGenerator() {
 				link.download = `gj-sharepic-${new Date().toISOString()}.png`;
 				link.href = dataUrl;
 				link.click();
+			});
+		}
+	};*/
+
+	const handlePreview = () => {
+		const node = document.getElementById('sharepic-download');
+		if (node) {
+			domToPng(node, {
+				height: 1350,
+				width: 1080,
+				style: { transform: 'scale(3, 3)', transformOrigin: 'top left' },
+			}).then((dataUrl: string) => {
+				const img = document.getElementById('test') as HTMLImageElement;
+				img.src = dataUrl;
+				img.style.width = '360px';
 			});
 		}
 	};
@@ -75,7 +90,9 @@ export default function GjSharePicGenerator() {
 							SharePicComponent && (<SharePicComponent />)
 						}
 					</div>
-					<Button onClick={handleDownload}>Download</Button>
+					<Button onClick={handlePreview}>Grafik erstellen</Button>
+					<h2>Vorschau:</h2>
+					<img id='test' />
 				</div>
 
 				<div className='container'>
