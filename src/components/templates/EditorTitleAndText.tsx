@@ -12,106 +12,117 @@ import { EditorBackgroundPosition } from "../organism/EditorBackgroundPosition";
 import { backgroundPositions } from "../../constants/background-positions";
 import { EditorBackgroundBlur } from "../organism/EditorBackgroundBlur";
 import { EditorBackgroundBrightness } from "../organism/EditorBackgroundBrightness";
+import Details from "../atoms/Details";
 
 export default function EditorTitleAndText() {
 	const { state, dispatch } = useSharePic();
 
 	return (
 		<>
-			<EditorColorSet
-				colorSets={colorSets}
-				colorSet={state.colorSet}
-				handleColorSet={(e: { target: { value: string; }; }) => dispatch({
-					type: "SET_COLOR_SET",
-					payload: colorSets.find((c) => c.name === e.target.value)!!,
-				})}
-			/>
+			<Details summary="Farben">
+				<EditorColorSet
+					colorSets={colorSets}
+					colorSet={state.colorSet}
+					handleColorSet={(e: { target: { value: string; }; }) => dispatch({
+						type: "SET_COLOR_SET",
+						payload: colorSets.find((c) => c.name === e.target.value)!!,
+					})}
+				/>
 
-			<EditorBackgroundImage
-				handleBackgroundImage={(base64File: string) => dispatch({
-					type: "SET_BACKGROUND_IMAGE",
-					payload: base64File
-				})}
-				handleFileDelete={() => dispatch({
-					type: "SET_BACKGROUND_IMAGE",
-					payload: null
-				})}
-			/>
+				<EditorHighlightColor
+					highlightColors={highlightColors}
+					highlightColor={state.highlightColor}
+					handleHighlightColor={(e: { target: { value: string; }; }) => dispatch({
+						type: "SET_HIGHLIGHT_COLOR",
+						payload: highlightColors.find((c) => c.name === e.target.value)!!,
+					})}
+				/>
+			</Details>
 
-			<EditorBackgroundPosition
-				position={state.backgroundPosition}
-				handlePosition={(e: { target: { value: any; }; }) => dispatch({
-					type: "SET_BACKGROUND_POSITION",
-					payload: backgroundPositions.find((bP) => bP.value === e.target.value)!!,
-				})}
-			/>
+			<Details summary="Hintergrund">
+				<EditorBackgroundImage
+					handleBackgroundImage={(base64File: string) => dispatch({
+						type: "SET_BACKGROUND_IMAGE",
+						payload: base64File
+					})}
+					handleFileDelete={() => dispatch({
+						type: "SET_BACKGROUND_IMAGE",
+						payload: null
+					})}
+				/>
 
-			<EditorBackgroundBlur
-				blur={state.backgroundBlur}
-				handleBlur={(e: { target: { value: any; }; }) => dispatch({
-					type: "SET_BACKGROUND_BLUR",
-					payload: e.target.value
-				})}
-			/>
+				<EditorBackgroundPosition
+					position={state.backgroundPosition}
+					handlePosition={(e: { target: { value: any; }; }) => dispatch({
+						type: "SET_BACKGROUND_POSITION",
+						payload: backgroundPositions.find((bP) => bP.value === e.target.value)!!,
+					})}
+				/>
 
-			<EditorBackgroundBrightness
-				brightness={state.backgroundBrightness}
-				handleBrightness={(e: { target: { value: any; }; }) => dispatch({
-					type: "SET_BACKGROUND_BRIGHTNESS",
-					payload: e.target.value
-				})}
-			/>
+				<EditorBackgroundBlur
+					blur={state.backgroundBlur}
+					handleBlur={(e: { target: { value: any; }; }) => dispatch({
+						type: "SET_BACKGROUND_BLUR",
+						payload: e.target.value
+					})}
+				/>
 
-			<EditorLogoLocalGroup
-				localGroup={state.localGroup}
-				handleLocalGroup={(e: { target: { value: any; }; }) => dispatch({
-					type: "SET_LOCAL_GROUP",
-					payload: e.target.value
-				})}
-			/>
+				<EditorBackgroundBrightness
+					brightness={state.backgroundBrightness}
+					handleBrightness={(e: { target: { value: any; }; }) => dispatch({
+						type: "SET_BACKGROUND_BRIGHTNESS",
+						payload: e.target.value
+					})}
+				/>
+			</Details>
 
-			<EditorLogoVisible
-				visible={state.logoVisible}
-				handleVisibility={() => dispatch({
-					type: "SET_LOGO_VISIBLE",
-					payload: !state.logoVisible
-				})}
-			/>
 
-			<EditorArrowVisible
-				visible={state.arrowVisible}
-				handleVisibility={() => dispatch({
-					type: "SET_ARROW_VISIBLE",
-					payload: !state.arrowVisible
-				})}
-			/>
 
-			<EditorHeading
-				multiLineText={state.heading}
-				maxCharsPerLine={20}
-				maxLines={3}
-				handleHeading={(e: { target: { value: any; }; }) => dispatch({
-					type: "SET_HEADING",
-					payload: e.target.value.split(/\r?\n/).slice(0, 5)
-				})}
-			/>
+			<Details summary="Logo & Pfeil">
+				<EditorLogoLocalGroup
+					localGroup={state.localGroup}
+					handleLocalGroup={(e: { target: { value: any; }; }) => dispatch({
+						type: "SET_LOCAL_GROUP",
+						payload: e.target.value
+					})}
+				/>
 
-			<EditorText
-				multiLineText={state.text}
-				handleText={(e: { target: { value: any; }; }) => dispatch({
-					type: "SET_TEXT",
-					payload: e.target.value.split(/\r?\n/)
-				})}
-			/>
+				<EditorLogoVisible
+					visible={state.logoVisible}
+					handleVisibility={() => dispatch({
+						type: "SET_LOGO_VISIBLE",
+						payload: !state.logoVisible
+					})}
+				/>
 
-			<EditorHighlightColor
-				highlightColors={highlightColors}
-				highlightColor={state.highlightColor}
-				handleHighlightColor={(e: { target: { value: string; }; }) => dispatch({
-					type: "SET_HIGHLIGHT_COLOR",
-					payload: highlightColors.find((c) => c.name === e.target.value)!!,
-				})}
-			/>
+				<EditorArrowVisible
+					visible={state.arrowVisible}
+					handleVisibility={() => dispatch({
+						type: "SET_ARROW_VISIBLE",
+						payload: !state.arrowVisible
+					})}
+				/>
+			</Details>
+
+			<Details summary="Inhalte">
+				<EditorHeading
+					multiLineText={state.heading}
+					maxCharsPerLine={20}
+					maxLines={3}
+					handleHeading={(e: { target: { value: any; }; }) => dispatch({
+						type: "SET_HEADING",
+						payload: e.target.value.split(/\r?\n/).slice(0, 5)
+					})}
+				/>
+
+				<EditorText
+					multiLineText={state.text}
+					handleText={(e: { target: { value: any; }; }) => dispatch({
+						type: "SET_TEXT",
+						payload: e.target.value.split(/\r?\n/)
+					})}
+				/>
+			</Details>
 		</>
 	);
 }

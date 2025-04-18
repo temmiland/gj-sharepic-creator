@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { domToPng } from 'modern-screenshot'
+import { domToPng } from 'modern-screenshot';
 import Button from '../../atoms/Button';
 import SharePicTitleOnly from '../../templates/SharePicTitleOnly';
 import EditorTitleOnly from '../../templates/EditorTitleOnly';
@@ -25,7 +25,7 @@ const templates = {
 		options: EditorTitleAndText,
 	},
 	event: {
-		name: 'Veranstaltung',
+		name: 'Veranstaltung (opt. Piktogramm)',
 		sharePic: SharePicEvent,
 		options: EditorEvent,
 	},
@@ -35,7 +35,7 @@ const templates = {
 		options: EditorTextOnly,
 	},
 	pictogramOnly: {
-		name: 'Piktogram',
+		name: 'Piktogramm',
 		sharePic: SharePicPictogramOnly,
 		options: EditorPictogramOnly,
 	}
@@ -45,34 +45,43 @@ export default function GjSharePicGenerator() {
 
   	const [selectedTemplate, setSelectedTemplate] = useState<keyof typeof templates>('titleOnly');
 
-	/*const handleDownload = () => {
-		const node = document.getElementById('sharepic-download');
-		if (node) {
-			domToPng(node, {
-				height: 1350,
-				width: 1080,
-				style: { transform: 'scale(3, 3)', transformOrigin: 'top left' },
-			}).then((dataUrl: string) => {
+	const handleDownload = async () => {
+			const resultImg = document.getElementById('final-result') as HTMLImageElement;
+
+			if (resultImg && resultImg.src) {
 				const link = document.createElement('a');
 				link.download = `gj-sharepic-${new Date().toISOString()}.png`;
-				link.href = dataUrl;
+				link.href = resultImg.src;
+				document.body.appendChild(link);
 				link.click();
-			});
-		}
-	};*/
+				document.body.removeChild(link);
+			}
+	};
 
-	const handlePreview = () => {
+	const handlePreview = async () => {
 		const node = document.getElementById('sharepic-download');
 		if (node) {
-			domToPng(node, {
-				height: 1350,
-				width: 1080,
-				style: { transform: 'scale(3, 3)', transformOrigin: 'top left' },
-			}).then((dataUrl: string) => {
-				const img = document.getElementById('test') as HTMLImageElement;
-				img.src = dataUrl;
-				img.style.width = '360px';
+			const scale = 3;
+			const width = node.offsetWidth;
+			const height = node.offsetHeight;
+
+			const contentDataUrl = await domToPng(node, {
+				width: width * scale,
+				height: height * scale,
+				style: {
+					transform: `scale(${scale})`,
+					transformOrigin: 'top left',
+					width: `${width}px`,
+					height: `${height}px`,
+				}
 			});
+
+			const resultImg = document.getElementById('final-result') as HTMLImageElement;
+			resultImg.src = contentDataUrl;
+			resultImg.style.width = '360px';
+
+			const downloadBtn = document.getElementById('final-download') as HTMLDivElement;
+			downloadBtn.style.display = 'block';
 		}
 	};
 
@@ -90,9 +99,13 @@ export default function GjSharePicGenerator() {
 							SharePicComponent && (<SharePicComponent />)
 						}
 					</div>
-					<Button onClick={handlePreview}>Grafik erstellen</Button>
+					<Button onClick={handlePreview}>SharePic erstellen</Button>
+					<h3>Die Bilderstellung bei Fehlern bitte erneut versuchen.</h3>
 					<h2>Vorschau:</h2>
-					<img id='test' />
+					<img id='final-result' />
+					<div id='final-download' style={{display: 'none'}}>
+						<Button onClick={handleDownload}>Herunterladen</Button>
+					</div>
 				</div>
 
 				<div className='container'>
