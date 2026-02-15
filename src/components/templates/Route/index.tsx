@@ -22,6 +22,7 @@ import { useLocation } from 'react-router';
 import { useEffect } from 'react';
 import Header from '../../organism/Header';
 import Footer from '../../organism/Footer';
+import DonateBanner from '../../organism/DonateBanner';
 import './Route.scss';
 
 type RouteProps =  {
@@ -43,6 +44,7 @@ export default function Route({children}: RouteProps) {
 
 	return (
 		<>
+			<DonateBanner />
 			<Header />
 			<div className="hdg-route">
 				{children}
