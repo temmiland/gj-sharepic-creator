@@ -50,7 +50,7 @@ export default function DonateBanner() {
 		<div className="donate-banner">
 			<div className="donate-banner__content">
 				<p className="donate-banner__text">
-					gjshare.pics wird zu gjsharepics.temmi.land. Die Weiterleitung funktioniert noch einige Tage.
+					Domain und Hosting kosten Geld. Jede Spende hilft, das Tool am Laufen zu halten!
 				</p>
 				<a
 					href="https://buymeacoffee.com/temmiland"
