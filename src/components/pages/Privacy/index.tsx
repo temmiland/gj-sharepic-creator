@@ -201,11 +201,11 @@ export default function Privacy() {
 				<p>
 					{ 'Temmi Pietsch' }
 					<br />
-					{ 'c/o Postflex #7561' }
+					{ 'c/o Autorenglück #23155' }
 					<br />
-					{ 'Emsdettener Str. 10' }
+					{ 'Albert-Einstein-Straße 47' }
 					<br />
-					{ 'D-48268 Greven' }
+					{ 'D-02977 Hoyerswerda' }
 					<br />
 					{ 'Keine Pakete oder Päckchen - Annahme wird verweigert!' }
 				</p>

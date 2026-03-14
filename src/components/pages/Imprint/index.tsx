@@ -28,7 +28,7 @@ export default function Imprint() {
 			<div className="hdg-imprint__inner">
 				<h1>Impressum</h1>
 				<h2>Anbieter</h2>
-				<p>Temmi Pietsch<br/>c/o Postflex #7561<br/>Emsdettener Str. 10<br/>D-48268 Greven<br/>Keine Pakete oder Päckchen - Annahme wird verweigert!</p>
+				<p>Temmi Pietsch<br/>c/o Autorenglück #23155<br/>Albert-Einstein-Straße 47<br/>D-02977 Hoyerswerda<br/>Keine Pakete oder Päckchen - Annahme wird verweigert!</p>
 				<h2>Kontakt</h2>
 				<p>E-Mail: welcome@temmi.land</p>
 				<p>Wir sind weder verpflichtet noch bereit, an einem Streitbeilegungsverfahren teilzunehmen.</p>
