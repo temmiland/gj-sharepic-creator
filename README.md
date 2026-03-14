@@ -1,6 +1,6 @@
 # gj-sharepic-creator
 
-With the web application developed by Temmi Pietsch for the GRÜNE JUGEND Dresden, it is possible to easily create various templates from the corporate design templates, online.
+With the web application developed by Temmi Pietsch for the GRÜNE JUGEND Sachsen, it is possible to easily create various templates from the corporate design templates, online.
 
 ## Check it out
 

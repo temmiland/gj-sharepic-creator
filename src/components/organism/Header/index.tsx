@@ -71,7 +71,7 @@ export default function Header() {
 							<a
 								target="_blank"
 								rel="noopener noreferrer"
-								href="https://dresden.gj-sachsen.de"
+								href="https://gj-sachsen.de"
 							>
 								Unsere Webseite
 							</a>

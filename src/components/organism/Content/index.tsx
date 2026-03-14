@@ -33,7 +33,7 @@ export function Content({}: ContentProps) {
 			<div className="hdg-hero">
 				<div className="__inner">
 					<h1>Willkommen</h1>
-					<p>Als <b>GRÜNE JUGEND Dresden</b> erstellen wir regelmäßig Beiträge für Instagram. Ob Stories oder SharePics – die Erstellung ist oft mühsam, und nicht jedes unserer Mitglieder ist fit im Umgang mit Bildbearbeitungsprogrammen. Deshalb haben wir die Standardvorlagen des Corporate Designs von 2024 in eine Webanwendung gegossen und ermöglichen so unseren Mitgliedern die einfache Erstellung von Inhalten für Instagram.</p>
+					<p>Als <b>GRÜNE JUGEND Sachsen</b> erstellen wir regelmäßig Beiträge für Instagram. Ob Stories oder SharePics – die Erstellung ist oft mühsam, und nicht jedes unserer Mitglieder ist fit im Umgang mit Bildbearbeitungsprogrammen. Deshalb haben wir die Standardvorlagen des Corporate Designs von 2024 in eine Webanwendung gegossen und ermöglichen so unseren Mitgliedern die einfache Erstellung von Inhalten für Instagram.</p>
 					<div className="__buttons">
 						<div className="__button">
 							<button onClick={() => navigate("/sharepics")}>SharePics erstellen</button>

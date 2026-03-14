@@ -66,17 +66,17 @@ export default function Contact() {
 							<img className="hdg-contact__list-arrow" src="./arrow.svg" />
 						</li>
 					</a>
-					<a href="https://instagram.com/gruenejugend_dresden" target="_blank" rel="noopener noreferrer">
+					<a href="https://instagram.com/gruenejugend_sachsen" target="_blank" rel="noopener noreferrer">
 						<li>
 							<img className="hdg-contact__list-icon" src="./pictograms/Handy.svg" />
-							<p>GJ Dresden – Instagram</p>
+							<p>GJ Sachsen – Instagram</p>
 							<img className="hdg-contact__list-arrow" src="./arrow.svg" />
 						</li>
 					</a>
-					<a href="https://dresden.gj-sachsen.de" target="_blank" rel="noopener noreferrer">
+					<a href="https://gj-sachsen.de" target="_blank" rel="noopener noreferrer">
 						<li>
 							<img className="hdg-contact__list-icon" src="./pictograms/Computer.svg" />
-							<p>GJ Dresden – Webseite</p>
+							<p>GJ Sachsen – Webseite</p>
 							<img className="hdg-contact__list-arrow" src="./arrow.svg" />
 						</li>
 					</a>

@@ -18,7 +18,7 @@ export default function SharePicTitleOnly() {
 		dispatch({
 			type: "INITIALIZE",
 			payload: {
-				localGroup: "Dresden",
+				localGroup: "Leipzig",
 				logoVisible: true,
 				arrowVisible: true,
 				headingTopOrBottom: false,

@@ -18,12 +18,12 @@ export default function SharePicEvent() {
 		dispatch({
 			type: "INITIALIZE",
 			payload: {
-				localGroup: "Dresden",
+				localGroup: "Leipzig",
 				logoVisible: true,
 				arrowVisible: false,
 				headingTopOrBottom: true,
 				heading: ["*Weihnachts-", "feier"],
-				text: ["%Mit leckeren Plätzchen, Punsch und Pub-Quiz feiern wir die Weihnachtszeit.%", "%🗓️ Dienstag, 12.12.2025 – 18:30 Uhr%", "%📍 Grüne Ecke, Bischofsplatz 6, Dresden%"],
+				text: ["%Mit leckeren Plätzchen, Punsch und Pub-Quiz feiern wir die Weihnachtszeit.%", "%🗓️ Dienstag, 12.12.2025 – 18:30 Uhr%", "%📍 Grünen Quartier, Heinrichstraße 9, Leipzig%"],
 				highlightColor: highlightColors[0],
 				colorSet: colorSets[5],
 				backgroundImage: "./event_bg.jpg",
