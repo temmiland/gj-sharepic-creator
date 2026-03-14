@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at:
  *
- *     https://gjshare.pics/license
+ *     https://gjsharepics.temmi.land/license
  *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -50,7 +50,7 @@ export default function DonateBanner() {
 		<div className="donate-banner">
 			<div className="donate-banner__content">
 				<p className="donate-banner__text">
-					Domain und Hosting kosten Geld. Jede Spende hilft, das Tool am Laufen zu halten!
+					gjshare.pics wird zu gjsharepics.temmi.land. Die Weiterleitung funktioniert noch einige Tage.
 				</p>
 				<a
 					href="https://buymeacoffee.com/temmiland"

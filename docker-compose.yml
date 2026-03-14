@@ -6,7 +6,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at:
 #
-#     https://gjshare.pics/license
+#     https://gjsharepics.temmi.land/license
 #
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -22,7 +22,7 @@ services:
   server:
     container_name: gjshare_pics_web
     restart: always
-    hostname: gjshare.pics
+    hostname: gjsharepics.temmi.land
     build:
       context: .
       dockerfile: ./docker/Dockerfile
@@ -31,11 +31,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.gjshare_pics_web.entrypoints=web"
-      - "traefik.http.routers.gjshare_pics_web.rule=Host(`gjshare.pics`) || Host(`www.gjshare.pics`)"
+      - "traefik.http.routers.gjshare_pics_web.rule=Host(`gjsharepics.temmi.land`) || Host(`www.gjsharepics.temmi.land`)"
       - "traefik.http.middlewares.gjshare_pics_web-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.gjshare_pics_web.middlewares=gjshare_pics_web-https-redirect"
       - "traefik.http.routers.gjshare_pics_web-secure.entrypoints=websecure"
-      - "traefik.http.routers.gjshare_pics_web-secure.rule=Host(`gjshare.pics`) || Host(`www.gjshare.pics`)"
+      - "traefik.http.routers.gjshare_pics_web-secure.rule=Host(`gjsharepics.temmi.land`) || Host(`www.gjsharepics.temmi.land`)"
       - "traefik.http.routers.gjshare_pics_web-secure.tls=true"
       - "traefik.http.routers.gjshare_pics_web-secure.tls.certresolver=letsencrypt"
       - "traefik.http.routers.gjshare_pics_web-secure.service=gjshare_pics_web"

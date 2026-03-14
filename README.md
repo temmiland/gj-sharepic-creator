@@ -4,7 +4,7 @@ With the web application developed by Temmi Pietsch for the GRÜNE JUGEND Dresde
 
 ## Check it out
 
-You can reach the application [here. – (gjshare.pics)](https://gjshare.pics)
+You can reach the application [here. – (gjsharepics.temmi.land)](https://gjsharepics.temmi.land)
 
 ## Known issues
 
