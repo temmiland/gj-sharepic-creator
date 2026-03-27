@@ -62,12 +62,12 @@ export function SharePicText({ multiLineText, colorSet, highlightColor }: ShareP
             style={{
               backgroundColor: colorSet.accentColor === '#c7ff7a'
 			  	? colorSet.backgroundColor === '#000000'
-					? colorSets.find(cS => cS.name === "White")?.backgroundColor!!
-					: colorSets.find(cS => cS.name === "Black")?.backgroundColor!!
+					? colorSets.find(cS => cS.name === "White")?.backgroundColor ?? '#ffffff'
+					: colorSets.find(cS => cS.name === "Black")?.backgroundColor ?? '#000000'
 				: colorSet.accentColor,
 			  color: colorSet.backgroundColor === '#000000'
-			  	? colorSets.find(cS => cS.name === "Black")?.backgroundColor!!
-					: colorSets.find(cS => cS.name === "White")?.backgroundColor!!,
+			  	? colorSets.find(cS => cS.name === "Black")?.backgroundColor ?? '#000000'
+					: colorSets.find(cS => cS.name === "White")?.backgroundColor ?? '#ffffff',
 			  boxDecorationBreak: 'clone',
 			  WebkitBoxDecorationBreak: 'clone',
             }}
@@ -85,8 +85,8 @@ export function SharePicText({ multiLineText, colorSet, highlightColor }: ShareP
 			  boxDecorationBreak: 'clone',
 			  WebkitBoxDecorationBreak: 'clone',
 			  color: highlightColor.backgroundColor === '#000000'
-			  	? colorSets.find(cS => cS.name === "White")?.backgroundColor!!
-				: colorSets.find(cS => cS.name === "Black")?.backgroundColor!!,
+			  	? colorSets.find(cS => cS.name === "White")?.backgroundColor ?? '#ffffff'
+				: colorSets.find(cS => cS.name === "Black")?.backgroundColor ?? '#000000',
             }}
           >
             {parseMarkdown(spanContent)}
@@ -114,8 +114,8 @@ export function SharePicText({ multiLineText, colorSet, highlightColor }: ShareP
 							key={line}
 							style={{
 								color: colorSet.name === "Black"
-									? colorSets.find(cS => cS.name === "White")?.backgroundColor!!
-									: colorSets.find(cS => cS.name === "Black")?.backgroundColor!!
+									? colorSets.find(cS => cS.name === "White")?.backgroundColor ?? '#ffffff'
+									: colorSets.find(cS => cS.name === "Black")?.backgroundColor ?? '#000000'
 							}}
 						>
 							{parseMarkdown(line)}

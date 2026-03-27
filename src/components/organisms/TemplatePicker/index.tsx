@@ -239,7 +239,7 @@ function PreviewHeading({ el, pctX, pctY, canvasW, headingBg, plainLineBg }: { e
 	//   = (fontSize * 10 / canvasW) * preview_width.
 	// So: padding-top % = (fontSize * 10 / canvasW) / (el.width / canvasW) * 100
 	//                    = (fontSize * 10 / el.width) * 100
-	const lineHeightPct = (el.fontSize * 10 / el.width) * 100;
+	const lineHeightPct = el.width > 0 ? (el.fontSize * 10 / el.width) * 100 : 0;
 
 	return (
 		<div
@@ -252,7 +252,7 @@ function PreviewHeading({ el, pctX, pctY, canvasW, headingBg, plainLineBg }: { e
 				const charRatio = Math.min(1, text.length / 18);
 				return (
 					<div
-						key={i}
+						key={`${i}-${line}`}
 						className="prev-heading-line"
 						style={{
 							height: 0,
@@ -277,7 +277,7 @@ function PreviewText({ el, pctX, pctY, canvasW, textColor }: { el: TextElement; 
 			className="prev-text"
 			style={{ left: `${pctX}%`, top: `${pctY}%`, width: `${widthPct}%` }}
 		>
-			{Array.from({ length: lineCount }).map((_, i) => (
+			{Array.from({ length: lineCount }, (_, i) => (
 				<div
 					key={i}
 					className="prev-text-line"

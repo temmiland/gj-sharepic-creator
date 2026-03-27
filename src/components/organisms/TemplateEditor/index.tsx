@@ -33,20 +33,20 @@ export function TemplateEditor() {
 				<EditorColorSet
 					colorSets={colorSets}
 					colorSet={state.colorSet}
-					handleColorSet={(e: { target: { value: string } }) =>
+					handleColorSet={(e: React.ChangeEvent<HTMLInputElement>) =>
 						dispatch({
 							type: 'SET_COLOR_SET',
-							payload: colorSets.find(c => c.name === e.target.value)!,
+							payload: colorSets.find(c => c.name === e.target.value) ?? colorSets[0],
 						})
 					}
 				/>
 				<EditorHighlightColor
 					highlightColors={highlightColors}
 					highlightColor={state.highlightColor}
-					handleHighlightColor={(e: { target: { value: string } }) =>
+					handleHighlightColor={(e: React.ChangeEvent<HTMLInputElement>) =>
 						dispatch({
 							type: 'SET_HIGHLIGHT_COLOR',
-							payload: highlightColors.find(c => c.name === e.target.value)!,
+							payload: highlightColors.find(c => c.name === e.target.value) ?? highlightColors[0],
 						})
 					}
 				/>
@@ -63,22 +63,22 @@ export function TemplateEditor() {
 				/>
 				<EditorBackgroundPosition
 					position={state.backgroundPosition}
-					handlePosition={(e: { target: { value: string } }) =>
+					handlePosition={(e: React.ChangeEvent<HTMLSelectElement>) =>
 						dispatch({
 							type: 'SET_BACKGROUND_POSITION',
-							payload: backgroundPositions.find(bp => bp.value === e.target.value)!,
+							payload: backgroundPositions.find(bp => bp.value === e.target.value) ?? backgroundPositions[0],
 						})
 					}
 				/>
 				<EditorBackgroundBlur
 					blur={state.backgroundBlur}
-					handleBlur={(e: { target: { value: string } }) =>
+					handleBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
 						dispatch({ type: 'SET_BACKGROUND_BLUR', payload: Number(e.target.value) })
 					}
 				/>
 				<EditorBackgroundBrightness
 					brightness={state.backgroundBrightness}
-					handleBrightness={(e: { target: { value: string } }) =>
+					handleBrightness={(e: React.ChangeEvent<HTMLInputElement>) =>
 						dispatch({ type: 'SET_BACKGROUND_BRIGHTNESS', payload: Number(e.target.value) })
 					}
 				/>

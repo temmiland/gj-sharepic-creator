@@ -8,7 +8,7 @@
  *     - https://gjsharepics.temmi.land/license
  *******************************************************************************/
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { ColorSet, BackgroundPosition } from '@/types/design-tokens';
 import { colorSets } from '@/constants/colors';
 import { useSharePic } from '@/context/SharePicContext';
@@ -25,75 +25,66 @@ type SharePicCanvasProps = {
 	children: React.ReactNode;
 };
 
+function calculateImageBrightness(image: HTMLImageElement): number {
+	const canvas = document.createElement("canvas");
+	const ctx = canvas.getContext("2d");
+
+	if (!ctx) {
+		throw new Error("Canvas context not available");
+	}
+
+	canvas.width = image.width;
+	canvas.height = image.height;
+	ctx.drawImage(image, 0, 0, image.width, image.height);
+
+	const imageData = ctx.getImageData(0, 0, image.width, image.height);
+	const pixels = imageData.data;
+
+	let totalBrightness = 0;
+	let pixelCount = 0;
+
+	for (let i = 0; i < pixels.length; i += 4) {
+		const r = pixels[i];
+		const g = pixels[i + 1];
+		const b = pixels[i + 2];
+		totalBrightness += 0.2126 * r + 0.7152 * g + 0.0722 * b;
+		pixelCount++;
+	}
+
+	return totalBrightness / pixelCount;
+}
+
+function calculateColorSetOnImageBrightness(base64Image: string): Promise<ColorSet> {
+	return new Promise((resolve, reject) => {
+		const image = new Image();
+		image.src = base64Image;
+
+		image.onload = () => {
+			const brightness = calculateImageBrightness(image);
+			if (brightness < 180) {
+				resolve(colorSets.find(cS => cS.name === "Black") ?? colorSets[6]);
+			} else {
+				resolve(colorSets.find(cS => cS.name === "White") ?? colorSets[5]);
+			}
+		};
+
+		image.onerror = () => {
+			reject(new Error("Failed to load base64 image"));
+		};
+	});
+}
+
 export function SharePicCanvas({ backgroundImageUploaded, backgroundImage, backgroundPosition, backgroundBlur, backgroundBrightness, colorSet, handleColorSet, children }: SharePicCanvasProps) {
 
+	const handleColorSetRef = useRef(handleColorSet);
+	handleColorSetRef.current = handleColorSet;
+
 	useEffect(() => {
-		const calculateAndSetColorSet = async () => {
-			if (backgroundImageUploaded && backgroundImage) {
-				try {
-					const colorSet = await calculateColorSetOnImageBrightness(backgroundImage);
-					handleColorSet(colorSet);
-				} catch (error) {
-					console.error("Fehler beim Berechnen des Farbsatzes:", error);
-				}
-			}
-		};
-
-		calculateAndSetColorSet();
-	}, [backgroundImage]);
-
-	const calculateColorSetOnImageBrightness = (base64Image: string): Promise<ColorSet> => {
-		const calculateImageBrightness = (image: HTMLImageElement): number => {
-			const canvas = document.createElement("canvas");
-			const ctx = canvas.getContext("2d");
-
-			if (!ctx) {
-				throw new Error("Canvas context not available");
-			}
-
-			canvas.width = image.width;
-			canvas.height = image.height;
-
-			ctx.drawImage(image, 0, 0, image.width, image.height);
-
-			const imageData = ctx.getImageData(0, 0, image.width, image.height);
-			const pixels = imageData.data;
-
-			let totalBrightness = 0;
-			let pixelCount = 0;
-
-			for (let i = 0; i < pixels.length; i += 4) {
-				const r = pixels[i];
-				const g = pixels[i + 1];
-				const b = pixels[i + 2];
-
-				const brightness = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-				totalBrightness += brightness;
-				pixelCount++;
-			}
-
-			return totalBrightness / pixelCount;
-		};
-
-		return new Promise((resolve, reject) => {
-			const image = new Image();
-			image.src = base64Image;
-
-			image.onload = () => {
-				const brightness = calculateImageBrightness(image);
-
-				if (brightness < 180) {
-					resolve(colorSets.find(cS => cS.name === "Black") || colorSets[6]);
-				} else {
-					resolve(colorSets.find(cS => cS.name === "White") || colorSets[5]);
-				}
-			};
-
-			image.onerror = () => {
-				reject(new Error("Failed to load base64 image"));
-			};
-		});
-	};
+		if (!backgroundImageUploaded || !backgroundImage) return;
+		calculateColorSetOnImageBrightness(backgroundImage)
+			.then(colorSet => handleColorSetRef.current(colorSet))
+			.catch(() => {});
+	}, [backgroundImage, backgroundImageUploaded]);
 
 	const { canvasConfig } = useSharePic();
 	const { transparentBackground, width, height } = canvasConfig;
