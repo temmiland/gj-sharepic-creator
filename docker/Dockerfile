@@ -11,6 +11,9 @@ FROM oven/bun AS builder
 
 LABEL MAINTAINER="Temmi Pietsch <welcome@temmi.land>"
 
+ENV VITE_SUPABASE_URL=https://yoisyvglqzytlxjnlnrs.supabase.co
+ENV VITE_SUPABASE_ANON_KEY=sb_publishable_N1aEbAB-KYqWvvxib8cj4A_gX87nPUB
+
 COPY . /app
 
 WORKDIR /app
