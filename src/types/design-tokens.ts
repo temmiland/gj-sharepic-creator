@@ -28,10 +28,3 @@ export type Pictogram = {
 	name: string;
 	path: string;
 };
-
-export type PictogramItem = {
-	id: string;
-	pictogram: Pictogram;
-	position: { x: number; y: number };
-	size: number;
-};
