@@ -73,7 +73,7 @@ export function TemplatePicker({ builtinTemplates = defaultTemplates }: { builti
 		navigator.clipboard.writeText(url).then(() => {
 			setCopiedId(template.id);
 			setTimeout(() => setCopiedId(null), 2000);
-		});
+		}).catch(() => {});
 	};
 
 	const isCustom = (id: string) => customIds.has(id);

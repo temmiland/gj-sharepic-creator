@@ -21,55 +21,55 @@ export function Contact() {
 					Ich freue mich über jede Nachricht!
 				</p>
 				<ol className="hdg-contact__list">
-					<a href="https://github.com/temmiland/gj-sharepic-creator/labels/bug" target="_blank" rel="noopener noreferrer">
-						<li>
-							<img className="hdg-contact__list-icon" src="./pictograms/Appell.svg" />
+					<li>
+						<a href="https://github.com/temmiland/gj-sharepic-creator/labels/bug" target="_blank" rel="noopener noreferrer">
+							<img className="hdg-contact__list-icon" src="./pictograms/Appell.svg" alt="" />
 							<p>Fehler</p>
-							<img className="hdg-contact__list-arrow" src="./arrow.svg" />
-						</li>
-					</a>
-					<a href="https://github.com/temmiland/gj-sharepic-creator/labels/enhancement" target="_blank" rel="noopener noreferrer">
-						<li>
-							<img className="hdg-contact__list-icon" src="./pictograms/Ackerpflanze.svg" />
+							<img className="hdg-contact__list-arrow" src="./arrow.svg" alt="" />
+						</a>
+					</li>
+					<li>
+						<a href="https://github.com/temmiland/gj-sharepic-creator/labels/enhancement" target="_blank" rel="noopener noreferrer">
+							<img className="hdg-contact__list-icon" src="./pictograms/Ackerpflanze.svg" alt="" />
 							<p>Funktionswünsche</p>
-							<img className="hdg-contact__list-arrow" src="./arrow.svg" />
-						</li>
-					</a>
-					<a href="mailto:gj@temmi.land">
-						<li>
-							<img className="hdg-contact__list-icon" src="./pictograms/Sprechblase.svg" />
+							<img className="hdg-contact__list-arrow" src="./arrow.svg" alt="" />
+						</a>
+					</li>
+					<li>
+						<a href="mailto:gj@temmi.land">
+							<img className="hdg-contact__list-icon" src="./pictograms/Sprechblase.svg" alt="" />
 							<p>Sonstiges</p>
-							<img className="hdg-contact__list-arrow" src="./arrow.svg" />
-						</li>
-					</a>
-					<a href="https://instagram.com/temmiland" target="_blank" rel="noopener noreferrer">
-						<li>
-							<img className="hdg-contact__list-icon" src="./pictograms/Handy.svg" />
+							<img className="hdg-contact__list-arrow" src="./arrow.svg" alt="" />
+						</a>
+					</li>
+					<li>
+						<a href="https://instagram.com/temmiland" target="_blank" rel="noopener noreferrer">
+							<img className="hdg-contact__list-icon" src="./pictograms/Handy.svg" alt="" />
 							<p>Instagram</p>
-							<img className="hdg-contact__list-arrow" src="./arrow.svg" />
-						</li>
-					</a>
-					<a href="https://temmi.land" target="_blank" rel="noopener noreferrer">
-						<li>
-							<img className="hdg-contact__list-icon" src="./pictograms/Computer.svg" />
+							<img className="hdg-contact__list-arrow" src="./arrow.svg" alt="" />
+						</a>
+					</li>
+					<li>
+						<a href="https://temmi.land" target="_blank" rel="noopener noreferrer">
+							<img className="hdg-contact__list-icon" src="./pictograms/Computer.svg" alt="" />
 							<p>Webseite</p>
-							<img className="hdg-contact__list-arrow" src="./arrow.svg" />
-						</li>
-					</a>
-					<a href="https://instagram.com/gruenejugend_sachsen" target="_blank" rel="noopener noreferrer">
-						<li>
-							<img className="hdg-contact__list-icon" src="./pictograms/Handy.svg" />
+							<img className="hdg-contact__list-arrow" src="./arrow.svg" alt="" />
+						</a>
+					</li>
+					<li>
+						<a href="https://instagram.com/gruenejugend_sachsen" target="_blank" rel="noopener noreferrer">
+							<img className="hdg-contact__list-icon" src="./pictograms/Handy.svg" alt="" />
 							<p>GJ Sachsen – Instagram</p>
-							<img className="hdg-contact__list-arrow" src="./arrow.svg" />
-						</li>
-					</a>
-					<a href="https://gj-sachsen.de" target="_blank" rel="noopener noreferrer">
-						<li>
-							<img className="hdg-contact__list-icon" src="./pictograms/Computer.svg" />
+							<img className="hdg-contact__list-arrow" src="./arrow.svg" alt="" />
+						</a>
+					</li>
+					<li>
+						<a href="https://gj-sachsen.de" target="_blank" rel="noopener noreferrer">
+							<img className="hdg-contact__list-icon" src="./pictograms/Computer.svg" alt="" />
 							<p>GJ Sachsen – Webseite</p>
-							<img className="hdg-contact__list-arrow" src="./arrow.svg" />
-						</li>
-					</a>
+							<img className="hdg-contact__list-arrow" src="./arrow.svg" alt="" />
+						</a>
+					</li>
 				</ol>
 			</div>
 		</div>

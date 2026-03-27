@@ -22,7 +22,7 @@ export function DonateBanner() {
 			const dismissedTime = parseInt(dismissedAt, 10);
 			const now = Date.now();
 			const threeDays = 3 * 24 * 60 * 60 * 1000; // 3 Tage in ms
-			if (now - dismissedTime > threeDays) {
+			if (isNaN(dismissedTime) || now - dismissedTime > threeDays) {
 				setIsVisible(true);
 				localStorage.removeItem('donateBannerDismissed');
 			}

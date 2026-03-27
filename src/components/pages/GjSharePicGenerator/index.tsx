@@ -73,7 +73,7 @@ export function GjSharePicGenerator() {
 		navigator.clipboard.writeText(url).then(() => {
 			setLinkCopied(true);
 			setTimeout(() => setLinkCopied(false), 2000);
-		});
+		}).catch(() => {});
 	};
 
 	const handlePreview = async () => {
