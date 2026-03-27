@@ -17,6 +17,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *****************************************************************************/
 
+import type { BackgroundPosition } from '@/types/design-tokens';
+
 export const backgroundPositions: BackgroundPosition[] = [
 	{displayName: 'Oben links', value: 'top left'},
 	{displayName: 'Oben rechts', value: 'top right'},

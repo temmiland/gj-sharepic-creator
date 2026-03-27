@@ -1,0 +1,81 @@
+@use '../../../variables' as *;
+@use 'sass:color';
+
+.add-element {
+	margin-top: 0.8rem;
+}
+
+.add-element__trigger {
+	width: 100%;
+	padding: 1rem;
+	background: $cdGreen;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	font-weight: 700;
+	font-size: 1.4rem;
+	font-family: inherit;
+	touch-action: manipulation;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.6rem;
+
+	&--open {
+		background: color.adjust($cdGreen, $lightness: -5%);
+	}
+}
+
+.add-element__icon {
+	font-size: 2rem;
+	line-height: 1;
+	margin-top: -0.1rem;
+}
+
+.add-element__grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 0.6rem;
+	padding: 0.8rem;
+	background: $surface-hover;
+	border: 1.5px solid rgba($cdGreen, 0.3);
+	border-top: none;
+}
+
+.add-element__card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.6rem;
+	padding: 1.2rem 0.5rem;
+	background: #fff;
+	border: 1.5px solid rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	font-weight: 700;
+	font-size: 1.2rem;
+	font-family: inherit;
+	color: $text-primary;
+	min-height: 7.2rem;
+	transition: background $transition-fast, border-color $transition-fast;
+	touch-action: manipulation;
+
+	&:hover {
+		background: $surface-hover;
+		border-color: rgba(0, 0, 0, 0.2);
+	}
+}
+
+.add-element__card-label {
+	position: relative;
+}
+
+.add-element__file-input {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	cursor: pointer;
+	margin: 0;
+}

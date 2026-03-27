@@ -1,0 +1,80 @@
+@use '../../../variables' as *;
+@use 'sass:color';
+
+.template-io {
+	display: flex;
+	flex-direction: column;
+	gap: 0.8rem;
+}
+
+.template-io__label {
+	font-size: 1.2rem;
+	display: block;
+}
+
+.template-io__name-input {
+	width: 100%;
+	padding: 0.4rem;
+	font-size: 1.3rem;
+}
+
+.template-io__actions {
+	display: flex;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+}
+
+.template-io__btn {
+	flex: 1;
+	padding: 0.8rem;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	font-weight: 700;
+	font-size: 1.3rem;
+
+	&--save {
+		background: $cdGreen;
+
+		&:hover {
+			background: color.adjust($cdGreen, $lightness: -5%);
+		}
+	}
+
+	&--export {
+		background: $cdLavendel;
+
+		&:hover {
+			background: color.adjust($cdLavendel, $lightness: -5%);
+		}
+	}
+}
+
+.template-io__import-label {
+	display: block;
+	padding: 0.8rem;
+	background: $surface-hover;
+	border: 1px solid $border-medium;
+	text-align: center;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 1.3rem;
+}
+
+.template-io__import-input {
+	display: none;
+}
+
+.template-io__status {
+	font-size: 1.2rem;
+	font-weight: 600;
+	margin: 0;
+
+	&--success {
+		color: $cdGreen;
+	}
+
+	&--error {
+		color: #ff4444;
+	}
+}

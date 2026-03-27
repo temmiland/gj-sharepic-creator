@@ -1,0 +1,224 @@
+@use '../../../variables' as *;
+
+input, textarea, select, option {
+	font-weight: 600;
+	font-family: "Wix Madefor Display", system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+input[type="checkbox"] {
+	width: 2.4rem;
+	height: 2.4rem;
+	border: 2px solid $border-medium;
+	position: relative;
+	cursor: pointer;
+	border-radius: $radius-sm;
+	appearance: none;
+	background-color: $surface;
+	transition: all $transition-fast;
+
+	&:hover {
+		border-color: $cdGreen;
+	}
+
+	&:checked {
+		background-color: $cdGreen;
+		border-color: $cdGreen;
+	}
+
+	&:checked::before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 0.6rem;
+		height: 1.1rem;
+		border: solid $cdWhite;
+		border-width: 0 2.5px 2.5px 0;
+		transform: translate(-50%, -60%) rotate(45deg);
+	}
+
+	&:checked::after {
+		content: none;
+	}
+
+	&:focus-visible {
+		outline: 2px solid $cdGreen;
+		outline-offset: 2px;
+	}
+}
+
+/* Text Input */
+input[type="text"] {
+	width: 100%;
+	height: 4.4rem;
+	padding: 0 1.4rem;
+	border: 1.5px solid $border-medium;
+	font-size: 1.5rem;
+	color: $text-primary;
+	background-color: $surface;
+	outline: none;
+	border-radius: $radius-sm;
+	appearance: none;
+	transition: border-color $transition-fast, box-shadow $transition-fast;
+
+	&:hover {
+		border-color: $cdGreen;
+	}
+
+	&:focus {
+		border-color: $cdGreen;
+		box-shadow: 0 0 0 3px rgba($cdGreen, 0.15);
+		color: $text-primary;
+		background-color: $surface;
+	}
+
+	&::placeholder {
+		color: $text-muted;
+	}
+}
+
+textarea {
+	width: 100%;
+	min-height: 4.4rem;
+	padding: 1rem 1.4rem;
+	border: 1.5px solid $border-medium;
+	font-size: 1.5rem;
+	color: $text-primary;
+	background-color: $surface;
+	outline: none;
+	border-radius: $radius-sm;
+	appearance: none;
+	font-family: "Wix Madefor Display", system-ui, Avenir, Helvetica, Arial, sans-serif;
+	resize: vertical;
+	transition: border-color $transition-fast, box-shadow $transition-fast;
+	line-height: 1.5;
+
+	&:hover {
+		border-color: $cdGreen;
+	}
+
+	&:focus {
+		border-color: $cdGreen;
+		box-shadow: 0 0 0 3px rgba($cdGreen, 0.15);
+		color: $text-primary;
+		background-color: $surface;
+	}
+
+	&::placeholder {
+		color: $text-muted;
+	}
+}
+
+input[type="number"] {
+	width: 7rem;
+	height: 4.4rem;
+	padding: 0 1rem;
+	margin: 0.2rem;
+	border: 1.5px solid $border-medium;
+	font-size: 1.5rem;
+	color: $text-primary;
+	background-color: $surface;
+	text-align: center;
+	outline: none;
+	border-radius: $radius-sm;
+	appearance: textfield;
+	transition: border-color $transition-fast, box-shadow $transition-fast;
+
+	&:hover {
+		border-color: $cdGreen;
+	}
+
+	&:focus {
+		border-color: $cdGreen;
+		box-shadow: 0 0 0 3px rgba($cdGreen, 0.15);
+		color: $text-primary;
+		background-color: $surface;
+	}
+}
+
+/* Select */
+select {
+	height: 4.4rem;
+	padding: 0 3.2rem 0 1.4rem;
+	border: 1.5px solid $border-medium;
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: $text-primary;
+	background-color: $surface;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235a5a5a' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 1.2rem center;
+	outline: none;
+	border-radius: $radius-sm;
+	appearance: none;
+	cursor: pointer;
+	transition: border-color $transition-fast, box-shadow $transition-fast;
+
+	&:hover {
+		border-color: $cdGreen;
+	}
+
+	&:focus {
+		border-color: $cdGreen;
+		box-shadow: 0 0 0 3px rgba($cdGreen, 0.15);
+		color: $text-primary;
+		background-color: $surface;
+	}
+}
+
+option {
+	padding: 0.8rem;
+	background-color: $surface;
+	color: $text-primary;
+	font-size: 1.5rem;
+}
+
+input[type="file"] {
+	display: none;
+}
+
+.file-upload {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+
+	label {
+		display: inline-flex;
+		align-items: center;
+		padding: 1rem 2rem;
+		border: 1.5px dashed $border-medium;
+		background-color: $surface-secondary;
+		color: $text-primary;
+		font-weight: 600;
+		font-size: 1.4rem;
+		cursor: pointer;
+		text-align: center;
+		border-radius: $radius-sm;
+		transition: all $transition-fast;
+
+		&:hover {
+			border-color: $cdGreen;
+			background-color: rgba($cdGreen, 0.05);
+			color: $cdGreen;
+		}
+	}
+
+	button {
+		border: none;
+		padding: 1rem 1.6rem;
+		height: auto;
+		color: $text-secondary;
+		background-color: $surface-secondary;
+		font-family: "Wix Madefor Display", sans-serif;
+		font-weight: 600;
+		font-size: 1.4rem;
+		cursor: pointer;
+		border-radius: $radius-sm;
+		transition: all $transition-fast;
+
+		&:hover {
+			color: #d32f2f;
+			background-color: rgba(#d32f2f, 0.08);
+		}
+	}
+}

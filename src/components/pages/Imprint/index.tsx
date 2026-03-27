@@ -21,7 +21,7 @@
 import { useNavigate } from 'react-router';
 import './Imprint.scss';
 
-export default function Imprint() {
+export function Imprint() {
 	const navigate = useNavigate();
 	return (
 		<div className="hdg-imprint">

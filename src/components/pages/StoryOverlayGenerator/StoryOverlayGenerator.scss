@@ -1,0 +1,184 @@
+@use '../../../variables' as *;
+@use '../../../fonts' as *;
+
+.inner {
+	display: grid;
+	grid-template-columns: minmax(0, 410px) 1fr;
+	padding: 2rem 4rem;
+	gap: 3rem;
+	justify-content: center;
+	max-width: 1200px;
+	margin: 0 auto;
+
+	@media (max-width: 920px) {
+		grid-template-columns: 1fr;
+		padding: 2rem;
+	}
+
+	@media (max-width: 425px) {
+		padding: 1rem;
+		gap: 1.5rem;
+		grid-template-columns: 1fr;
+	}
+}
+
+.container {
+	background: $surface;
+	padding: 2.4rem;
+	height: max-content;
+	border-radius: $radius-lg;
+	box-shadow: $shadow-md;
+	border: 1px solid $border-light;
+
+	@media (max-width: 425px) {
+		border-radius: $radius-md;
+		padding: 1.2rem;
+	}
+
+	&.sticky {
+		position: sticky;
+		top: 10rem;
+		z-index: 10;
+		align-self: start;
+
+		@media (max-width: 920px) {
+			position: relative;
+			top: auto;
+		}
+	}
+
+	h2 {
+		color: $text-secondary;
+		font-size: 1.4rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		margin: 2rem 0 0.8rem;
+
+		&:first-of-type {
+			margin-top: 0;
+		}
+	}
+
+	h3 {
+		font-size: 1.2rem;
+		font-weight: 500;
+		color: $text-muted;
+		margin: 1rem 0;
+	}
+
+	select {
+		width: 100%;
+	}
+}
+
+.action-bar {
+	display: flex;
+	gap: 0.8rem;
+	align-items: stretch;
+}
+
+.final-result {
+	max-width: 360px;
+	width: 100%;
+	aspect-ratio: 360 / 640;
+	object-fit: contain;
+}
+
+.canvas-wrap {
+	width: 100%;
+}
+
+.sharepic-container {
+	position: relative;
+	overflow: hidden;
+	width: max-content;
+	border-radius: $radius-md;
+	box-shadow: $shadow-lg;
+}
+
+.preview-error {
+	color: red;
+}
+
+.final-download {
+	display: none;
+
+	&--visible {
+		display: block;
+	}
+}
+
+.sharepic-canvas {
+	display: block;
+}
+
+.undo-redo-bar {
+	display: flex;
+	gap: 0.6rem;
+	margin-top: 0.8rem;
+}
+
+.undo-redo-btn {
+	flex: 1;
+	padding: 0.6rem 1rem;
+	background: #f0f4e8;
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	font-size: 1.3rem;
+	font-weight: 600;
+	cursor: pointer;
+	font-family: inherit;
+	transition: background 0.15s, color 0.15s;
+
+	@media (max-width: 425px) {
+		padding: 0.8rem 0.6rem;
+		font-size: 1.2rem;
+	}
+
+	&:hover:not(:disabled) {
+		background: #33c270;
+		color: #fff;
+		border-color: #33c270;
+	}
+
+	&:disabled {
+		opacity: 0.35;
+		cursor: default;
+	}
+}
+
+.gj-logo {
+	margin: 0;
+	padding: 0;
+
+	width: max-content;
+
+	@extend .work-sans-700;
+	font-size: 1.5rem;
+	line-height: 0.9;
+	letter-spacing: 0;
+	text-transform: uppercase;
+	text-align: left;
+	color: #c7ff7a;
+}
+
+.gj-logo span {
+	display: inline-block;
+	margin-left: 1.15rem;
+}
+
+.ortsgruppe {
+	margin: 0;
+	padding: 0;
+
+	width: max-content;
+
+	@extend .work-sans-700;
+	font-size: 0.75rem;
+	letter-spacing: -0.01rem;
+	text-transform: uppercase;
+	text-align: left;
+	color: #c7ff7a;
+	margin-top: 0.2rem;
+	margin-left: 1.4rem;
+}

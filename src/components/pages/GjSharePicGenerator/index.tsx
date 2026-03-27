@@ -1,66 +1,76 @@
-import { useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { domToPng } from 'modern-screenshot';
-import Button from '../../atoms/Button';
-import SharePicTitleOnly from '../../templates/SharePicTitleOnly';
-import EditorTitleOnly from '../../templates/EditorTitleOnly';
-import SharePicTitleAndText from '../../templates/SharePicTitleAndText';
-import EditorTitleAndText from '../../templates/EditorTitleAndText';
-import SharePicTextOnly from '../../templates/SharePicTextOnly';
-import EditorTextOnly from '../../templates/EditorTextOnly';
-import SharePicPictogramOnly from '../../templates/SharePicPictogramOnly';
-import EditorPictogramOnly from '../../templates/EditorPictogramOnly';
-import SharePicEvent from '../../templates/SharePicEvent';
-import EditorEvent from '../../templates/EditorEvent';
+import { Button } from '@/components/atoms/Button';
+import { TemplateRenderer } from '@/components/organisms/TemplateRenderer';
+import { TemplateEditor, AddElementButton } from '@/components/organisms/TemplateEditor';
+import { TemplatePicker } from '@/components/organisms/TemplatePicker';
+import { useSharePic } from '@/context/SharePicContext';
+import { ErrorBoundary } from '@/components/atoms/ErrorBoundary';
+import { templateToState, decodeTemplateFromUrl, saveCustomTemplateToStorage, loadCustomTemplatesFromStorage, stateToTemplate, encodeTemplateForUrl } from '@/utils/template-io';
 import './GjSharePicGenerator.scss';
 
-const templates = {
-	titleOnly: {
-		name: 'Überschrift (opt. Piktogramm)',
-		sharePic: SharePicTitleOnly,
-		options: EditorTitleOnly,
-	},
-	titleAndText: {
-		name: 'Überschrift & Text',
-		sharePic: SharePicTitleAndText,
-		options: EditorTitleAndText,
-	},
-	event: {
-		name: 'Veranstaltung (opt. Piktogramm)',
-		sharePic: SharePicEvent,
-		options: EditorEvent,
-	},
-	textOnly: {
-		name: 'Text (opt. Piktogramm)',
-		sharePic: SharePicTextOnly,
-		options: EditorTextOnly,
-	},
-	pictogramOnly: {
-		name: 'Piktogramm',
-		sharePic: SharePicPictogramOnly,
-		options: EditorPictogramOnly,
-	}
+function useCanvasScale(containerRef: React.RefObject<HTMLDivElement | null>) {
+	const [scale, setScale] = useState(1);
+
+	useEffect(() => {
+		const el = containerRef.current;
+		if (!el) return;
+		const observer = new ResizeObserver(([entry]) => {
+			const availableWidth = entry.contentRect.width;
+			setScale(Math.min(1, availableWidth / 360));
+		});
+		observer.observe(el);
+		return () => observer.disconnect();
+	}, [containerRef]);
+
+	return scale;
 }
 
-export default function GjSharePicGenerator() {
+export function GjSharePicGenerator() {
+	const { canUndo, canRedo, undo, redo, dispatch, setCustomTemplates, state, canvasConfig } = useSharePic();
+	const canvasWrapRef = useRef<HTMLDivElement>(null);
+	const scale = useCanvasScale(canvasWrapRef);
+	const [previewError, setPreviewError] = useState<string | null>(null);
+	const [previewSrc, setPreviewSrc] = useState<string | null>(null);
+	const [linkCopied, setLinkCopied] = useState(false);
+	const showDownload = previewSrc !== null;
 
-  	const [selectedTemplate, setSelectedTemplate] = useState<keyof typeof templates>('titleOnly');
+	// Load template from shared URL on first mount
+	useEffect(() => {
+		const template = decodeTemplateFromUrl();
+		if (template && template.templateType === 'sharepic') {
+			saveCustomTemplateToStorage(template);
+			setCustomTemplates(loadCustomTemplatesFromStorage());
+			dispatch({ type: 'LOAD_TEMPLATE', payload: templateToState(template) });
+			window.history.replaceState(null, '', window.location.pathname);
+		}
+	}, [dispatch]);
 
 	const handleDownload = async () => {
-			const resultImg = document.getElementById('final-result') as HTMLImageElement;
+		if (!previewSrc) return;
+		const link = document.createElement('a');
+		link.download = `gj-sharepic-${new Date().toISOString()}.png`;
+		link.href = previewSrc;
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	};
 
-			if (resultImg && resultImg.src) {
-				const link = document.createElement('a');
-				link.download = `gj-sharepic-${new Date().toISOString()}.png`;
-				link.href = resultImg.src;
-				document.body.appendChild(link);
-				link.click();
-				document.body.removeChild(link);
-			}
+	const handleShare = () => {
+		const template = stateToTemplate(state, canvasConfig.width, canvasConfig.height, 'sharepic');
+		const encoded = encodeTemplateForUrl(template);
+		const url = `${window.location.origin}${window.location.pathname}?t=${encoded}`;
+		navigator.clipboard.writeText(url).then(() => {
+			setLinkCopied(true);
+			setTimeout(() => setLinkCopied(false), 2000);
+		});
 	};
 
 	const handlePreview = async () => {
+		setPreviewError(null);
 		const node = document.getElementById('sharepic-download');
-		if (node) {
+		if (!node) return;
+		try {
 			const scale = 3;
 			const width = node.offsetWidth;
 			const height = node.offsetHeight;
@@ -76,57 +86,72 @@ export default function GjSharePicGenerator() {
 				}
 			});
 
-			const resultImg = document.getElementById('final-result') as HTMLImageElement;
-			resultImg.src = contentDataUrl;
-			resultImg.style.width = '360px';
-
-			const downloadBtn = document.getElementById('final-download') as HTMLDivElement;
-			downloadBtn.style.display = 'block';
+			setPreviewSrc(contentDataUrl);
+		} catch (err) {
+			setPreviewError(err instanceof Error ? err.message : 'Unbekannter Fehler');
 		}
 	};
-
-	const SharePicComponent = templates[selectedTemplate].sharePic;
-	const EditorComponent = templates[selectedTemplate].options;
 
 	return (
 		<>
 			<div className="inner">
 				<div className='container sticky'>
-					<div
-						className='sharepic-container'
-					>
-						{
-							SharePicComponent && (<SharePicComponent />)
-						}
+					{/* Outer div fills parent width so ResizeObserver can measure available space */}
+					<div ref={canvasWrapRef} className="canvas-wrap">
+						{/* CSS zoom shrinks the layout box together with the visual size — unlike transform:scale
+						    which keeps the full layout box, causing the canvas hit area to extend over buttons
+						    below it on iOS Safari and swallowing their taps. */}
+						<div className='sharepic-container' style={{ zoom: scale }}>
+							<ErrorBoundary>
+								<TemplateRenderer />
+							</ErrorBoundary>
+						</div>
 					</div>
-					<Button onClick={handlePreview}>SharePic erstellen</Button>
-					<h3>Die Bilderstellung bei Fehlern bitte erneut versuchen.</h3>
-					<h2>Vorschau:</h2>
-					<img id='final-result' />
-					<div id='final-download' style={{display: 'none'}}>
+					<div className="undo-redo-bar">
+						<button
+							type="button"
+							className="undo-redo-btn"
+							onClick={undo}
+							disabled={!canUndo}
+							title="Rückgängig (Strg+Z)"
+						>
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 14L4 9l5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M4 9h11a5 5 0 010 10h-1" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+							Rückgängig
+						</button>
+						<button
+							type="button"
+							className="undo-redo-btn"
+							onClick={redo}
+							disabled={!canRedo}
+							title="Wiederholen (Strg+Y)"
+						>
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 14l5-5-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M20 9H9a5 5 0 000 10h1" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+							Wiederholen
+						</button>
+					</div>
+					<AddElementButton />
+					<div className="action-bar">
+						<Button onClick={handlePreview}>SharePic erstellen</Button>
+						<Button onClick={handleShare}>
+							{linkCopied ? '✓ Kopiert' : 'Teilen'}
+						</Button>
+					</div>
+					{previewError && (
+						<p role="alert" className="preview-error">
+							Fehler beim Erstellen: {previewError}
+						</p>
+					)}
+					<img id='final-result' src={previewSrc ?? undefined} className={previewSrc ? 'final-result' : undefined} />
+					<div id='final-download' className={`final-download${showDownload ? ' final-download--visible' : ''}`}>
 						<Button onClick={handleDownload}>Herunterladen</Button>
 					</div>
 				</div>
 
 				<div className='container'>
-					<h2>Vorlage auswählen:</h2>
-					<select
-						onChange={(e) => setSelectedTemplate(e.target.value as keyof typeof templates)}
-						value={selectedTemplate}
-					>
-						{
-							Object.entries(templates).map(([key, template]) => (
-								<option key={key} value={key}>
-									{template.name}
-								</option>
-							))
-						}
-					</select>
-					{
-						EditorComponent && (<EditorComponent />)
-					}
+					<TemplatePicker />
+					<TemplateEditor />
 				</div>
 			</div>
 		</>
-  );
+	);
 }

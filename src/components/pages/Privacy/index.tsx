@@ -20,7 +20,7 @@
 
 import './Privacy.scss';
 
-export default function Privacy() {
+export function Privacy() {
 	return (
 		<div className="hdg-privacy">
 			<div className="hdg-privacy__inner">

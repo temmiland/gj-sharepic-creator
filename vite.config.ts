@@ -7,4 +7,18 @@ export default defineConfig({
 		host: true
 	},
 	plugins: [react()],
+	resolve: {
+		alias: [{ find: '@', replacement: '/src' }],
+	},
+	build: {
+		rollupOptions: {
+			output: {
+				manualChunks: {
+					'react-vendor': ['react', 'react-dom', 'react-router'],
+					'screenshot': ['modern-screenshot'],
+				},
+			},
+		},
+		chunkSizeWarningLimit: 500,
+	},
 })

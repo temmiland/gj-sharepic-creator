@@ -17,6 +17,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *****************************************************************************/
 
+import type { ColorSet, HighlightColor } from '@/types/design-tokens';
+
 export const colorSets: ColorSet[] = [
 	{
 		name: "Light Green",

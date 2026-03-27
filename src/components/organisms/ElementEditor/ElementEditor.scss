@@ -1,0 +1,158 @@
+@use '../../../variables' as *;
+@use 'sass:color';
+
+.element-editor {
+	border: 1px solid $border-light;
+	margin-bottom: 0.6rem;
+}
+
+.element-editor__header {
+	display: flex;
+	align-items: center;
+}
+
+.element-editor__toggle {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	padding: 0.8rem 1.2rem;
+	cursor: pointer;
+	user-select: none;
+	font-weight: 600;
+	font-size: 1.3rem;
+	background: transparent;
+	border: none;
+	text-align: left;
+	font-family: inherit;
+	touch-action: manipulation;
+}
+
+.element-editor__chevron {
+	flex-shrink: 0;
+	transition: transform 0.2s;
+
+	&--open {
+		transform: rotate(180deg);
+	}
+}
+
+.element-editor__remove {
+	background: #ff4444;
+	color: #fff;
+	border: none;
+	padding: 0.2rem 0.7rem;
+	cursor: pointer;
+	font-size: 1.2rem;
+	font-weight: 600;
+	margin-right: 0.8rem;
+	flex-shrink: 0;
+	touch-action: manipulation;
+
+	&:hover {
+		background: #ff2222;
+	}
+}
+
+.element-editor__body {
+	display: none;
+	padding: 0 1.2rem 1.2rem;
+
+	&--open {
+		display: block;
+	}
+}
+
+.element-editor__position-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.6rem;
+	margin-bottom: 0.4rem;
+}
+
+.element-editor__center-buttons {
+	display: flex;
+	gap: 0.4rem;
+	margin-bottom: 0.8rem;
+}
+
+.element-editor__center-btn {
+	flex: 1;
+	padding: 0.3rem;
+	font-size: 1.1rem;
+	background: $surface-hover;
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	cursor: pointer;
+
+	&:hover {
+		background: color.adjust($surface-hover, $lightness: -5%);
+	}
+}
+
+.element-editor__visibility {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 1.2rem;
+	margin-bottom: 0.8rem;
+}
+
+.element-editor__label {
+	font-size: 1.2rem;
+	display: block;
+	margin-bottom: 0.6rem;
+}
+
+.element-editor__input {
+	width: 100%;
+	padding: 0.4rem;
+	font-size: 1.3rem;
+}
+
+/* Shared sub-editor classes */
+.element-editor__field {
+	font-size: 1.2rem;
+	display: block;
+	margin-bottom: 0.6rem;
+
+	&--no-margin {
+		margin-bottom: 0;
+	}
+}
+
+.element-editor__control {
+	width: 100%;
+	padding: 0.4rem;
+	font-size: 1.3rem;
+}
+
+.element-editor__grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.6rem;
+	margin-bottom: 0.6rem;
+}
+
+.element-editor__file-label {
+	position: relative;
+	display: block;
+	padding: 0.5rem;
+	background: $surface-hover;
+	border: 1px solid $border-medium;
+	text-align: center;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 1.2rem;
+	margin-bottom: 0.6rem;
+	overflow-clip-margin: unset;
+}
+
+.element-editor__file-input {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	cursor: pointer;
+	margin: 0;
+}

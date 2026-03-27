@@ -1,0 +1,14 @@
+@use '../../../variables' as *;
+
+.editor-text-swatch {
+	padding: 0 4px;
+
+	&--accent {
+		background: $cdLightGreen;
+	}
+
+	&--highlight {
+		background: $cdLavendel;
+		color: $cdWhite;
+	}
+}

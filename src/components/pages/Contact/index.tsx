@@ -20,7 +20,7 @@
 
 import './Contact.scss';
 
-export default function Contact() {
+export function Contact() {
 	return (
 		<div className="hdg-contact">
 			<div className="hdg-contact__inner">

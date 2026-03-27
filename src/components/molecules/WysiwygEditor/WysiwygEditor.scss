@@ -1,0 +1,75 @@
+@use '../../../variables' as *;
+
+.wysiwyg-editor {
+	display: flex;
+	flex-direction: column;
+	border: 1.5px solid $border-medium;
+	background-color: $surface;
+	transition: border-color $transition-fast, box-shadow $transition-fast;
+
+	&:focus-within {
+		border-color: $cdGreen;
+		box-shadow: 0 0 0 3px rgba($cdGreen, 0.15);
+	}
+
+	&__toolbar {
+		display: flex;
+		gap: 0.2rem;
+		padding: 0.5rem;
+		background: $surface-secondary;
+		border-bottom: 1px solid $border-light;
+		flex-wrap: wrap;
+	}
+
+	&__btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 3.2rem;
+		height: 3.2rem;
+		padding: 0;
+		border: 1.5px solid transparent;
+		background: transparent;
+		cursor: pointer;
+		font-size: 1.3rem;
+		font-weight: 700;
+		color: $text-secondary;
+		font-family: "Wix Madefor Display", system-ui, Avenir, Helvetica, Arial, sans-serif;
+		transition: all $transition-fast;
+
+		&:hover {
+			background: $surface-hover;
+			border-color: $border-light;
+			color: $text-primary;
+		}
+
+		&:active {
+			background: rgba($cdGreen, 0.1);
+			border-color: $cdGreen;
+			color: $cdGreen;
+		}
+	}
+
+	textarea {
+		border: none !important;
+		outline: none !important;
+		box-shadow: none !important;
+		resize: vertical;
+		min-height: 4.4rem;
+		padding: 1rem 1.4rem;
+		font-size: 1.5rem;
+		line-height: 1.5;
+		color: $text-primary;
+		background-color: $surface;
+		font-family: "Wix Madefor Display", system-ui, Avenir, Helvetica, Arial, sans-serif;
+		font-weight: 600;
+
+		&::placeholder {
+			color: $text-muted;
+		}
+
+		&:hover {
+			border-color: transparent !important;
+		}
+	}
+}

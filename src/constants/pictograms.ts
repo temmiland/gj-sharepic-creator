@@ -17,6 +17,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *****************************************************************************/
 
+import type { Pictogram } from '@/types/design-tokens';
+
 export const pictograms: Pictogram[] = [
 	{ name: "Ackerpflanze", path: "/pictograms/Ackerpflanze.svg" },
 	{ name: "Apfel", path: "/pictograms/Apfel.svg" },

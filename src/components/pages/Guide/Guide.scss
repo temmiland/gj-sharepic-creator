@@ -1,0 +1,129 @@
+@use '../../../variables' as *;
+@use '../../../fonts' as *;
+
+.hdg-guide {
+	min-height: 100vh;
+}
+
+.hdg-guide__inner {
+	padding: 10rem 10rem 8rem;
+	max-width: 900px;
+	margin: 0 auto;
+
+	@media (max-width: 768px) {
+		padding: 6rem 4rem 6rem;
+	}
+
+	@media (max-width: 425px) {
+		padding: 5rem 2.4rem 5rem;
+	}
+
+	h1 {
+		@extend .wix-madefor-display-800;
+		color: $cdWhite;
+		font-size: 6rem;
+		margin: 0 0 2rem;
+
+		@media (max-width: 425px) {
+			font-size: 4rem;
+		}
+	}
+}
+
+.hdg-guide__intro {
+	@extend .wix-madefor-display-400;
+	font-size: 2.2rem;
+	line-height: 1.5;
+	color: rgba($cdWhite, 0.8);
+	margin: 0 0 5rem;
+}
+
+.hdg-guide__list {
+	list-style: none;
+	padding: 0;
+	margin: 0 0 5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.6rem;
+}
+
+.hdg-guide__item {
+	display: flex;
+	gap: 2rem;
+	align-items: flex-start;
+	background: rgba($cdWhite, 0.06);
+	border: 1px solid rgba($cdWhite, 0.12);
+	border-radius: $radius-md;
+	padding: 2rem 2.4rem;
+	transition: background $transition-fast;
+
+	&:hover {
+		background: rgba($cdWhite, 0.1);
+	}
+}
+
+.hdg-guide__icon {
+	font-size: 2.8rem;
+	flex-shrink: 0;
+	line-height: 1;
+	margin-top: 0.2rem;
+}
+
+.hdg-guide__content {
+	h2 {
+		@extend .wix-madefor-display-600;
+		font-size: 2rem;
+		color: $cdLightGreen;
+		margin: 0 0 0.6rem;
+	}
+
+	p {
+		@extend .wix-madefor-display-400;
+		font-size: 1.7rem;
+		line-height: 1.55;
+		color: rgba($cdWhite, 0.85);
+		margin: 0 0 0.4rem;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0.4rem 0 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+
+		li {
+			font-size: 1.6rem;
+			color: rgba($cdWhite, 0.8);
+		}
+	}
+
+	kbd {
+		display: inline-block;
+		padding: 0.1rem 0.5rem;
+		background: rgba($cdWhite, 0.12);
+		border: 1px solid rgba($cdWhite, 0.25);
+		border-radius: 4px;
+		font-family: monospace;
+		font-size: 1.4rem;
+		color: $cdWhite;
+	}
+}
+
+.hdg-guide__cta {
+	display: inline-block;
+	background: $cdLightGreen;
+	color: $cdBlack;
+	padding: 1.2rem 3rem;
+	font-size: 1.8rem;
+	font-weight: 700;
+	text-decoration: none;
+	border-radius: $radius-md;
+	transition: background $transition-fast, transform $transition-fast;
+
+	&:hover {
+		background: $cdGreen;
+		transform: translateY(-2px);
+	}
+}

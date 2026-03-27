@@ -17,65 +17,114 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  *****************************************************************************/
 
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router";
-import Route from './components/templates/Route/index.tsx';
-import { Content } from './components/organism/Content/index.tsx';
-import { SharePicProvider } from './context/SharePicContext.tsx';
-import GjSharePicGenerator from './components/pages/GjSharePicGenerator/index.tsx';
-import Privacy from './components/pages/Privacy/index.tsx';
-import Contact from './components/pages/Contact/index.tsx';
-import Imprint from './components/pages/Imprint/index.tsx';
+import { AppLayout } from '@/components/layouts/AppLayout';
+import { Content } from '@/components/organisms/Content';
+import { SharePicProvider } from '@/context/SharePicContext';
+import { ErrorBoundary } from '@/components/atoms/ErrorBoundary';
+import { STORY_CANVAS_CONFIG } from '@/constants/canvas';
 import './main.scss';
+
+const GjSharePicGenerator = lazy(() =>
+	import('@/components/pages/GjSharePicGenerator').then(m => ({ default: m.GjSharePicGenerator }))
+);
+const Privacy = lazy(() =>
+	import('@/components/pages/Privacy').then(m => ({ default: m.Privacy }))
+);
+const Contact = lazy(() =>
+	import('@/components/pages/Contact').then(m => ({ default: m.Contact }))
+);
+const Imprint = lazy(() =>
+	import('@/components/pages/Imprint').then(m => ({ default: m.Imprint }))
+);
+const Guide = lazy(() =>
+	import('@/components/pages/Guide').then(m => ({ default: m.Guide }))
+);
+const StoryOverlayGenerator = lazy(() =>
+	import('@/components/pages/StoryOverlayGenerator').then(m => ({ default: m.StoryOverlayGenerator }))
+);
 
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: (
-			<Route>
+			<AppLayout>
 				<Content />
-			</Route>
+			</AppLayout>
 		),
 	},
 	{
 		path: "/sharepics",
 		element: (
-			<Route>
+			<AppLayout>
 				<SharePicProvider>
-					<GjSharePicGenerator />
+					<Suspense fallback={null}>
+						<GjSharePicGenerator />
+					</Suspense>
 				</SharePicProvider>
-			</Route>
+			</AppLayout>
+		)
+	},
+	{
+		path: "/story-overlays",
+		element: (
+			<AppLayout>
+				<SharePicProvider canvasConfig={STORY_CANVAS_CONFIG}>
+					<Suspense fallback={null}>
+						<StoryOverlayGenerator />
+					</Suspense>
+				</SharePicProvider>
+			</AppLayout>
+		)
+	},
+	{
+		path: "/anleitung",
+		element: (
+			<AppLayout>
+				<Suspense fallback={null}>
+					<Guide />
+				</Suspense>
+			</AppLayout>
 		)
 	},
 	{
 		path: "/kontakt",
 		element: (
-			<Route>
-				<Contact />
-			</Route>
+			<AppLayout>
+				<Suspense fallback={null}>
+					<Contact />
+				</Suspense>
+			</AppLayout>
 		)
 	},
 	{
 		path: "/datenschutz",
 		element: (
-			<Route>
-				<Privacy />
-			</Route>
+			<AppLayout>
+				<Suspense fallback={null}>
+					<Privacy />
+				</Suspense>
+			</AppLayout>
 		)
 	},
 	{
 		path: "/impressum",
 		element: (
-			<Route>
-				<Imprint />
-			</Route>
+			<AppLayout>
+				<Suspense fallback={null}>
+					<Imprint />
+				</Suspense>
+			</AppLayout>
 		)
 	}
 ]);
 
 createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
-		<RouterProvider router={router}/>
+		<ErrorBoundary>
+			<RouterProvider router={router}/>
+		</ErrorBoundary>
 	</React.StrictMode>,
 );
