@@ -58,6 +58,64 @@
 			background: color.adjust($cdLavendel, $lightness: -5%);
 		}
 	}
+
+	&--submit {
+		background: #f5a623;
+		flex: 1;
+
+		&:hover:not(:disabled) {
+			background: color.adjust(#f5a623, $lightness: -8%);
+		}
+
+		&:disabled {
+			opacity: 0.6;
+			cursor: default;
+		}
+	}
+
+	&--cancel {
+		background: #888;
+		flex: 1;
+
+		&:hover:not(:disabled) {
+			background: #666;
+		}
+
+		&:disabled {
+			opacity: 0.6;
+			cursor: default;
+		}
+	}
+}
+
+.template-io__submit-form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+	padding: 0.8rem;
+	background: $surface-hover;
+	border: 1px solid $border-medium;
+}
+
+.template-io__submit-hint {
+	margin: 0;
+	font-size: 1.2rem;
+	color: #555;
+}
+
+.template-io__submit-message {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.5rem;
+	font-size: 1.2rem;
+	font-family: inherit;
+	border: 1px solid $border-medium;
+	resize: vertical;
+}
+
+.template-io__submit-actions {
+	display: flex;
+	gap: 0.5rem;
 }
 
 .template-io__import-label {

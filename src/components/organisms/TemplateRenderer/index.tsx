@@ -8,7 +8,8 @@
  *     - https://gjsharepics.temmi.land/license
  *******************************************************************************/
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useLayoutEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import type { ColorSet } from '@/types/design-tokens';
 import { useSharePic } from '@/context/SharePicContext';
 import { SharePicCanvas } from '@/components/organisms/SharePicCanvas';
@@ -102,9 +103,30 @@ function CenterButtons({ element }: { element: TemplateElement }) {
 
 	return (
 		<>
-			<div className="center-button center-button--h" onPointerDown={centerH} title="Horizontal zentrieren">↔</div>
-			<div className="center-button center-button--v" onPointerDown={centerV} title="Vertikal zentrieren">↕</div>
+			<div className="toolbar-btn toolbar-btn--center" onPointerDown={centerH} title="Horizontal zentrieren">↔</div>
+			<div className="toolbar-btn toolbar-btn--center" onPointerDown={centerV} title="Vertikal zentrieren">↕</div>
 		</>
+	);
+}
+
+function DeleteButton({ elementId }: { elementId: string }) {
+	const { dispatch } = useSharePic();
+
+	const handleClick = (e: React.PointerEvent) => {
+		e.stopPropagation();
+		dispatch({ type: 'REMOVE_ELEMENT', payload: elementId });
+	};
+
+	return (
+		<div
+			className="toolbar-btn toolbar-btn--delete"
+			onPointerDown={handleClick}
+			title="Element löschen"
+		>
+			<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+				<path d="M3 4h10M6 4V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1M5 4l.7 8.5a1 1 0 0 0 1 .9h2.6a1 1 0 0 0 1-.9L11 4" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+			</svg>
+		</div>
 	);
 }
 
@@ -113,9 +135,7 @@ function EditButton({ elementId }: { elementId: string }) {
 		e.stopPropagation();
 		const editorEl = document.querySelector(`[data-element-editor="${elementId}"]`);
 		if (editorEl) {
-			// Open the element editor itself (now a React-controlled accordion)
 			editorEl.dispatchEvent(new CustomEvent('hdg-details-open'));
-			// Open any collapsed ancestor accordion panels (hdg-details or element-editor)
 			let parent = editorEl.parentElement;
 			while (parent) {
 				if (parent.classList.contains('hdg-details') || parent.classList.contains('element-editor')) {
@@ -132,10 +152,7 @@ function EditButton({ elementId }: { elementId: string }) {
 	};
 
 	return (
-		<div
-			className="edit-button"
-			onPointerDown={handleClick}
-		>
+		<div className="toolbar-btn toolbar-btn--edit" onPointerDown={handleClick} title="Element bearbeiten">
 			<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
 				<path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z" stroke="#555" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round"/>
 			</svg>
@@ -163,6 +180,15 @@ function getCanvasScale(canvasWidth: number): number {
 function DraggableElement({ element, children, selected }: { element: TemplateElement; children: React.ReactNode; selected: boolean }) {
 	const { state, dispatch, canvasConfig } = useSharePic();
 	const wrapperRef = useRef<HTMLDivElement>(null);
+	const [toolbarRect, setToolbarRect] = useState<DOMRect | null>(null);
+
+	useLayoutEffect(() => {
+		if (!selected || !wrapperRef.current) {
+			setToolbarRect(null);
+			return;
+		}
+		setToolbarRect(wrapperRef.current.getBoundingClientRect());
+	}, [selected, element.x, element.y, (element as any).width, (element as any).height, (element as any).size]);
 
 	const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
 		e.preventDefault();
@@ -177,12 +203,12 @@ function DraggableElement({ element, children, selected }: { element: TemplateEl
 		const onMove = (ev: PointerEvent) => {
 			const dx = (ev.clientX - startX) / scale;
 			const dy = (ev.clientY - startY) / scale;
+			const { w, h } = getElementSize(element);
+			const x = Math.round(Math.max(0, Math.min(canvasConfig.width - w, startPosX + dx)));
+			const y = Math.round(Math.max(0, Math.min(canvasConfig.height - h, startPosY + dy)));
 			dispatch({
 				type: 'UPDATE_ELEMENT',
-				payload: {
-					id: element.id,
-					changes: { x: Math.round(startPosX + dx), y: Math.round(startPosY + dy) },
-				},
+				payload: { id: element.id, changes: { x, y } },
 			});
 		};
 
@@ -246,8 +272,10 @@ function DraggableElement({ element, children, selected }: { element: TemplateEl
 	const zIndex = getZIndex(element.type);
 	const showResize = selected && (element.type === 'pictogram' || element.type === 'image');
 	const showEdit = selected && (element.type === 'text' || element.type === 'heading');
+	const showDelete = selected;
 
 	return (
+		<>
 		<div
 			ref={wrapperRef}
 			className={`template-element ${selected ? 'template-element--selected' : ''}`}
@@ -267,9 +295,25 @@ function DraggableElement({ element, children, selected }: { element: TemplateEl
 		>
 			{children}
 			{showResize && <ResizeHandle onPointerDown={handleResizeDown} />}
-			{selected && <CenterButtons element={element} />}
-			{showEdit && <EditButton elementId={element.id} />}
 		</div>
+		{selected && toolbarRect && createPortal(
+			<div
+				className="element-toolbar"
+				style={{
+					position: 'fixed',
+					left: `${toolbarRect.left + toolbarRect.width / 2}px`,
+					top: `${toolbarRect.top - 8}px`,
+					transform: 'translateX(-50%) translateY(-100%)',
+				}}
+				onPointerDown={e => e.stopPropagation()}
+			>
+				<CenterButtons element={element} />
+				{showEdit && <EditButton elementId={element.id} />}
+				{showDelete && <DeleteButton elementId={element.id} />}
+			</div>,
+			document.body
+		)}
+	</>
 	);
 }
 

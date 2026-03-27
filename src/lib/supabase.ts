@@ -8,18 +8,9 @@
  *     - https://gjsharepics.temmi.land/license
  *******************************************************************************/
 
-import './Button.scss';
+import { createClient } from '@supabase/supabase-js';
 
-type ButtonProps = {
-	onClick: () => void;
-	children?: React.ReactNode;
-	disabled?: boolean;
-};
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 
-export function Button({ onClick, children = "Buttontext", disabled }: ButtonProps) {
-	return (
-		<button className="hdg-button" onClick={onClick} disabled={disabled}>
-			{children}
-		</button>
-	);
-}
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);

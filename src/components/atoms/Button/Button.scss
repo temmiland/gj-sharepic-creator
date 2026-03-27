@@ -41,4 +41,11 @@
 		transform: translateY(0);
 		box-shadow: $shadow-sm;
 	}
+
+	&:disabled {
+		background: $border-light;
+		color: $text-muted;
+		cursor: not-allowed;
+		box-shadow: none;
+	}
 }

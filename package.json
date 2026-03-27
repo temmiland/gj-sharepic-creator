@@ -13,6 +13,7 @@
     "test:run": "vitest run"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.100.1",
     "modern-screenshot": "^4.6.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

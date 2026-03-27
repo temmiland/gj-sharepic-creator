@@ -10,14 +10,9 @@
 
 import type { SharePicTemplate, TemplateElement } from '@/types/template';
 import type { ColorSet, HighlightColor, BackgroundPosition } from '@/types/design-tokens';
-import { generateUUID } from '@/utils/uuid';
 import { colorSets, highlightColors } from '@/constants/colors';
 import { backgroundPositions } from '@/constants/background-positions';
-import { defaultTemplates } from '@/constants/default-templates';
-import { defaultStoryTemplates } from '@/constants/default-story-templates';
-
 const STORAGE_KEY = 'gj-sharepic-custom-templates';
-const DEFAULT_IDS = new Set([...defaultTemplates, ...defaultStoryTemplates].map(t => t.id));
 
 export function templateToState(template: SharePicTemplate) {
 	const colorSet = colorSets.find(c => c.name === template.canvas.colorSetName) ?? colorSets[0];
@@ -45,7 +40,7 @@ export function stateToTemplate(state: {
 	colorSet: ColorSet;
 	highlightColor: HighlightColor;
 	backgroundImage: string | null;
-	backgroundImageUploaded: boolean;
+	backgroundImageUploaded?: boolean;
 	backgroundPosition: BackgroundPosition;
 	backgroundBlur: number;
 	backgroundBrightness: number;
@@ -61,7 +56,7 @@ export function stateToTemplate(state: {
 			height: canvasHeight,
 			colorSetName: state.colorSet.name,
 			highlightColorName: state.highlightColor.name,
-			backgroundImage: state.backgroundImageUploaded ? null : state.backgroundImage,
+			backgroundImage: state.backgroundImage,
 			backgroundPositionValue: state.backgroundPosition.value,
 			backgroundBlur: state.backgroundBlur,
 			backgroundBrightness: state.backgroundBrightness,
@@ -71,7 +66,8 @@ export function stateToTemplate(state: {
 }
 
 export function encodeTemplateForUrl(template: SharePicTemplate): string {
-	// Strip background images (data URLs) – too large for a URL
+	// All images should already be Supabase URLs at this point.
+	// Strip any remaining data URLs as a safety fallback so they never end up in the URL.
 	const shareable: SharePicTemplate = {
 		...template,
 		canvas: {
@@ -80,6 +76,11 @@ export function encodeTemplateForUrl(template: SharePicTemplate): string {
 				? null
 				: template.canvas.backgroundImage,
 		},
+		elements: template.elements.map(el =>
+			el.type === 'image' && el.src.startsWith('data:')
+				? { ...el, src: '' }
+				: el
+		),
 	};
 	return encodeURIComponent(JSON.stringify(shareable));
 }
@@ -170,7 +171,7 @@ function validateTemplate(obj: unknown): boolean {
 	return true;
 }
 
-export function saveCustomTemplateToStorage(template: SharePicTemplate): void {
+export function saveCustomTemplateToStorage(template: SharePicTemplate): SharePicTemplate {
 	const existing = loadCustomTemplatesFromStorage();
 	const idx = existing.findIndex(t => t.id === template.id);
 	if (idx >= 0) {
@@ -179,6 +180,7 @@ export function saveCustomTemplateToStorage(template: SharePicTemplate): void {
 		existing.push(template);
 	}
 	localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+	return template;
 }
 
 export function loadCustomTemplatesFromStorage(): SharePicTemplate[] {
@@ -188,14 +190,9 @@ export function loadCustomTemplatesFromStorage(): SharePicTemplate[] {
 		const parsed = JSON.parse(raw);
 		if (!Array.isArray(parsed)) return [];
 		const valid = parsed.filter(validateTemplate) as SharePicTemplate[];
-		// Migrate old entries that were saved with a default template's ID
+		// Migrate old templates without templateType
 		let needsSave = false;
 		for (const t of valid) {
-			if (DEFAULT_IDS.has(t.id)) {
-				t.id = generateUUID();
-				needsSave = true;
-			}
-			// Migrate old templates without templateType
 			if (!t.templateType) {
 				t.templateType = t.canvas.height >= 600 ? 'overlay' : 'sharepic';
 				needsSave = true;

@@ -54,8 +54,8 @@ export function TemplateEditor() {
 
 			<Accordion summary="Hintergrund">
 				<EditorBackgroundImage
-					handleBackgroundImage={(base64File: string) =>
-						dispatch({ type: 'SET_BACKGROUND_IMAGE', payload: base64File, uploaded: true })
+					handleBackgroundImage={(dataUrl: string) =>
+						dispatch({ type: 'SET_BACKGROUND_IMAGE', payload: dataUrl, uploaded: true })
 					}
 					handleFileDelete={() =>
 						dispatch({ type: 'SET_BACKGROUND_IMAGE', payload: null })

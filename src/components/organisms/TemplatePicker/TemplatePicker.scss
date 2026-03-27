@@ -207,7 +207,8 @@
 .prev-text,
 .prev-logo,
 .prev-arrow,
-.prev-pictogram {
+.prev-pictogram,
+.prev-image {
 	z-index: 1;
 }
 
@@ -266,6 +267,13 @@
 .prev-arrow {
 	position: absolute;
 	display: block;
+}
+
+/* Image element */
+.prev-image {
+	position: absolute;
+	display: block;
+	z-index: 0;
 }
 
 /* Pictogram element */

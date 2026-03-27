@@ -12,17 +12,22 @@ import { useRef, useState } from 'react';
 import { Link } from 'react-router';
 import { useSharePic } from '@/context/SharePicContext';
 import { defaultTemplates } from '@/constants/default-templates';
-import { loadCustomTemplatesFromStorage, removeCustomTemplateFromStorage, saveCustomTemplateToStorage, importTemplateFromFile, templateToState, exportTemplateAsJson, encodeTemplateForUrl } from '@/utils/template-io';
+import { loadCustomTemplatesFromStorage, removeCustomTemplateFromStorage, saveCustomTemplateToStorage, importTemplateFromFile, templateToState, exportTemplateAsJson } from '@/utils/template-io';
+import { uploadTemplateImages } from '@/utils/image-upload';
+import { saveTemplateToSupabase } from '@/utils/template-share';
+import { copyToClipboard } from '@/utils/clipboard';
 import { colorSets, highlightColors } from '@/constants/colors';
 import { pictograms } from '@/constants/pictograms';
-import type { SharePicTemplate, TemplateElement, HeadingElement, TextElement, LogoElement, ArrowElement, PictogramElement } from '@/types/template';
+import type { SharePicTemplate, TemplateElement, HeadingElement, TextElement, LogoElement, ArrowElement, PictogramElement, ImageElement } from '@/types/template';
 import './TemplatePicker.scss';
 
 export function TemplatePicker({ builtinTemplates = defaultTemplates }: { builtinTemplates?: SharePicTemplate[] }) {
 	const { state, dispatch, customTemplates, setCustomTemplates, canvasConfig } = useSharePic();
 	const importRef = useRef<HTMLInputElement>(null);
 	const [importError, setImportError] = useState<string | null>(null);
+	const [shareError, setShareError] = useState<string | null>(null);
 	const [copiedId, setCopiedId] = useState<string | null>(null);
+	const [shareLoadingId, setShareLoadingId] = useState<string | null>(null);
 
 	const currentType: 'sharepic' | 'overlay' = canvasConfig.transparentBackground ? 'overlay' : 'sharepic';
 
@@ -55,10 +60,9 @@ export function TemplatePicker({ builtinTemplates = defaultTemplates }: { builti
 		setImportError(null);
 		try {
 			const template = await importTemplateFromFile(file, currentType);
-			saveCustomTemplateToStorage(template);
+			const saved = saveCustomTemplateToStorage(template);
 			setCustomTemplates(loadCustomTemplatesFromStorage());
-			const newState = templateToState(template);
-			dispatch({ type: 'LOAD_TEMPLATE', payload: newState });
+			dispatch({ type: 'LOAD_TEMPLATE', payload: templateToState(saved) });
 		} catch (err) {
 			setImportError(err instanceof Error ? err.message : 'Import fehlgeschlagen');
 			setTimeout(() => setImportError(null), 5000);
@@ -66,14 +70,31 @@ export function TemplatePicker({ builtinTemplates = defaultTemplates }: { builti
 		if (importRef.current) importRef.current.value = '';
 	};
 
-	const handleShareLink = (e: React.PointerEvent, template: SharePicTemplate) => {
+	const handleShareLink = async (e: React.PointerEvent, template: SharePicTemplate) => {
 		e.stopPropagation();
-		const encoded = encodeTemplateForUrl(template);
-		const url = `${window.location.origin}${window.location.pathname}?t=${encoded}`;
-		navigator.clipboard.writeText(url).then(() => {
+		setShareLoadingId(template.id);
+		try {
+			const clone = structuredClone(template);
+			const urlPromise = uploadTemplateImages(clone)
+				.then(() => saveTemplateToSupabase(clone))
+				.then(id => `${window.location.origin}${window.location.pathname}?id=${id}`);
+
+			if (typeof ClipboardItem !== 'undefined') {
+				await navigator.clipboard.write([
+					new ClipboardItem({ 'text/plain': urlPromise.then(url => new Blob([url], { type: 'text/plain' })) }),
+				]);
+			} else {
+				await copyToClipboard(await urlPromise);
+			}
+
 			setCopiedId(template.id);
 			setTimeout(() => setCopiedId(null), 2000);
-		}).catch(() => {});
+		} catch {
+			setShareError('Link konnte nicht erstellt werden.');
+			setTimeout(() => setShareError(null), 3000);
+		} finally {
+			setShareLoadingId(null);
+		}
 	};
 
 	const isCustom = (id: string) => customIds.has(id);
@@ -95,7 +116,7 @@ export function TemplatePicker({ builtinTemplates = defaultTemplates }: { builti
 						<path d="M7 9V1M4 4l3-3 3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 						<path d="M1 10v1.5A1.5 1.5 0 002.5 13h9a1.5 1.5 0 001.5-1.5V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
 					</svg>
-					JSON
+					Importieren
 					<input
 						ref={importRef}
 						type="file"
@@ -107,6 +128,7 @@ export function TemplatePicker({ builtinTemplates = defaultTemplates }: { builti
 				</div>
 			</div>
 			{importError && <p className="template-picker-error" role="alert">{importError}</p>}
+		{shareError && <p className="template-picker-error" role="alert">{shareError}</p>}
 			<div className="template-picker-grid">
 				{allTemplates.map(template => (
 					<button
@@ -125,7 +147,7 @@ export function TemplatePicker({ builtinTemplates = defaultTemplates }: { builti
 									onClick={e => e.stopPropagation()}
 									title="Link kopieren"
 								>
-									{copiedId === template.id ? '✓' : (
+									{copiedId === template.id ? '✓' : shareLoadingId === template.id ? '…' : (
 										<svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 											<path d="M9 1h4v4M13 1l-6 6M6 3H2a1 1 0 00-1 1v8a1 1 0 001 1h8a1 1 0 001-1V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 										</svg>
@@ -225,6 +247,8 @@ function PreviewElement({ element, canvasW, canvasH, accentColor, textColor, hea
 			return <PreviewArrow el={element} pctX={pctX} pctY={pctY} canvasW={canvasW} accentColor={accentColor} />;
 		case 'pictogram':
 			return <PreviewPictogram el={element} pctX={pctX} pctY={pctY} canvasW={canvasW} isDark={isDark} />;
+		case 'image':
+			return <PreviewImage el={element} pctX={pctX} pctY={pctY} canvasW={canvasW} canvasH={canvasH} />;
 		default:
 			return null;
 	}
@@ -316,6 +340,27 @@ function PreviewArrow({ el, pctX, pctY, canvasW, accentColor }: { el: ArrowEleme
 				fill={accentColor}
 			/>
 		</svg>
+	);
+}
+
+function PreviewImage({ el, pctX, pctY, canvasW, canvasH }: { el: ImageElement; pctX: number; pctY: number; canvasW: number; canvasH: number }) {
+	const widthPct = (el.width / canvasW) * 100;
+	const heightPct = (el.height / canvasH) * 100;
+	return (
+		<img
+			className="prev-image"
+			src={el.src}
+			alt=""
+			style={{
+				left: `${pctX}%`,
+				top: `${pctY}%`,
+				width: `${widthPct}%`,
+				height: `${heightPct}%`,
+				opacity: el.opacity,
+				objectFit: 'cover',
+			}}
+			draggable={false}
+		/>
 	);
 }
 

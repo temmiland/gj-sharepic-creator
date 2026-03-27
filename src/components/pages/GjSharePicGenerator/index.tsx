@@ -16,7 +16,12 @@ import { TemplateEditor, AddElementButton } from '@/components/organisms/Templat
 import { TemplatePicker } from '@/components/organisms/TemplatePicker';
 import { useSharePic } from '@/context/SharePicContext';
 import { ErrorBoundary } from '@/components/atoms/ErrorBoundary';
-import { templateToState, decodeTemplateFromUrl, saveCustomTemplateToStorage, loadCustomTemplatesFromStorage, stateToTemplate, encodeTemplateForUrl } from '@/utils/template-io';
+import { templateToState, decodeTemplateFromUrl, saveCustomTemplateToStorage, loadCustomTemplatesFromStorage, stateToTemplate } from '@/utils/template-io';
+import { uploadTemplateImages } from '@/utils/image-upload';
+import { saveTemplateToSupabase, loadTemplateFromSupabase } from '@/utils/template-share';
+import { copyToClipboard } from '@/utils/clipboard';
+import { useDefaultTemplates } from '@/hooks/useDefaultTemplates';
+import { defaultTemplates } from '@/constants/default-templates';
 import './GjSharePicGenerator.scss';
 
 function useCanvasScale(containerRef: React.RefObject<HTMLDivElement | null>) {
@@ -38,22 +43,47 @@ function useCanvasScale(containerRef: React.RefObject<HTMLDivElement | null>) {
 
 export function GjSharePicGenerator() {
 	const { canUndo, canRedo, undo, redo, dispatch, setCustomTemplates, state, canvasConfig } = useSharePic();
+	const builtinTemplates = useDefaultTemplates('sharepic', defaultTemplates);
 	const canvasWrapRef = useRef<HTMLDivElement>(null);
 	const scale = useCanvasScale(canvasWrapRef);
+	const [originalName, setOriginalName] = useState(state.templateName);
+	useEffect(() => { setOriginalName(state.templateName); }, [state.templateId]);
+	const canShare = state.templateName.trim() !== '' && state.templateName !== originalName;
 	const [previewError, setPreviewError] = useState<string | null>(null);
 	const [previewSrc, setPreviewSrc] = useState<string | null>(null);
 	const [linkCopied, setLinkCopied] = useState(false);
+	const [shareLoading, setShareLoading] = useState(false);
+	const [shareError, setShareError] = useState<string | null>(null);
 	const showDownload = previewSrc !== null;
 
 	// Load template from shared URL on first mount
 	useEffect(() => {
-		const template = decodeTemplateFromUrl();
-		if (template && template.templateType === 'sharepic') {
-			saveCustomTemplateToStorage(template);
-			setCustomTemplates(loadCustomTemplatesFromStorage());
-			dispatch({ type: 'LOAD_TEMPLATE', payload: templateToState(template) });
-			window.history.replaceState(null, '', window.location.pathname);
+		async function loadFromUrl() {
+			const params = new URLSearchParams(window.location.search);
+
+			// New: load by Supabase ID
+			const id = params.get('id');
+			if (id) {
+				const template = await loadTemplateFromSupabase(id);
+				if (template && template.templateType === 'sharepic') {
+					const saved = saveCustomTemplateToStorage({ ...template, id });
+					setCustomTemplates(loadCustomTemplatesFromStorage());
+					dispatch({ type: 'LOAD_TEMPLATE', payload: templateToState(saved) });
+					window.history.replaceState(null, '', window.location.pathname);
+					return;
+				}
+			}
+
+			// Legacy: load from ?t= encoded URL
+			const template = decodeTemplateFromUrl();
+			if (template && template.templateType === 'sharepic') {
+				const saved = saveCustomTemplateToStorage(template);
+				setCustomTemplates(loadCustomTemplatesFromStorage());
+				dispatch({ type: 'LOAD_TEMPLATE', payload: templateToState(saved) });
+				window.history.replaceState(null, '', window.location.pathname);
+			}
 		}
+		loadFromUrl();
 	}, [dispatch, setCustomTemplates]);
 
 	const handleDownload = async () => {
@@ -66,14 +96,33 @@ export function GjSharePicGenerator() {
 		document.body.removeChild(link);
 	};
 
-	const handleShare = () => {
-		const template = stateToTemplate(state, canvasConfig.width, canvasConfig.height, 'sharepic');
-		const encoded = encodeTemplateForUrl(template);
-		const url = `${window.location.origin}${window.location.pathname}?t=${encoded}`;
-		navigator.clipboard.writeText(url).then(() => {
+	const handleShare = async () => {
+		setShareLoading(true);
+		setShareError(null);
+		try {
+			const template = stateToTemplate(state, canvasConfig.width, canvasConfig.height, 'sharepic');
+
+			// Build the URL asynchronously, but kick off the clipboard write synchronously
+			// so Safari's user-gesture context is still active.
+			const urlPromise = uploadTemplateImages(template)
+				.then(() => saveTemplateToSupabase(template))
+				.then(id => `${window.location.origin}${window.location.pathname}?id=${id}`);
+
+			if (typeof ClipboardItem !== 'undefined') {
+				await navigator.clipboard.write([
+					new ClipboardItem({ 'text/plain': urlPromise.then(url => new Blob([url], { type: 'text/plain' })) }),
+				]);
+			} else {
+				await copyToClipboard(await urlPromise);
+			}
+
 			setLinkCopied(true);
 			setTimeout(() => setLinkCopied(false), 2000);
-		}).catch(() => {});
+		} catch {
+			setShareError('Link konnte nicht erstellt werden.');
+		} finally {
+			setShareLoading(false);
+		}
 	};
 
 	const handlePreview = async () => {
@@ -140,12 +189,23 @@ export function GjSharePicGenerator() {
 						</button>
 					</div>
 					<AddElementButton />
+					<br></br>
+					<input
+						type="text"
+						className="template-name-input"
+						value={state.templateName}
+						onChange={e => dispatch({ type: 'SET_TEMPLATE_NAME', payload: e.target.value })}
+						placeholder="Vorlagenname"
+					/>
 					<div className="action-bar">
 						<Button onClick={handlePreview}>SharePic erstellen</Button>
-						<Button onClick={handleShare}>
-							{linkCopied ? '✓ Kopiert' : 'Teilen'}
+						<Button onClick={handleShare} disabled={shareLoading || !canShare}>
+							{linkCopied ? '✓ Kopiert' : shareLoading ? 'Wird hochgeladen…' : 'Teilen'}
 						</Button>
 					</div>
+					{shareError && (
+						<p role="alert" className="preview-error">{shareError}</p>
+					)}
 					{previewError && (
 						<p role="alert" className="preview-error">
 							Fehler beim Erstellen: {previewError}
@@ -158,7 +218,7 @@ export function GjSharePicGenerator() {
 				</div>
 
 				<div className='container'>
-					<TemplatePicker />
+					<TemplatePicker builtinTemplates={builtinTemplates} />
 					<TemplateEditor />
 				</div>
 			</div>

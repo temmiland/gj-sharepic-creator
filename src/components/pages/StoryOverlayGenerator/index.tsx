@@ -17,7 +17,11 @@ import { TemplatePicker } from '@/components/organisms/TemplatePicker';
 import { useSharePic } from '@/context/SharePicContext';
 import { ErrorBoundary } from '@/components/atoms/ErrorBoundary';
 import { defaultStoryTemplates } from '@/constants/default-story-templates';
-import { templateToState, decodeTemplateFromUrl, saveCustomTemplateToStorage, loadCustomTemplatesFromStorage, stateToTemplate, encodeTemplateForUrl } from '@/utils/template-io';
+import { templateToState, decodeTemplateFromUrl, saveCustomTemplateToStorage, loadCustomTemplatesFromStorage, stateToTemplate } from '@/utils/template-io';
+import { useDefaultTemplates } from '@/hooks/useDefaultTemplates';
+import { uploadTemplateImages } from '@/utils/image-upload';
+import { saveTemplateToSupabase, loadTemplateFromSupabase } from '@/utils/template-share';
+import { copyToClipboard } from '@/utils/clipboard';
 import './StoryOverlayGenerator.scss';
 
 function useCanvasScale(containerRef: React.RefObject<HTMLDivElement | null>, canvasWidth: number) {
@@ -39,19 +43,46 @@ function useCanvasScale(containerRef: React.RefObject<HTMLDivElement | null>, ca
 
 export function StoryOverlayGenerator() {
 	const { canUndo, canRedo, undo, redo, canvasConfig, dispatch, setCustomTemplates, state } = useSharePic();
+	const builtinTemplates = useDefaultTemplates('overlay', defaultStoryTemplates);
+	const [originalName, setOriginalName] = useState(state.templateName);
+	useEffect(() => { setOriginalName(state.templateName); }, [state.templateId]);
+	const canShare = state.templateName.trim() !== '' && state.templateName !== originalName;
 
 	// Load template from shared URL on first mount, otherwise load first story template
 	useEffect(() => {
-		const urlTemplate = decodeTemplateFromUrl();
-		if (urlTemplate && urlTemplate.templateType === 'overlay') {
-			saveCustomTemplateToStorage(urlTemplate);
-			setCustomTemplates(loadCustomTemplatesFromStorage());
-			dispatch({ type: 'LOAD_TEMPLATE', payload: templateToState(urlTemplate) });
-			window.history.replaceState(null, '', window.location.pathname);
-		} else if (defaultStoryTemplates.length > 0) {
-			const initialState = templateToState(defaultStoryTemplates[0]);
-			dispatch({ type: 'LOAD_TEMPLATE', payload: initialState });
+		async function loadFromUrl() {
+			const params = new URLSearchParams(window.location.search);
+
+			// New: load by Supabase ID
+			const id = params.get('id');
+			if (id) {
+				const template = await loadTemplateFromSupabase(id);
+				if (template && template.templateType === 'overlay') {
+					const saved = saveCustomTemplateToStorage({ ...template, id });
+					setCustomTemplates(loadCustomTemplatesFromStorage());
+					dispatch({ type: 'LOAD_TEMPLATE', payload: templateToState(saved) });
+					window.history.replaceState(null, '', window.location.pathname);
+					return;
+				}
+			}
+
+			// Legacy: load from ?t= encoded URL
+			const urlTemplate = decodeTemplateFromUrl();
+			if (urlTemplate && urlTemplate.templateType === 'overlay') {
+				const saved = saveCustomTemplateToStorage(urlTemplate);
+				setCustomTemplates(loadCustomTemplatesFromStorage());
+				dispatch({ type: 'LOAD_TEMPLATE', payload: templateToState(saved) });
+				window.history.replaceState(null, '', window.location.pathname);
+				return;
+			}
+
+			// Default: load first story template
+			if (defaultStoryTemplates.length > 0) {
+				const initialState = templateToState(defaultStoryTemplates[0]);
+				dispatch({ type: 'LOAD_TEMPLATE', payload: initialState });
+			}
 		}
+		loadFromUrl();
 	}, [dispatch, setCustomTemplates]);
 
 	const canvasWrapRef = useRef<HTMLDivElement>(null);
@@ -59,6 +90,8 @@ export function StoryOverlayGenerator() {
 	const [previewError, setPreviewError] = useState<string | null>(null);
 	const [previewSrc, setPreviewSrc] = useState<string | null>(null);
 	const [linkCopied, setLinkCopied] = useState(false);
+	const [shareLoading, setShareLoading] = useState(false);
+	const [shareError, setShareError] = useState<string | null>(null);
 	const showDownload = previewSrc !== null;
 
 	const handleDownload = async () => {
@@ -71,14 +104,31 @@ export function StoryOverlayGenerator() {
 		document.body.removeChild(link);
 	};
 
-	const handleShare = () => {
-		const template = stateToTemplate(state, canvasConfig.width, canvasConfig.height, 'overlay');
-		const encoded = encodeTemplateForUrl(template);
-		const url = `${window.location.origin}${window.location.pathname}?t=${encoded}`;
-		navigator.clipboard.writeText(url).then(() => {
+	const handleShare = async () => {
+		setShareLoading(true);
+		setShareError(null);
+		try {
+			const template = stateToTemplate(state, canvasConfig.width, canvasConfig.height, 'overlay');
+
+			const urlPromise = uploadTemplateImages(template)
+				.then(() => saveTemplateToSupabase(template))
+				.then(id => `${window.location.origin}${window.location.pathname}?id=${id}`);
+
+			if (typeof ClipboardItem !== 'undefined') {
+				await navigator.clipboard.write([
+					new ClipboardItem({ 'text/plain': urlPromise.then(url => new Blob([url], { type: 'text/plain' })) }),
+				]);
+			} else {
+				await copyToClipboard(await urlPromise);
+			}
+
 			setLinkCopied(true);
 			setTimeout(() => setLinkCopied(false), 2000);
-		}).catch(() => {});
+		} catch {
+			setShareError('Link konnte nicht erstellt werden.');
+		} finally {
+			setShareLoading(false);
+		}
 	};
 
 	const handlePreview = async () => {
@@ -141,12 +191,22 @@ export function StoryOverlayGenerator() {
 						</button>
 					</div>
 					<AddElementButton />
+					<input
+						type="text"
+						className="template-name-input"
+						value={state.templateName}
+						onChange={e => dispatch({ type: 'SET_TEMPLATE_NAME', payload: e.target.value })}
+						placeholder="Vorlagenname"
+					/>
 					<div className="action-bar">
 						<Button onClick={handlePreview}>Story-Overlay erstellen</Button>
-						<Button onClick={handleShare}>
-							{linkCopied ? '✓ Kopiert' : 'Teilen'}
+						<Button onClick={handleShare} disabled={shareLoading || !canShare}>
+							{linkCopied ? '✓ Kopiert' : shareLoading ? 'Wird hochgeladen…' : 'Teilen'}
 						</Button>
 					</div>
+					{shareError && (
+						<p role="alert" className="preview-error">{shareError}</p>
+					)}
 					{previewError && (
 						<p role="alert" className="preview-error">
 							Fehler beim Erstellen: {previewError}
@@ -159,7 +219,7 @@ export function StoryOverlayGenerator() {
 				</div>
 
 				<div className='container'>
-					<TemplatePicker builtinTemplates={defaultStoryTemplates} />
+					<TemplatePicker builtinTemplates={builtinTemplates} />
 					<TemplateEditor />
 				</div>
 			</div>

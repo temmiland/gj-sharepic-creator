@@ -8,7 +8,7 @@
  *     - https://gjsharepics.temmi.land/license
  *******************************************************************************/
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSharePic } from '@/context/SharePicContext';
 import { generateUUID } from '@/utils/uuid';
 import { defaultTemplates } from '@/constants/default-templates';
@@ -21,12 +21,23 @@ import {
 	loadCustomTemplatesFromStorage,
 	templateToState,
 } from '@/utils/template-io';
+import { submitTemplateForReview } from '@/utils/template-share';
+import { uploadTemplateImages } from '@/utils/image-upload';
 import './TemplateIOSection.scss';
 
 export function TemplateIOSection() {
 	const { state, dispatch, setCustomTemplates, canvasConfig } = useSharePic();
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [status, setStatus] = useState<string | null>(null);
+	const [submitOpen, setSubmitOpen] = useState(false);
+
+	useEffect(() => {
+		if (!status) return;
+		const timer = setTimeout(() => setStatus(null), 3000);
+		return () => clearTimeout(timer);
+	}, [status]);
+	const [submitMessage, setSubmitMessage] = useState('');
+	const [submitLoading, setSubmitLoading] = useState(false);
 
 	const handleExport = () => {
 		const template = stateToTemplate(state, canvasConfig.width, canvasConfig.height, canvasConfig.transparentBackground ? 'overlay' : 'sharepic');
@@ -46,7 +57,22 @@ export function TemplateIOSection() {
 		}
 		setCustomTemplates(loadCustomTemplatesFromStorage());
 		setStatus('Template gespeichert!');
-		setTimeout(() => setStatus(null), 2000);
+	};
+
+	const handleSubmit = async () => {
+		setSubmitLoading(true);
+		try {
+			const template = stateToTemplate(state, canvasConfig.width, canvasConfig.height, canvasConfig.transparentBackground ? 'overlay' : 'sharepic');
+			await uploadTemplateImages(template, 1200, 0.75);
+			await submitTemplateForReview(template, submitMessage.trim() || undefined);
+			setSubmitOpen(false);
+			setSubmitMessage('');
+			setStatus('Danke! Template eingereicht.');
+		} catch {
+			setStatus('Fehler: Einreichen fehlgeschlagen.');
+		} finally {
+			setSubmitLoading(false);
+		}
 	};
 
 	const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +88,6 @@ export function TemplateIOSection() {
 		} catch (err) {
 			setStatus(`Fehler: ${err instanceof Error ? err.message : 'Unbekannter Fehler'}`);
 		}
-		setTimeout(() => setStatus(null), 3000);
 		if (fileInputRef.current) fileInputRef.current.value = '';
 	};
 
@@ -103,6 +128,48 @@ export function TemplateIOSection() {
 					className="template-io__import-input"
 				/>
 			</label>
+
+			{!submitOpen ? (
+				<button
+					type="button"
+					className="template-io__btn template-io__btn--submit"
+					onClick={() => setSubmitOpen(true)}
+				>
+					Zur Aufnahme einreichen
+				</button>
+			) : (
+				<div className="template-io__submit-form">
+					<p className="template-io__submit-hint">
+						Du kannst optional eine kurze Notiz hinterlassen, z.B. wofür das Template gedacht ist.
+					</p>
+					<textarea
+						className="template-io__submit-message"
+						placeholder="Notiz (optional)"
+						value={submitMessage}
+						onChange={e => setSubmitMessage(e.target.value)}
+						rows={3}
+					/>
+					<div className="template-io__submit-actions">
+						<button
+							type="button"
+							className="template-io__btn template-io__btn--submit"
+							onClick={handleSubmit}
+							disabled={submitLoading}
+						>
+							{submitLoading ? 'Wird eingereicht…' : 'Einreichen'}
+						</button>
+						<button
+							type="button"
+							className="template-io__btn template-io__btn--cancel"
+							onClick={() => { setSubmitOpen(false); setSubmitMessage(''); }}
+							disabled={submitLoading}
+						>
+							Abbrechen
+						</button>
+					</div>
+				</div>
+			)}
+
 			{status && (
 				<p className={`template-io__status ${status.startsWith('Fehler') ? 'template-io__status--error' : 'template-io__status--success'}`}>
 					{status}

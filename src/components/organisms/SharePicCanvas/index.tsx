@@ -103,26 +103,27 @@ export function SharePicCanvas({ backgroundImageUploaded, backgroundImage, backg
 				position: 'relative',
 				width: `${width}px`,
 				height: `${height}px`,
-				overflow: 'hidden',
+				overflow: 'visible',
 				background: transparentBackground ? 'transparent' : colorSet.backgroundColor,
 				zIndex: 0,
 			}}
 		>
 			{backgroundImage && (
-				<img
-					src={backgroundImage}
-					style={{
-						position: 'absolute',
-						top: '-20px',
-						left: '-20px',
-						width: `${imgWidth}px`,
-						height: `${imgHeight}px`,
-						objectFit: 'cover',
-						objectPosition: backgroundPosition.value,
-						filter: `blur(${backgroundBlur}rem) brightness(${backgroundBrightness}%)`,
-						zIndex: 1,
-					}}
-				/>
+				<div style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 1 }}>
+					<img
+						src={backgroundImage}
+						style={{
+							position: 'absolute',
+							top: '-20px',
+							left: '-20px',
+							width: `${imgWidth}px`,
+							height: `${imgHeight}px`,
+							objectFit: 'cover',
+							objectPosition: backgroundPosition.value,
+							filter: `blur(${backgroundBlur}rem) brightness(${backgroundBrightness}%)`,
+						}}
+					/>
+				</div>
 			)}
 			{children}
 		</div>

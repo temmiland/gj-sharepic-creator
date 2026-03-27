@@ -12,7 +12,7 @@ import { Input } from '@/components/atoms/Input';
 import { scaleImageToDataUrl } from '@/utils/image-scale';
 
 type EditorBackgroundImageProps = {
-	handleBackgroundImage: (base64File: string) => void;
+	handleBackgroundImage: (dataUrl: string) => void;
 	handleFileDelete: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
