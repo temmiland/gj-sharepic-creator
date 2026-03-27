@@ -60,6 +60,8 @@
 			white-space: pre-line;
 			padding: 0;
 			margin: 5rem 0 2.5rem 0;
+			text-transform: none;
+			letter-spacing: normal;
 
 			@media (orientation: landscape) and (max-height: 500px) {
 				font-size: 3.25rem;
