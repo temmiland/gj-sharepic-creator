@@ -1,0 +1,68 @@
+<!--
+  gj-sharepic-creator
+  Copyright (c) 2025-2026 temmiland
+
+  Licensed under the Affero General Public License (AGPL) Version 3.0;
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at:
+    - https://gjsharepics.temmi.land/license
+-->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Startseite - Höchste Priorität -->
+  <url>
+    <loc>https://gjsharepics.temmi.land/</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1</priority>
+  </url>
+
+  <!-- SharePic Generator - Hauptfeature -->
+  <url>
+    <loc>https://gjsharepics.temmi.land/sharepics</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Story Overlay Generator - Neues Feature -->
+  <url>
+    <loc>https://gjsharepics.temmi.land/story-overlays</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Anleitung - Wichtig für Benutzer -->
+  <url>
+    <loc>https://gjsharepics.temmi.land/anleitung</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Kontakt -->
+  <url>
+    <loc>https://gjsharepics.temmi.land/kontakt</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Datenschutz (erforderlich, aber niedrigere Priorität) -->
+  <url>
+    <loc>https://gjsharepics.temmi.land/datenschutz</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Impressum (erforderlich, aber niedrigere Priorität) -->
+  <url>
+    <loc>https://gjsharepics.temmi.land/impressum</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>
