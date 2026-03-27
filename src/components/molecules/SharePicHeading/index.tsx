@@ -33,18 +33,18 @@ export function SharePicHeading({ multiLineText, colorSet, highlightColor, fontS
 							fontColor={
 								line.startsWith('*')
 									? highlightColor.name === "Black"
-											? colorSets.find(cS => cS.name === "White")?.backgroundColor!!
-											: colorSets.find(cS => cS.name === "Black")?.backgroundColor!!
+											? colorSets.find(cS => cS.name === "White")?.backgroundColor ?? '#ffffff'
+											: colorSets.find(cS => cS.name === "Black")?.backgroundColor ?? '#000000'
 									: colorSet.name === "White"
-											? colorSets.find(cS => cS.name === "White")?.backgroundColor!!
-											: colorSets.find(cS => cS.name === "Black")?.backgroundColor!!
+											? colorSets.find(cS => cS.name === "White")?.backgroundColor ?? '#ffffff'
+											: colorSets.find(cS => cS.name === "Black")?.backgroundColor ?? '#000000'
 							}
 							backgroundColor={
 								line.startsWith('*')
 									? highlightColor.backgroundColor
 									: colorSet.name === "White"
-											? colorSets.find(cS => cS.name === "Black")?.backgroundColor!!
-											: colorSets.find(cS => cS.name === "White")?.backgroundColor!!
+											? colorSets.find(cS => cS.name === "Black")?.backgroundColor ?? '#000000'
+											: colorSets.find(cS => cS.name === "White")?.backgroundColor ?? '#ffffff'
 							}
 						>
 							{line.replace('*', '')}

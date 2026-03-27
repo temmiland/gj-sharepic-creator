@@ -44,6 +44,7 @@ export type SharePicAction =
 	| { type: "REMOVE_ELEMENT"; payload: string }
 	| { type: "SELECT_ELEMENT"; payload: string | null };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const sharePicReducer = (state: SharePicState, action: SharePicAction): SharePicState => {
 	switch (action.type) {
 		case "LOAD_TEMPLATE":
@@ -219,6 +220,7 @@ export const SharePicProvider = ({ children, canvasConfig = SHAREPIC_CANVAS_CONF
 	);
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useSharePic = (): SharePicContextType => {
 	const context = useContext(SharePicContext);
 	if (!context) {

@@ -52,7 +52,7 @@ export function StoryOverlayGenerator() {
 			const initialState = templateToState(defaultStoryTemplates[0]);
 			dispatch({ type: 'LOAD_TEMPLATE', payload: initialState });
 		}
-	}, [dispatch]);
+	}, [dispatch, setCustomTemplates]);
 
 	const canvasWrapRef = useRef<HTMLDivElement>(null);
 	const scale = useCanvasScale(canvasWrapRef, canvasConfig.width);

@@ -54,7 +54,7 @@ export function GjSharePicGenerator() {
 			dispatch({ type: 'LOAD_TEMPLATE', payload: templateToState(template) });
 			window.history.replaceState(null, '', window.location.pathname);
 		}
-	}, [dispatch]);
+	}, [dispatch, setCustomTemplates]);
 
 	const handleDownload = async () => {
 		if (!previewSrc) return;
