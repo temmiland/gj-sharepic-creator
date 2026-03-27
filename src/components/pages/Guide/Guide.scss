@@ -20,6 +20,10 @@
 	max-width: 900px;
 	margin: 0 auto;
 
+	@media (max-width: 900px) {
+		padding: 6rem 5rem 6rem;
+	}
+
 	@media (max-width: 768px) {
 		padding: 6rem 4rem 6rem;
 	}
@@ -33,6 +37,11 @@
 		color: $cdWhite;
 		font-size: 6rem;
 		margin: 0 0 2rem;
+		overflow-wrap: break-word;
+
+		@media (max-width: 768px) {
+			font-size: 5rem;
+		}
 
 		@media (max-width: 425px) {
 			font-size: 4rem;
@@ -46,6 +55,7 @@
 	line-height: 1.5;
 	color: rgba($cdWhite, 0.8);
 	margin: 0 0 5rem;
+	overflow-wrap: break-word;
 }
 
 .hdg-guide__list {
@@ -93,6 +103,7 @@
 		line-height: 1.55;
 		color: rgba($cdWhite, 0.85);
 		margin: 0 0 0.4rem;
+		overflow-wrap: break-word;
 	}
 
 	ul {
