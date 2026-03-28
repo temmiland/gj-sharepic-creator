@@ -1,12 +1,13 @@
 {
   "name": "gj-sharepic-creator",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run generate:sitemap && tsc -b && vite build",
+    "build": "npm run generate:sitemap && npm run generate:source-archive && tsc -b && vite build",
     "generate:sitemap": "node scripts/generate-sitemap.js",
+    "generate:source-archive": "node scripts/create-source-archive.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
