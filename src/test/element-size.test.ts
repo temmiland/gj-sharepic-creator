@@ -70,7 +70,7 @@ describe('getElementSize', () => {
 	it('returns image dimensions as-is', () => {
 		const image: ImageElement = {
 			id: 'i1', type: 'image', x: 0, y: 0, visible: true,
-			src: '', width: 200, height: 150, opacity: 1,
+			src: '', width: 200, height: 150, opacity: 1, rotation: 0,
 		};
 		expect(getElementSize(image)).toEqual({ w: 200, h: 150 });
 	});

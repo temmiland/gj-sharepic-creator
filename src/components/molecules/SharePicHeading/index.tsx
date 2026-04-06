@@ -38,13 +38,6 @@ function getColors(colorSet: ColorSet, highlightColor: HighlightColor) {
 }
 
 /**
- * Check whether a line contains inline #highlight# markers.
- */
-function hasInlineHighlight(text: string): boolean {
-	return /#[^#]+#/.test(text);
-}
-
-/**
  * Parse inline #text# highlight markers within a heading line.
  * Works like text: plain text stays as-is, highlighted parts become <span>s
  * with their own background. The parent h1 provides the base background.

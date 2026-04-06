@@ -38,7 +38,7 @@ export async function scaleImageToDataUrl(
 			URL.revokeObjectURL(url);
 
 			const { naturalWidth, naturalHeight } = img;
-			let scale = Math.min(1, maxW / naturalWidth, maxH / naturalHeight);
+			const scale = Math.min(1, maxW / naturalWidth, maxH / naturalHeight);
 			let w = Math.round(naturalWidth * scale);
 			let h = Math.round(naturalHeight * scale);
 

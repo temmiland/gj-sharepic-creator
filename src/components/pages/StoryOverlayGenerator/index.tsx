@@ -45,6 +45,7 @@ export function StoryOverlayGenerator() {
 	const { canUndo, canRedo, undo, redo, canvasConfig, dispatch, setCustomTemplates, state } = useSharePic();
 	const builtinTemplates = useDefaultTemplates('overlay', defaultStoryTemplates);
 	const [originalName, setOriginalName] = useState(state.templateName);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => { setOriginalName(state.templateName); }, [state.templateId]);
 	const canShare = state.templateName.trim() !== '' && state.templateName !== originalName;
 

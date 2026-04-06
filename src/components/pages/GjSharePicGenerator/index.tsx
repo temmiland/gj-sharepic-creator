@@ -48,6 +48,7 @@ export function GjSharePicGenerator() {
 	const canvasWrapRef = useRef<HTMLDivElement>(null);
 	const scale = useCanvasScale(canvasWrapRef);
 	const [originalName, setOriginalName] = useState(state.templateName);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => { setOriginalName(state.templateName); }, [state.templateId]);
 	const canShare = state.templateName.trim() !== '' && state.templateName !== originalName;
 	const [previewError, setPreviewError] = useState<string | null>(null);

@@ -59,7 +59,7 @@ export function stateToTemplate(state: {
 			height: canvasHeight,
 			colorSetName: state.colorSet.name,
 			highlightColorName: state.highlightColor.name,
-			backgroundImage: state.backgroundImage,
+			backgroundImage: state.backgroundImageUploaded ? null : state.backgroundImage,
 			backgroundPositionValue: state.backgroundPosition.value,
 			backgroundBlur: state.backgroundBlur,
 			backgroundBrightness: state.backgroundBrightness,

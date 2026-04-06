@@ -9,7 +9,7 @@
  *******************************************************************************/
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { templateToState, stateToTemplate } from '@/utils/template-io';
+import { templateToState, stateToTemplate, encodeTemplateForUrl, decodeTemplateFromUrl } from '@/utils/template-io';
 import { defaultTemplates } from '@/constants/default-templates';
 
 describe('templateToState', () => {
@@ -90,6 +90,114 @@ describe('stateToTemplate', () => {
 		const template = stateToTemplate(state);
 
 		expect(template.canvas.backgroundImage).toBe(state.backgroundImage);
+	});
+});
+
+describe('templateToState blur migration', () => {
+	it('migrates old rem-based blur (≤ 2) to px by multiplying by 16', () => {
+		const template = { ...defaultTemplates[0], canvas: { ...defaultTemplates[0].canvas, backgroundBlur: 1 } };
+		const state = templateToState(template);
+		expect(state.backgroundBlur).toBe(16);
+	});
+
+	it('does not migrate blur values already in px range (> 2)', () => {
+		const template = { ...defaultTemplates[0], canvas: { ...defaultTemplates[0].canvas, backgroundBlur: 20 } };
+		const state = templateToState(template);
+		expect(state.backgroundBlur).toBe(20);
+	});
+
+	it('does not migrate zero blur', () => {
+		const template = { ...defaultTemplates[0], canvas: { ...defaultTemplates[0].canvas, backgroundBlur: 0 } };
+		const state = templateToState(template);
+		expect(state.backgroundBlur).toBe(0);
+	});
+});
+
+describe('encodeTemplateForUrl', () => {
+	it('strips data: backgroundImage', () => {
+		const state = {
+			...templateToState(defaultTemplates[0]),
+			backgroundImage: 'data:image/png;base64,abc',
+		};
+		const template = stateToTemplate(state);
+		template.canvas.backgroundImage = 'data:image/png;base64,abc'; // force it in for test
+		const encoded = encodeTemplateForUrl(template);
+		const decoded = JSON.parse(decodeURIComponent(encoded));
+		expect(decoded.canvas.backgroundImage).toBeNull();
+	});
+
+	it('preserves non-data backgroundImage', () => {
+		const state = templateToState(defaultTemplates[2]);
+		const template = stateToTemplate(state);
+		const bgImage = template.canvas.backgroundImage;
+		const encoded = encodeTemplateForUrl(template);
+		const decoded = JSON.parse(decodeURIComponent(encoded));
+		expect(decoded.canvas.backgroundImage).toBe(bgImage);
+	});
+
+	it('strips data: src from image elements', () => {
+		const state = templateToState(defaultTemplates[0]);
+		const template = stateToTemplate(state);
+		template.elements.push({
+			id: 'img1', type: 'image', x: 0, y: 0, visible: true,
+			src: 'data:image/png;base64,xyz', width: 100, height: 100, opacity: 1, rotation: 0,
+		});
+		const encoded = encodeTemplateForUrl(template);
+		const decoded = JSON.parse(decodeURIComponent(encoded));
+		const imgEl = decoded.elements.find((e: { type: string }) => e.type === 'image');
+		expect(imgEl.src).toBe('');
+	});
+
+	it('preserves non-data image src', () => {
+		const state = templateToState(defaultTemplates[0]);
+		const template = stateToTemplate(state);
+		template.elements.push({
+			id: 'img2', type: 'image', x: 0, y: 0, visible: true,
+			src: 'https://example.com/img.png', width: 100, height: 100, opacity: 1, rotation: 0,
+		});
+		const encoded = encodeTemplateForUrl(template);
+		const decoded = JSON.parse(decodeURIComponent(encoded));
+		const imgEl = decoded.elements.find((e: { type: string }) => e.type === 'image');
+		expect(imgEl.src).toBe('https://example.com/img.png');
+	});
+});
+
+describe('decodeTemplateFromUrl', () => {
+	it('returns null when no ?t= param present', () => {
+		vi.stubGlobal('window', { location: { search: '' } });
+		expect(decodeTemplateFromUrl()).toBeNull();
+	});
+
+	it('returns null for invalid JSON', () => {
+		vi.stubGlobal('window', { location: { search: '?t=notjson' } });
+		expect(decodeTemplateFromUrl()).toBeNull();
+	});
+
+	it('returns null for structurally invalid template', () => {
+		const bad = encodeURIComponent(JSON.stringify({ foo: 'bar' }));
+		vi.stubGlobal('window', { location: { search: `?t=${bad}` } });
+		expect(decodeTemplateFromUrl()).toBeNull();
+	});
+
+	it('round-trips a valid template through URL encoding', () => {
+		const template = stateToTemplate(templateToState(defaultTemplates[0]));
+		const encoded = encodeTemplateForUrl(template);
+		vi.stubGlobal('window', { location: { search: `?t=${encoded}` } });
+		const result = decodeTemplateFromUrl();
+		expect(result).not.toBeNull();
+		expect(result!.id).toBe(template.id);
+		expect(result!.name).toBe(template.name);
+	});
+
+	it('infers templateType from canvas height when missing', () => {
+		const template = stateToTemplate(templateToState(defaultTemplates[0]));
+		const raw = JSON.parse(decodeURIComponent(encodeTemplateForUrl(template)));
+		delete raw.templateType;
+		const encoded = encodeURIComponent(JSON.stringify(raw));
+		vi.stubGlobal('window', { location: { search: `?t=${encoded}` } });
+		const result = decodeTemplateFromUrl();
+		// canvas height 450 < 600 → sharepic
+		expect(result!.templateType).toBe('sharepic');
 	});
 });
 
