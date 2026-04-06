@@ -56,14 +56,6 @@ export function ElementEditor({ element, isSelected }: { element: TemplateElemen
 		prevSelectedRef.current = !!isSelected;
 	}, [isSelected]);
 
-	useEffect(() => {
-		const el = containerRef.current;
-		if (!el) return;
-		const handler = () => setOpen(true);
-		el.addEventListener('hdg-details-open', handler);
-		return () => el.removeEventListener('hdg-details-open', handler);
-	}, []);
-
 	return (
 		<div
 			ref={containerRef}

@@ -48,15 +48,20 @@ function HighlightSpan({ bgColor, textColor, contentKey, children }: {
 		}
 
 		const lineHeightPx = parseFloat(window.getComputedStyle(pEl).lineHeight);
+		// getBoundingClientRect / getClientRects return zoomed viewport coords.
+		// offsetWidth is in CSS layout pixels (unzoomed). Divide all rect values by zoom.
+		const zoom = pEl.getBoundingClientRect().width / pEl.offsetWidth || 1;
 
 		setLineRects(lines.map(group => {
-			const top = Math.min(...group.map(r => r.top)) - pRect.top;
-			const contentHeight = Math.max(...group.map(r => r.bottom)) - Math.min(...group.map(r => r.top));
-			const leading = (lineHeightPx - contentHeight) / 2;
+			const topVp = Math.min(...group.map(r => r.top)) - pRect.top;
+			const contentHeightVp = Math.max(...group.map(r => r.bottom)) - Math.min(...group.map(r => r.top));
+			const topCss = topVp / zoom;
+			const contentHeightCss = contentHeightVp / zoom;
+			const leading = (lineHeightPx - contentHeightCss) / 2;
 			return {
-				top: top - leading,
-				left: Math.min(...group.map(r => r.left)) - pRect.left,
-				width: Math.max(...group.map(r => r.right)) - Math.min(...group.map(r => r.left)),
+				top: topCss - leading,
+				left: (Math.min(...group.map(r => r.left)) - pRect.left) / zoom,
+				width: (Math.max(...group.map(r => r.right)) - Math.min(...group.map(r => r.left))) / zoom,
 				height: lineHeightPx,
 			};
 		}));
@@ -65,7 +70,8 @@ function HighlightSpan({ bgColor, textColor, contentKey, children }: {
 	useLayoutEffect(() => {
 		measure();
 		const ro = new ResizeObserver(measure);
-		if (spanRef.current) ro.observe(spanRef.current);
+		const pEl = spanRef.current?.closest('p');
+		if (pEl) ro.observe(pEl);
 		const canvas = document.getElementById('sharepic-download');
 		if (canvas) ro.observe(canvas);
 		return () => ro.disconnect();
@@ -75,9 +81,8 @@ function HighlightSpan({ bgColor, textColor, contentKey, children }: {
 		<>
 			{lineRects.map((r, i) => {
 				const n = lineRects.length;
-				// CSS padding covers: left side of first rect, right side of last rect.
-				// At line-break edges those sides are missing — extend them manually.
-				const extendLeft = i > 0 ? HIGHLIGHT_PAD_X : 0;
+				// getClientRects with box-decoration-break:slice includes padding-right only
+				// on the last fragment. On continuation lines we add protrusion manually.
 				const extendRight = i < n - 1 ? HIGHLIGHT_PAD_X : 0;
 				return (
 					<span
@@ -86,8 +91,8 @@ function HighlightSpan({ bgColor, textColor, contentKey, children }: {
 						style={{
 							position: 'absolute',
 							top: `${r.top}px`,
-							left: `${r.left - extendLeft}px`,
-							width: `${r.width + extendLeft + extendRight}px`,
+							left: `${r.left - HIGHLIGHT_PAD_X}px`,
+							width: `${r.width + HIGHLIGHT_PAD_X + extendRight}px`,
 							height: `${r.height}px`,
 							backgroundColor: bgColor,
 							zIndex: -1,
@@ -96,7 +101,7 @@ function HighlightSpan({ bgColor, textColor, contentKey, children }: {
 					/>
 				);
 			})}
-			<span ref={spanRef} style={{ color: textColor, padding: `0 ${HIGHLIGHT_PAD_X}px` }}>{children}</span>
+			<span ref={spanRef} style={{ color: textColor, paddingRight: `${HIGHLIGHT_PAD_X}px` }}>{children}</span>
 		</>
 	);
 }

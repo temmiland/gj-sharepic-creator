@@ -148,23 +148,16 @@ function DeleteButton({ elementId }: { elementId: string }) {
 }
 
 function EditButton({ elementId }: { elementId: string }) {
+	const { dispatch } = useSharePic();
+
 	const handleClick = (e: React.PointerEvent) => {
 		e.stopPropagation();
+		dispatch({ type: 'SELECT_ELEMENT', payload: elementId });
 		const editorEl = document.querySelector(`[data-element-editor="${elementId}"]`);
 		if (editorEl) {
-			editorEl.dispatchEvent(new CustomEvent('hdg-details-open'));
-			let parent = editorEl.parentElement;
-			while (parent) {
-				if (parent.classList.contains('hdg-details') || parent.classList.contains('element-editor')) {
-					parent.dispatchEvent(new CustomEvent('hdg-details-open'));
-				}
-				parent = parent.parentElement;
-			}
 			editorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
 			const textarea = editorEl.querySelector('textarea');
-			if (textarea) {
-				setTimeout(() => textarea.focus(), 400);
-			}
+			if (textarea) setTimeout(() => textarea.focus(), 400);
 		}
 	};
 

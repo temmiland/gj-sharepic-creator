@@ -71,7 +71,7 @@ export async function scaleImageToDataUrl(
 
 				if (quality > 0.4) {
 					// First: reduce quality
-					quality -= 0.1;
+					quality = Math.round((quality - 0.1) * 100) / 100;
 				} else {
 					// Then: reduce dimensions by 20% each step
 					w = Math.round(w * 0.8);
