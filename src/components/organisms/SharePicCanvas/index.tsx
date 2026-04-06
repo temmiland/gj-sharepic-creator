@@ -89,9 +89,11 @@ export function SharePicCanvas({ backgroundImageUploaded, backgroundImage, backg
 	const { canvasConfig } = useSharePic();
 	const { transparentBackground, width, height } = canvasConfig;
 
-	// Overflow with 20px on each side for blur
-	const imgWidth = width + 40;
-	const imgHeight = height + 40;
+	// Fixed overflow so blur doesn't change the visible zoom level of the background image.
+	// 80px is sufficient for blur values up to ~20px.
+	const blurOverflow = 80;
+	const imgWidth = width + blurOverflow * 2;
+	const imgHeight = height + blurOverflow * 2;
 
 	return (
 		<div
@@ -114,13 +116,13 @@ export function SharePicCanvas({ backgroundImageUploaded, backgroundImage, backg
 						src={backgroundImage}
 						style={{
 							position: 'absolute',
-							top: '-20px',
-							left: '-20px',
+							top: `-${blurOverflow}px`,
+							left: `-${blurOverflow}px`,
 							width: `${imgWidth}px`,
 							height: `${imgHeight}px`,
 							objectFit: 'cover',
 							objectPosition: backgroundPosition.value,
-							filter: `blur(${backgroundBlur}rem) brightness(${backgroundBrightness}%)`,
+							filter: `blur(${backgroundBlur}px) brightness(${backgroundBrightness}%)`,
 						}}
 					/>
 				</div>

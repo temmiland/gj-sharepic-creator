@@ -54,6 +54,7 @@ export interface ImageElement extends TemplateElementBase {
 	width: number;
 	height: number;
 	opacity: number;
+	rotation: number;
 }
 
 export type TemplateElement =

@@ -27,7 +27,10 @@ export function templateToState(template: SharePicTemplate) {
 		backgroundImage: template.canvas.backgroundImage,
 		backgroundImageUploaded: false,
 		backgroundPosition,
-		backgroundBlur: template.canvas.backgroundBlur,
+		// Migrate old rem-based blur values (0 < v ≤ 2) to px (multiply by 16)
+		backgroundBlur: template.canvas.backgroundBlur > 0 && template.canvas.backgroundBlur <= 2
+			? Math.round(template.canvas.backgroundBlur * 16)
+			: template.canvas.backgroundBlur,
 		backgroundBrightness: template.canvas.backgroundBrightness,
 		elements: structuredClone(template.elements),
 		selectedElementId: null,

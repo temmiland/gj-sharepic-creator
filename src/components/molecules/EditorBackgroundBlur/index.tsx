@@ -8,21 +8,23 @@
  *     - https://gjsharepics.temmi.land/license
  *******************************************************************************/
 
-import { Input } from '@/components/atoms/Input';
-
 type EditorBackgroundBlurProps = {
 	blur: number;
-	handleBlur: React.ChangeEventHandler<HTMLInputElement>;
+	handleBlur: (value: number) => void;
 };
 
 export function EditorBackgroundBlur({ blur, handleBlur }: EditorBackgroundBlurProps) {
 	return (
 		<>
-			<h2>Hintergrundbild – Unschärfe</h2>
-			<Input
-				type="number"
+			<h2>Hintergrundbild – Unschärfe ({blur}px)</h2>
+			<input
+				type="range"
+				min={0}
+				max={20}
+				step={0.5}
 				value={blur}
-				onChange={handleBlur}
+				onChange={e => handleBlur(Number(e.target.value))}
+				style={{ width: '100%' }}
 			/>
 		</>
 	);

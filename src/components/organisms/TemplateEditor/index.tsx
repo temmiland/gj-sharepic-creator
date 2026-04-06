@@ -72,8 +72,8 @@ export function TemplateEditor() {
 				/>
 				<EditorBackgroundBlur
 					blur={state.backgroundBlur}
-					handleBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
-						dispatch({ type: 'SET_BACKGROUND_BLUR', payload: Number(e.target.value) })
+					handleBlur={(value: number) =>
+						dispatch({ type: 'SET_BACKGROUND_BLUR', payload: value })
 					}
 				/>
 				<EditorBackgroundBrightness
@@ -86,7 +86,7 @@ export function TemplateEditor() {
 
 			<Accordion summary="Elemente">
 				{state.elements.map(element => (
-					<ElementEditor key={element.id} element={element} />
+					<ElementEditor key={element.id} element={element} isSelected={state.selectedElementId === element.id} />
 				))}
 				<AddElementButton />
 			</Accordion>

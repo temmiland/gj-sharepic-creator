@@ -23,7 +23,7 @@ export const defaultTemplates: SharePicTemplate[] = [
 			highlightColorName: 'Light Green',
 			backgroundImage: null,
 			backgroundPositionValue: 'top left',
-			backgroundBlur: 0.2,
+			backgroundBlur: 3,
 			backgroundBrightness: 100,
 		},
 		elements: [
@@ -76,7 +76,7 @@ export const defaultTemplates: SharePicTemplate[] = [
 			highlightColorName: 'Light Green',
 			backgroundImage: null,
 			backgroundPositionValue: 'top left',
-			backgroundBlur: 0.2,
+			backgroundBlur: 3,
 			backgroundBrightness: 100,
 		},
 		elements: [
@@ -172,7 +172,7 @@ export const defaultTemplates: SharePicTemplate[] = [
 			highlightColorName: 'Light Green',
 			backgroundImage: null,
 			backgroundPositionValue: 'top left',
-			backgroundBlur: 0.2,
+			backgroundBlur: 3,
 			backgroundBrightness: 100,
 		},
 		elements: [
@@ -209,7 +209,7 @@ export const defaultTemplates: SharePicTemplate[] = [
 			highlightColorName: 'Light Green',
 			backgroundImage: null,
 			backgroundPositionValue: 'top left',
-			backgroundBlur: 0.2,
+			backgroundBlur: 3,
 			backgroundBrightness: 100,
 		},
 		elements: [

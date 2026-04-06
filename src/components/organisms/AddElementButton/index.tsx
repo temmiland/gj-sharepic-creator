@@ -65,7 +65,7 @@ export function AddElementButton() {
 			payload: {
 				id, type: 'image',
 				x: Math.round((CANVAS_WIDTH - w) / 2), y: Math.round((CANVAS_HEIGHT - h) / 2),
-				visible: true, src: dataUrl, width: w, height: h, opacity: 1,
+				visible: true, src: dataUrl, width: w, height: h, opacity: 1, rotation: 0,
 			},
 		});
 	};

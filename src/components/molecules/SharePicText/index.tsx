@@ -8,7 +8,7 @@
  *     - https://gjsharepics.temmi.land/license
  *******************************************************************************/
 
-import React from "react";
+import React, { useRef, useLayoutEffect, useState, useCallback } from "react";
 import type { ColorSet, HighlightColor } from '@/types/design-tokens';
 import './SharePicText.scss';
 import { colorSets } from '@/constants/colors';
@@ -18,6 +18,88 @@ type SharePicTextProps = {
 	colorSet: ColorSet;
 	highlightColor: HighlightColor;
 };
+
+type LineRect = { top: number; left: number; width: number; height: number };
+const HIGHLIGHT_PAD_X = 4;
+
+function HighlightSpan({ bgColor, textColor, contentKey, children }: {
+	bgColor: string;
+	textColor: string;
+	contentKey: string;
+	children: React.ReactNode;
+}) {
+	const spanRef = useRef<HTMLSpanElement>(null);
+	const [lineRects, setLineRects] = useState<LineRect[]>([]);
+
+	const measure = useCallback(() => {
+		const el = spanRef.current;
+		if (!el) return;
+		const pEl = el.closest('p');
+		if (!pEl) return;
+		const pRect = pEl.getBoundingClientRect();
+		const rawRects = Array.from(el.getClientRects()).filter(r => r.width > 0);
+		if (rawRects.length === 0) return;
+
+		const lines: DOMRect[][] = [];
+		for (const rect of rawRects) {
+			const existing = lines.find(l => Math.abs(l[0].top - rect.top) < rect.height * 0.5);
+			if (existing) existing.push(rect);
+			else lines.push([rect]);
+		}
+
+		const lineHeightPx = parseFloat(window.getComputedStyle(pEl).lineHeight);
+
+		setLineRects(lines.map(group => {
+			const top = Math.min(...group.map(r => r.top)) - pRect.top;
+			const contentHeight = Math.max(...group.map(r => r.bottom)) - Math.min(...group.map(r => r.top));
+			const leading = (lineHeightPx - contentHeight) / 2;
+			return {
+				top: top - leading,
+				left: Math.min(...group.map(r => r.left)) - pRect.left,
+				width: Math.max(...group.map(r => r.right)) - Math.min(...group.map(r => r.left)),
+				height: lineHeightPx,
+			};
+		}));
+	}, []);
+
+	useLayoutEffect(() => {
+		measure();
+		const ro = new ResizeObserver(measure);
+		if (spanRef.current) ro.observe(spanRef.current);
+		const canvas = document.getElementById('sharepic-download');
+		if (canvas) ro.observe(canvas);
+		return () => ro.disconnect();
+	}, [measure, contentKey]);
+
+	return (
+		<>
+			{lineRects.map((r, i) => {
+				const n = lineRects.length;
+				// CSS padding covers: left side of first rect, right side of last rect.
+				// At line-break edges those sides are missing — extend them manually.
+				const extendLeft = i > 0 ? HIGHLIGHT_PAD_X : 0;
+				const extendRight = i < n - 1 ? HIGHLIGHT_PAD_X : 0;
+				return (
+					<span
+						key={i}
+						aria-hidden
+						style={{
+							position: 'absolute',
+							top: `${r.top}px`,
+							left: `${r.left - extendLeft}px`,
+							width: `${r.width + extendLeft + extendRight}px`,
+							height: `${r.height}px`,
+							backgroundColor: bgColor,
+							zIndex: -1,
+							pointerEvents: 'none',
+						}}
+					/>
+				);
+			})}
+			<span ref={spanRef} style={{ color: textColor, padding: `0 ${HIGHLIGHT_PAD_X}px` }}>{children}</span>
+		</>
+	);
+}
 
 export function SharePicText({ multiLineText, colorSet, highlightColor }: SharePicTextProps) {
 
@@ -56,41 +138,28 @@ export function SharePicText({ multiLineText, colorSet, highlightColor }: ShareP
         elements.push(<del key={offset}>{parseMarkdown(strikeContent)}</del>);
 	  } else if (fullMatch.startsWith('%') && fullMatch.endsWith('%')) {
 		const spanContent = fullMatch.slice(1, -1);
+		const bgColor = colorSet.accentColor === '#c7ff7a'
+			? colorSet.backgroundColor === '#000000'
+				? colorSets.find(cS => cS.name === "White")?.backgroundColor ?? '#ffffff'
+				: colorSets.find(cS => cS.name === "Black")?.backgroundColor ?? '#000000'
+			: colorSet.accentColor;
+		const textColor = colorSet.backgroundColor === '#000000'
+			? colorSets.find(cS => cS.name === "Black")?.backgroundColor ?? '#000000'
+			: colorSets.find(cS => cS.name === "White")?.backgroundColor ?? '#ffffff';
         elements.push(
-          <span
-            key={offset}
-            style={{
-              backgroundColor: colorSet.accentColor === '#c7ff7a'
-			  	? colorSet.backgroundColor === '#000000'
-					? colorSets.find(cS => cS.name === "White")?.backgroundColor ?? '#ffffff'
-					: colorSets.find(cS => cS.name === "Black")?.backgroundColor ?? '#000000'
-				: colorSet.accentColor,
-			  color: colorSet.backgroundColor === '#000000'
-			  	? colorSets.find(cS => cS.name === "Black")?.backgroundColor ?? '#000000'
-					: colorSets.find(cS => cS.name === "White")?.backgroundColor ?? '#ffffff',
-			  boxDecorationBreak: 'clone',
-			  WebkitBoxDecorationBreak: 'clone',
-            }}
-          >
+          <HighlightSpan key={offset} bgColor={bgColor} textColor={textColor} contentKey={spanContent}>
             {parseMarkdown(spanContent)}
-          </span>
+          </HighlightSpan>
         );
 	  } else if (fullMatch.startsWith('#') && fullMatch.endsWith('#')) {
         const spanContent = fullMatch.slice(1, -1);
+		const textColor = highlightColor.backgroundColor === '#000000'
+			? colorSets.find(cS => cS.name === "White")?.backgroundColor ?? '#ffffff'
+			: colorSets.find(cS => cS.name === "Black")?.backgroundColor ?? '#000000';
         elements.push(
-          <span
-            key={offset}
-            style={{
-              backgroundColor: highlightColor.backgroundColor,
-			  boxDecorationBreak: 'clone',
-			  WebkitBoxDecorationBreak: 'clone',
-			  color: highlightColor.backgroundColor === '#000000'
-			  	? colorSets.find(cS => cS.name === "White")?.backgroundColor ?? '#ffffff'
-				: colorSets.find(cS => cS.name === "Black")?.backgroundColor ?? '#000000',
-            }}
-          >
+          <HighlightSpan key={offset} bgColor={highlightColor.backgroundColor} textColor={textColor} contentKey={spanContent}>
             {parseMarkdown(spanContent)}
-          </span>
+          </HighlightSpan>
         );
       }
 
@@ -108,10 +177,10 @@ export function SharePicText({ multiLineText, colorSet, highlightColor }: ShareP
 	return (
 		<div className="text">
 			{
-				multiLineText.map((line) => (
+				multiLineText.map((line, index) => (
 					line !== "" ? (
 						<p
-							key={line}
+							key={index}
 							style={{
 								color: colorSet.name === "Black"
 									? colorSets.find(cS => cS.name === "White")?.backgroundColor ?? '#ffffff'

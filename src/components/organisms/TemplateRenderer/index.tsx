@@ -8,8 +8,7 @@
  *     - https://gjsharepics.temmi.land/license
  *******************************************************************************/
 
-import { useRef, useEffect, useLayoutEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { useRef, useEffect } from 'react';
 import type { ColorSet } from '@/types/design-tokens';
 import { useSharePic } from '@/context/SharePicContext';
 import { SharePicCanvas } from '@/components/organisms/SharePicCanvas';
@@ -28,7 +27,10 @@ export function TemplateRenderer() {
 	useEffect(() => {
 		const handler = (e: PointerEvent) => {
 			const canvas = document.getElementById('sharepic-download');
-			if (canvas && !canvas.contains(e.target as Node)) {
+			const target = e.target as Node;
+			if (canvas && !canvas.contains(target)) {
+				// Don't deselect when interacting with an element editor panel
+				if ((target as HTMLElement).closest?.('[data-element-editor]')) return;
 				dispatch({ type: 'SELECT_ELEMENT', payload: null });
 			}
 		};
@@ -81,6 +83,21 @@ function ResizeHandle({ onPointerDown }: { onPointerDown: (e: React.PointerEvent
 				<path d="M2 9L9 2" stroke="#555" strokeWidth="1.2" strokeLinecap="round"/>
 				<path d="M5 9L9 5" stroke="#555" strokeWidth="1.2" strokeLinecap="round"/>
 				<path d="M8 9L9 8" stroke="#555" strokeWidth="1.2" strokeLinecap="round"/>
+			</svg>
+		</div>
+	);
+}
+
+function RotateHandle({ onPointerDown }: { element: ImageElement; onPointerDown: (e: React.PointerEvent) => void }) {
+	return (
+		<div
+			className="rotate-handle"
+			onPointerDown={onPointerDown}
+			title="Drehen"
+		>
+			<svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+				<path d="M21 2v6h-6" stroke="#555" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+				<path d="M21 13a9 9 0 1 1-3-7.7L21 8" stroke="#555" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 			</svg>
 		</div>
 	);
@@ -180,15 +197,6 @@ function getCanvasScale(canvasWidth: number): number {
 function DraggableElement({ element, children, selected }: { element: TemplateElement; children: React.ReactNode; selected: boolean }) {
 	const { state, dispatch, canvasConfig } = useSharePic();
 	const wrapperRef = useRef<HTMLDivElement>(null);
-	const [toolbarRect, setToolbarRect] = useState<DOMRect | null>(null);
-
-	useLayoutEffect(() => {
-		if (!selected || !wrapperRef.current) {
-			setToolbarRect(null);
-			return;
-		}
-		setToolbarRect(wrapperRef.current.getBoundingClientRect());
-	}, [selected, element.x, element.y, (element as any).width, (element as any).height, (element as any).size]);
 
 	const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
 		e.preventDefault();
@@ -269,13 +277,38 @@ function DraggableElement({ element, children, selected }: { element: TemplateEl
 		}
 	};
 
+	const handleRotateDown = (e: React.PointerEvent) => {
+		if (element.type !== 'image') return;
+		e.preventDefault();
+		e.stopPropagation();
+
+		const img = element as ImageElement;
+		const startRotation = img.rotation ?? 0;
+		const rect = wrapperRef.current!.getBoundingClientRect();
+		const centerX = rect.left + rect.width / 2;
+		const centerY = rect.top + rect.height / 2;
+		const startAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
+
+		const onMove = (ev: PointerEvent) => {
+			const angle = Math.atan2(ev.clientY - centerY, ev.clientX - centerX) * (180 / Math.PI);
+			const rotation = Math.round(startRotation + angle - startAngle);
+			dispatch({ type: 'UPDATE_ELEMENT', payload: { id: element.id, changes: { rotation } } });
+		};
+		const onUp = () => {
+			window.removeEventListener('pointermove', onMove);
+			window.removeEventListener('pointerup', onUp);
+		};
+		window.addEventListener('pointermove', onMove);
+		window.addEventListener('pointerup', onUp);
+	};
+
 	const zIndex = getZIndex(element.type);
 	const showResize = selected && (element.type === 'pictogram' || element.type === 'image');
-	const showEdit = selected && (element.type === 'text' || element.type === 'heading');
+	const showRotate = selected && element.type === 'image';
+	const showEdit = selected;
 	const showDelete = selected;
 
 	return (
-		<>
 		<div
 			ref={wrapperRef}
 			className={`template-element ${selected ? 'template-element--selected' : ''}`}
@@ -288,32 +321,30 @@ function DraggableElement({ element, children, selected }: { element: TemplateEl
 				touchAction: 'none',
 				userSelect: 'none',
 				width: 'fit-content',
-				...(element.type === 'logo' ? { transform: 'rotate(-13deg)', transformOrigin: 'top left' } : {}),
-				...(selected ? { outline: `2px dashed ${getContrastOutlineColor(state.colorSet.backgroundColor)}` } : {}),
+				...(element.type === 'logo' ? { transform: 'rotate(-13deg)', transformOrigin: 'top left' } : {}),			...(element.type === 'image' && (element as ImageElement).rotation ? { transform: `rotate(${(element as ImageElement).rotation}deg)` } : {}),				...(selected ? { outline: `2px dashed ${getContrastOutlineColor(state.colorSet.backgroundColor)}` } : {}),
 			}}
 			onPointerDown={handlePointerDown}
 		>
 			{children}
 			{showResize && <ResizeHandle onPointerDown={handleResizeDown} />}
+			{showRotate && <RotateHandle element={element as ImageElement} onPointerDown={handleRotateDown} />}
+			{selected && (
+				<div
+					className="element-toolbar"
+					style={{
+						position: 'absolute',
+						left: '50%',
+						top: '-8px',
+						transform: 'translateX(-50%) translateY(-100%)',
+					}}
+					onPointerDown={e => e.stopPropagation()}
+				>
+					<CenterButtons element={element} />
+					{showEdit && <EditButton elementId={element.id} />}
+					{showDelete && <DeleteButton elementId={element.id} />}
+				</div>
+			)}
 		</div>
-		{selected && toolbarRect && createPortal(
-			<div
-				className="element-toolbar"
-				style={{
-					position: 'fixed',
-					left: `${toolbarRect.left + toolbarRect.width / 2}px`,
-					top: `${toolbarRect.top - 8}px`,
-					transform: 'translateX(-50%) translateY(-100%)',
-				}}
-				onPointerDown={e => e.stopPropagation()}
-			>
-				<CenterButtons element={element} />
-				{showEdit && <EditButton elementId={element.id} />}
-				{showDelete && <DeleteButton elementId={element.id} />}
-			</div>,
-			document.body
-		)}
-	</>
 	);
 }
 

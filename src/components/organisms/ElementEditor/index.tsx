@@ -21,7 +21,7 @@ import { ImageElementEditor } from '@/components/organisms/ImageElementEditor';
 import type { TemplateElement } from '@/types/template';
 import './ElementEditor.scss';
 
-export function ElementEditor({ element }: { element: TemplateElement }) {
+export function ElementEditor({ element, isSelected }: { element: TemplateElement; isSelected?: boolean }) {
 	const { dispatch } = useSharePic();
 
 	const updateElement = (changes: Partial<TemplateElement>) => {
@@ -43,6 +43,18 @@ export function ElementEditor({ element }: { element: TemplateElement }) {
 	const typeLabel = getElementTypeLabel(element.type);
 	const [open, setOpen] = useState(false);
 	const containerRef = useRef<HTMLDivElement>(null);
+	const prevSelectedRef = useRef(false);
+
+	// Auto-open/close when element is selected or deselected on the canvas
+	useEffect(() => {
+		if (isSelected && !prevSelectedRef.current) {
+			setOpen(true);
+			containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+		} else if (!isSelected && prevSelectedRef.current) {
+			setOpen(false);
+		}
+		prevSelectedRef.current = !!isSelected;
+	}, [isSelected]);
 
 	useEffect(() => {
 		const el = containerRef.current;
@@ -55,14 +67,18 @@ export function ElementEditor({ element }: { element: TemplateElement }) {
 	return (
 		<div
 			ref={containerRef}
-			className="element-editor"
+			className={`element-editor${isSelected ? ' element-editor--selected' : ''}`}
 			data-element-editor={element.id}
+			onPointerDown={e => e.stopPropagation()}
 		>
 			<div className="element-editor__header">
 				<button
 					type="button"
 					className="element-editor__toggle"
-					onClick={() => setOpen(v => !v)}
+					onClick={() => {
+						setOpen(v => !v);
+						dispatch({ type: 'SELECT_ELEMENT', payload: element.id });
+					}}
 				>
 					<svg
 						className={`element-editor__chevron${open ? ' element-editor__chevron--open' : ''}`}

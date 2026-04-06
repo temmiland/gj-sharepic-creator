@@ -182,6 +182,83 @@
 	box-shadow: $shadow-lg;
 }
 
+.sharepic-popup-trigger {
+	position: relative;
+}
+
+.canvas-popup-overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.75);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 20000;
+}
+
+.canvas-popup-inner {
+	position: relative;
+	width: min(90vw, 90vh * #{360 / 450});
+	height: min(90vh, 90vw * #{450 / 360});
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+}
+
+.canvas-popup-toolbar {
+	display: flex;
+	gap: 0.6rem;
+	align-items: center;
+}
+
+.canvas-popup-edit-btn {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.4rem 0.8rem;
+	background: rgba(255, 255, 255, 0.9);
+	border: none;
+	cursor: pointer;
+	font-size: 1.2rem;
+	font-weight: 600;
+	font-family: inherit;
+	color: #333;
+
+	&--active {
+		background: $cdLightGreen;
+		color: #000;
+	}
+
+	&:hover {
+		background: $cdLightGreen;
+	}
+}
+
+.fullscreen-btn {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	width: 28px;
+	height: 28px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255, 255, 255, 0.9);
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+	z-index: 100;
+	transition: background 0.15s;
+	color: #333;
+
+	&:hover {
+		background: $cdLightGreen;
+	}
+}
+
 .arrow {
 	width: 50px;
 	display: block;

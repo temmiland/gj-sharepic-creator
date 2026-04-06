@@ -14,6 +14,12 @@
 .element-editor {
 	border: 1px solid $border-light;
 	margin-bottom: 0.6rem;
+	transition: border-color 0.2s, box-shadow 0.2s;
+
+	&--selected {
+		border-color: $cdGreen;
+		box-shadow: 0 0 0 2px rgba($cdGreen, 0.2);
+	}
 }
 
 .element-editor__header {

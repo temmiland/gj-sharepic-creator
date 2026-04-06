@@ -17,12 +17,10 @@
 		font-weight: 550;
 		line-height: 1.6;
 
+		isolation: isolate;
+
 		em {
 			font-family: 'Wix Madefor Text';
-		}
-
-		span {
-			padding: 2px 4px;
 		}
 	}
 }

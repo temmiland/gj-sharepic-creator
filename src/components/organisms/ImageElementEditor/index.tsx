@@ -79,6 +79,15 @@ export function ImageElementEditor({ element }: { element: ImageElement }) {
 					className="element-editor__control"
 				/>
 			</label>
+			<label className="element-editor__field element-editor__field--no-margin">
+				Rotation ({element.rotation ?? 0}°)
+				<input
+					type="range" min={-180} max={180} step={1}
+					value={element.rotation ?? 0}
+					onChange={e => dispatch({ type: 'UPDATE_ELEMENT', payload: { id: element.id, changes: { rotation: Number(e.target.value) } } })}
+					className="element-editor__control"
+				/>
+			</label>
 		</>
 	);
 }

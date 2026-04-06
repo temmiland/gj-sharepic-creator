@@ -20,10 +20,15 @@ type EditorHeadingProps = {
 
 const headingActions: FormatAction[] = [
 	{
-		label: 'Hervorheben',
+		label: 'Zeile hervorheben',
 		icon: <span>★</span>,
 		wrapper: ['*', ''],
 		lineLevel: true,
+	},
+	{
+		label: 'Inline hervorheben',
+		icon: <span style={{ background: '#9f88ff', color: '#fff', padding: '0 3px' }}>H</span>,
+		wrapper: ['#', '#'],
 	},
 ];
 
