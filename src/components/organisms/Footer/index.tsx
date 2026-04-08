@@ -19,7 +19,7 @@ export function Footer() {
 				<p>
 					Made with ♥︎ by <a target="_blank" rel="noopener noreferrer" href="https://temmi.land">Temmi Pietsch</a>
 					<br/>
-					v1.0.3  ✦ <a target="_blank" rel="noopener noreferrer" href="https://github.com/temmiland/gj-sharepic-creator">GitHub</a> ✦ <a href="/source-code.zip" download="gj-sharepic-creator-source.zip">Quellcode</a> ✦ <a onClick={() => navigate("/kontakt")}>Kontakt</a> ✦ <a onClick={() => navigate("/datenschutz")}>Datenschutz</a> ✦ <a onClick={() => navigate("/impressum")}>Impressum</a>
+					v1.0.4  ✦ <a target="_blank" rel="noopener noreferrer" href="https://github.com/temmiland/gj-sharepic-creator">GitHub</a> ✦ <a href="/source-code.zip" download="gj-sharepic-creator-source.zip">Quellcode</a> ✦ <a onClick={() => navigate("/kontakt")}>Kontakt</a> ✦ <a onClick={() => navigate("/datenschutz")}>Datenschutz</a> ✦ <a onClick={() => navigate("/impressum")}>Impressum</a>
 				</p>
 			</div>
 		</footer>
