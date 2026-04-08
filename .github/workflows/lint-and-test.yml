@@ -10,6 +10,9 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    container:
+      image: ubuntu:latest
+      options: --network proxy
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,6 +29,9 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    container:
+      image: ubuntu:latest
+      options: --network proxy
     steps:
       - name: Checkout
         uses: actions/checkout@v4
