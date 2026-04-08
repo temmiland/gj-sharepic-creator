@@ -16,9 +16,9 @@ jobs:
             -H "Authorization: token $GH_TOKEN" \
             -H "Content-Type: application/json" \
             https://api.github.com/repos/temmiland/gj-sharepic-creator/releases \
-            -d '{
-              "tag_name": "${{ gitea.event.release.tag_name }}",
-              "name": "${{ gitea.event.release.name }}",
-              "body": "${{ gitea.event.release.body }}",
-              "prerelease": ${{ gitea.event.release.prerelease }}
-            }'
+            --data "$(jq -n \
+              --arg tag "${{ gitea.event.release.tag_name }}" \
+              --arg name "${{ gitea.event.release.name }}" \
+              --arg body "${{ gitea.event.release.body }}" \
+              --argjson prerelease ${{ gitea.event.release.prerelease }} \
+              '{tag_name: $tag, name: $name, body: $body, prerelease: $prerelease}')"
