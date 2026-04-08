@@ -11,7 +11,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     container:
-      image: ubuntu:latest
+      image: node:20
       options: --network proxy
     steps:
       - name: Checkout
@@ -30,7 +30,7 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     container:
-      image: ubuntu:latest
+      image: node:20
       options: --network proxy
     steps:
       - name: Checkout

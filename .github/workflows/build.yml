@@ -11,7 +11,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     container:
-      image: ubuntu:latest
+      image: oven/bun:latest
       options: --network proxy
     steps:
       - name: Checkout
