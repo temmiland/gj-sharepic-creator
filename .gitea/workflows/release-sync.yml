@@ -13,15 +13,39 @@ jobs:
         steps:
             - name: Create GitHub Release
               env:
-                  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+                  GITHUB_API_TOKEN: ${{ secrets.GH_TOKEN }}
+                  RELEASE_TAG: ${{ gitea.event.release.tag_name }}
+                  RELEASE_NAME: ${{ gitea.event.release.name }}
+                  RELEASE_BODY: ${{ gitea.event.release.body }}
+                  RELEASE_PRERELEASE: ${{ gitea.event.release.prerelease }}
               run: |
-                  curl -X POST \
-                      -H "Authorization: token $GH_TOKEN" \
+                  set -euo pipefail
+
+                  jq -n \
+                      --arg tag "$RELEASE_TAG" \
+                      --arg name "$RELEASE_NAME" \
+                      --arg body "$RELEASE_BODY" \
+                      --arg prerelease "$RELEASE_PRERELEASE" \
+                      '{
+                          tag_name: $tag,
+                          name: (if $name == "" then $tag else $name end),
+                          body: $body,
+                          prerelease: ($prerelease == "true")
+                      }' > payload.json
+
+                  status="$(curl -sS -X POST \
+                      -o response.json -w '%{http_code}' \
+                      -H "Authorization: Bearer $GITHUB_API_TOKEN" \
+                      -H "Accept: application/vnd.github+json" \
+                      -H "X-GitHub-Api-Version: 2022-11-28" \
                       -H "Content-Type: application/json" \
                       https://api.github.com/repos/temmiland/gj-sharepic-creator/releases \
-                      --data "$(jq -n \
-                          --arg tag "${{ gitea.event.release.tag_name }}" \
-                          --arg name "${{ gitea.event.release.name }}" \
-                          --arg body "${{ gitea.event.release.body }}" \
-                          --argjson prerelease ${{ gitea.event.release.prerelease }} \
-                          '{tag_name: $tag, name: $name, body: $body, prerelease: $prerelease}')"
+                      --data-binary @payload.json)"
+
+                  if [ "$status" -ge 300 ]; then
+                      echo "GitHub API returned HTTP $status"
+                      cat response.json
+                      exit 1
+                  fi
+
+                  echo "Created GitHub release: $(jq -r '.html_url' response.json)"
