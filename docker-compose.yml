@@ -18,8 +18,6 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile
-    ports:
-      - "95:95"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.gjshare_pics_web.entrypoints=web"
