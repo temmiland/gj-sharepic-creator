@@ -7,7 +7,8 @@
 # You may obtain a copy of the License at:
 #     - https://gjsharepics.temmi.land/license
 ################################################################################
-FROM oven/bun AS builder
+# Bun 1.4.4 includes the fix for CVE-2026-111497 (Node2Shell).
+FROM oven/bun:1.4.4 AS builder
 
 LABEL MAINTAINER="Temmi Pietsch <welcome@temmi.land>"
 
